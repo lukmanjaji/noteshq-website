@@ -18,6 +18,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
     - name: Copy files
-      run:  cp -r /home/noteshq/ci/_work/noteshq-web/noteshq-web/*.html  /home/noteshq/
+      run:  cp -r /home/noteshq/ci/_work/noteshq-web/noteshq-web/*.*  /home/noteshq/
     - name: Copy save
       run:  cp -r /home/noteshq/ci/_work/noteshq-web/noteshq-web/assets/*.png  /home/noteshq/assets/
