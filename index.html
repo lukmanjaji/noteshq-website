@@ -1,0 +1,2301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NotesHQ — Your thinking, finally organized</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='14' y='12' width='58' height='58' rx='11' fill='%23B7C2F3'/><rect x='18' y='18' width='58' height='58' rx='11' fill='%238092E5'/><rect x='22' y='24' width='58' height='58' rx='11' fill='%232D43E0'/><circle cx='75' cy='25' r='13' fill='%23FF6B47'/><text x='75' y='30' text-anchor='middle' font-family='system-ui,sans-serif' font-size='11' font-weight='700' fill='white'>HQ</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1B1426;
+    --ink-2: #4A3F5C;
+    --ink-3: #897A9E;
+    --ink-4: #C7BCD8;
+    --bg: #FBF9FF;
+    --bg-2: #F4EEFF;
+    --line: #ECE3F7;
+    --card: #FFFFFF;
+    --purple: #6B3FD4;
+    --purple-deep: #4A1FB0;
+    --purple-soft: #EDE3FF;
+    --purple-tint: #F7F1FF;
+    --brand-blue: #2D43E0;
+    --brand-orange: #FF6B47;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    font-family: 'Geist', system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ── Nav ── */
+  .nav-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(251, 249, 255, 0.85);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+  .nav {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 32px;
+  }
+  .brand {
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .brand-word {
+    font-weight: 700; font-size: 19px; letter-spacing: -0.02em;
+  }
+  .nav-links {
+    display: inline-flex; align-items: center; gap: 30px;
+    font-size: 14px; color: var(--ink-2); font-weight: 500;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta { display: inline-flex; align-items: center; gap: 8px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 8px;
+    padding: 10px 18px;
+    font: inherit; font-size: 14px; font-weight: 600;
+    border-radius: 10px; cursor: pointer; border: none;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+  .btn.ghost {
+    background: transparent; color: var(--ink);
+  }
+  .btn.ghost:hover { background: rgba(0,0,0,0.04); }
+  .btn.primary {
+    background: var(--ink); color: white;
+  }
+  .btn.primary:hover { background: #000; transform: translateY(-1px); }
+  .btn.big {
+    padding: 14px 26px; font-size: 15px; border-radius: 12px;
+  }
+  .btn.purple {
+    background: var(--purple); color: white;
+    box-shadow: 0 10px 24px -10px var(--purple);
+  }
+  .btn.purple:hover { background: var(--purple-deep); transform: translateY(-1px); }
+
+  /* ── Hero ── */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: 64px 32px 100px;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 12% 18%, rgba(255, 107, 71, 0.10), transparent 45%),
+      radial-gradient(circle at 88% 24%, rgba(45, 67, 224, 0.10), transparent 50%),
+      radial-gradient(circle at 50% 90%, rgba(107, 63, 212, 0.07), transparent 50%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 1200px; margin: 0 auto; position: relative;
+    display: grid; grid-template-columns: 1.05fr 1fr; gap: 70px;
+    align-items: center;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(45, 67, 224, 0.1);
+    color: var(--brand-blue);
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-bottom: 20px;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brand-blue); }
+  .hero h1 {
+    margin: 0 0 18px;
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 68px;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--purple-deep);
+  }
+  .hero p.lead {
+    margin: 0 0 26px;
+    font-size: 18px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    max-width: 480px;
+  }
+  .hero-cta { display: inline-flex; gap: 10px; margin-bottom: 22px; }
+  .trust {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-size: 13px; color: var(--ink-3);
+  }
+  .trust .avatars { display: inline-flex; }
+  .trust .av {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 2px solid var(--bg);
+    background: var(--purple);
+    color: white;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600;
+    margin-left: -8px;
+  }
+  .trust .av:first-child { margin-left: 0; }
+  .trust .av.a1 { background: linear-gradient(135deg, #FF6B47, #D9418C); }
+  .trust .av.a2 { background: linear-gradient(135deg, #2D43E0, #6B3FD4); }
+  .trust .av.a3 { background: linear-gradient(135deg, #1F8A5B, #6FA688); }
+  .trust .av.a4 { background: linear-gradient(135deg, #C97F1A, #FF6B47); }
+  .trust .stars { color: #F2C744; letter-spacing: -1px; }
+
+  /* Hero phone art */
+  .hero-phone-stack {
+    position: relative;
+    height: 540px;
+  }
+  .phone {
+    position: absolute;
+    width: 280px;
+    aspect-ratio: 9 / 19;
+    background: #1a1a1f;
+    border-radius: 36px;
+    padding: 10px;
+    box-shadow:
+      0 50px 100px -30px rgba(40, 24, 70, 0.4),
+      0 0 0 1.5px rgba(0,0,0,0.05),
+      inset 0 0 0 2px rgba(255,255,255,0.04);
+  }
+  .phone-screen {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    border-radius: 28px;
+    overflow: hidden;
+    position: relative;
+  }
+  .phone.left {
+    left: 0; top: 40px;
+    transform: rotate(-5deg);
+  }
+  .phone.right {
+    right: 0; top: 0;
+    transform: rotate(5deg);
+    z-index: 2;
+  }
+  /* Phone 1 — home */
+  .ph-home { padding: 14px 12px; }
+  .ph-greet {
+    font-size: 11px; color: var(--ink-3); margin-bottom: 0;
+  }
+  .ph-greet em { font-style: normal; color: var(--ink-3); }
+  .ph-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 28px; line-height: 1.05;
+    margin-bottom: 10px;
+  }
+  .ph-search {
+    background: var(--bg-2);
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 11px; color: var(--ink-3);
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .ph-tiles { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 12px; }
+  .ph-tile {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 9px 6px;
+    text-align: center;
+  }
+  .ph-tile .ic {
+    width: 26px; height: 26px;
+    background: var(--purple-tint);
+    color: var(--purple);
+    border-radius: 8px;
+    margin: 0 auto 5px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .ph-tile strong { display: block; font-size: 10px; font-weight: 600; }
+  .ph-tile em { display: block; font-style: normal; font-size: 9px; color: var(--ink-3); margin-top: 1px; }
+  .ph-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 7px;
+  }
+  .ph-card .t {
+    font-family: 'Instrument Serif', serif;
+    font-size: 14px; line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .ph-card .row {
+    display: flex; gap: 4px; align-items: center; font-size: 9.5px; color: var(--ink-2);
+  }
+  .ph-card .check {
+    width: 9px; height: 9px; border-radius: 2.5px;
+    background: var(--purple); flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .ph-card .strike { text-decoration: line-through; color: var(--ink-4); }
+  .ph-card .pill {
+    display: inline-flex; padding: 1.5px 6px; border-radius: 4px;
+    font-size: 8px; font-weight: 600;
+    background: #DCFCE7; color: #1F8A5B;
+  }
+  .ph-card .meta {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 9.5px; color: var(--ink-3);
+    margin-top: 7px;
+    font-family: 'Geist Mono', monospace;
+  }
+  .ph-fab {
+    position: absolute;
+    bottom: 20px; right: 20px;
+    width: 38px; height: 38px;
+    background: var(--purple);
+    color: white;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 20px -6px var(--purple);
+  }
+
+  /* Phone 2 — NoteChat */
+  .ph-chat {
+    padding: 12px 10px;
+    background: var(--bg);
+    height: 100%;
+    display: flex; flex-direction: column;
+  }
+  .ph-chat-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 12px;
+  }
+  .ph-chat-glyph {
+    width: 26px; height: 26px;
+    background: linear-gradient(135deg, var(--purple), #B79CEE);
+    color: white;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .ph-chat-title { font-family: 'Instrument Serif', serif; font-size: 16px; line-height: 1; }
+  .ph-chat-sub { font-size: 9px; color: var(--ink-3); margin-top: 1px; }
+  .ph-bubble {
+    max-width: 80%;
+    padding: 8px 10px;
+    border-radius: 12px;
+    font-size: 10.5px;
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+  .ph-bubble.user {
+    background: var(--purple); color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+  }
+  .ph-bubble.bot {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-bottom-left-radius: 4px;
+  }
+  .ph-bubble.bot .citation {
+    background: var(--purple-soft);
+    color: var(--purple);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 9px;
+    font-weight: 600;
+  }
+  .ph-refs { display: flex; flex-direction: column; gap: 3px; margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--line); }
+  .ph-ref {
+    background: var(--purple-tint);
+    color: var(--purple);
+    padding: 4px 6px;
+    border-radius: 6px;
+    font-size: 9.5px;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .ph-input {
+    margin-top: auto;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 12px;
+    font-size: 10px;
+    color: var(--ink-3);
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  /* ── Logos strip ── */
+  .logos {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 28px 32px;
+    background: rgba(255,255,255,0.5);
+  }
+  .logos-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 24px;
+  }
+  .logos-label {
+    font-size: 12px; color: var(--ink-3);
+    font-family: 'Geist Mono', monospace; letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .logos-row { display: inline-flex; align-items: center; gap: 40px; color: var(--ink-3); flex-wrap: wrap; }
+  .logos-row span {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 20px;
+    opacity: 0.7;
+  }
+
+  /* ── Section ── */
+  section { padding: 96px 32px; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-head {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .section-eyebrow {
+    display: inline-block;
+    color: var(--purple);
+    font-family: 'Geist Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .section-head h2 {
+    margin: 0 auto 14px;
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    max-width: 720px;
+  }
+  .section-head h2 em { color: var(--purple-deep); font-style: italic; }
+  .section-head p {
+    margin: 0 auto;
+    max-width: 580px;
+    color: var(--ink-2);
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  /* ── Features grid ── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .feat {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .feat:hover {
+    transform: translateY(-3px);
+    border-color: var(--purple-soft);
+  }
+  .feat .ic {
+    width: 44px; height: 44px;
+    border-radius: 13px;
+    background: var(--purple-tint);
+    color: var(--purple);
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-bottom: 18px;
+  }
+  .feat h3 {
+    margin: 0 0 6px;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .feat p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .feat.wide { grid-column: span 2; }
+  .feat.dark {
+    background: linear-gradient(135deg, #1B1426 0%, #3A2358 100%);
+    border-color: transparent;
+    color: white;
+  }
+  .feat.dark .ic { background: rgba(255,255,255,0.15); color: white; }
+  .feat.dark p { color: rgba(255,255,255,0.75); }
+  .feat.blue {
+    background: linear-gradient(135deg, #2D43E0 0%, #6B6FE5 100%);
+    border-color: transparent;
+    color: white;
+  }
+  .feat.blue .ic { background: rgba(255,255,255,0.18); color: white; }
+  .feat.blue p { color: rgba(255,255,255,0.8); }
+  .feat .badge {
+    position: absolute;
+    top: 18px; right: 18px;
+    background: var(--brand-orange);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Showcase rows ── */
+  .showcase {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+    margin-bottom: 80px;
+  }
+  .showcase:nth-child(even) { direction: rtl; }
+  .showcase:nth-child(even) > * { direction: ltr; }
+  .showcase-text h3 {
+    margin: 0 0 14px;
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 38px;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .showcase-text h3 em { color: var(--purple); font-style: italic; }
+  .showcase-text p {
+    margin: 0 0 22px;
+    color: var(--ink-2);
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  .showcase-text .bullets {
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .showcase-text .bullet {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 14.5px; color: var(--ink-2);
+  }
+  .showcase-text .bullet-mark {
+    width: 22px; height: 22px;
+    border-radius: 7px;
+    background: var(--purple-tint);
+    color: var(--purple);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .showcase-text .bullet strong { color: var(--ink); font-weight: 600; display: inline; }
+
+  /* showcase art card */
+  .show-card {
+    background: var(--card);
+    border-radius: 22px;
+    box-shadow: 0 30px 70px -30px rgba(40, 24, 70, 0.3);
+    border: 1px solid rgba(0,0,0,0.04);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .show-card.gradient-purple {
+    background: linear-gradient(160deg, #f3edf9 0%, #e5dcff 100%);
+    border: none;
+  }
+  .show-card.gradient-orange {
+    background: linear-gradient(160deg, #fff1ec 0%, #ffd9cc 100%);
+    border: none;
+  }
+  .show-card.gradient-blue {
+    background: linear-gradient(160deg, #ecf0ff 0%, #d3daff 100%);
+    border: none;
+  }
+
+  /* NoteChat preview inside showcase */
+  .sc-chat { display: flex; flex-direction: column; gap: 10px; padding: 6px; }
+  .sc-bubble {
+    padding: 12px 14px;
+    border-radius: 14px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    max-width: 85%;
+  }
+  .sc-bubble.user {
+    background: var(--purple); color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
+  }
+  .sc-bubble.bot {
+    background: var(--card);
+    border: 1px solid var(--line);
+    align-self: flex-start;
+    border-bottom-left-radius: 5px;
+  }
+  .sc-bubble .citation {
+    background: var(--purple-soft);
+    color: var(--purple);
+    padding: 1px 6px;
+    border-radius: 5px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    margin: 0 1px;
+  }
+  .sc-source {
+    margin-top: 8px;
+    padding: 7px 10px;
+    background: var(--purple-tint);
+    border-radius: 8px;
+    font-size: 11.5px;
+    color: var(--purple);
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+
+  /* Quiz preview */
+  .sc-quiz-bar {
+    background: var(--purple);
+    color: white;
+    border-radius: 12px;
+    padding: 14px 18px;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .sc-quiz-bar .score {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    line-height: 1;
+  }
+  .sc-quiz-bar .sub {
+    font-size: 11px; opacity: 0.8;
+    font-family: 'Geist Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+  .sc-q {
+    background: var(--card);
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 10px;
+  }
+  .sc-q.correct { border-color: #A6E0BC; background: #F2FBF6; }
+  .sc-q.wrong { border-color: #FFB8C8; background: #FFF5F8; }
+  .sc-q-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .sc-q-num { font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600; color: var(--ink-3); }
+  .sc-q-tag {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.06em;
+    background: #FFF6D6; color: #8A6B0F;
+    padding: 2px 7px; border-radius: 999px;
+    text-transform: uppercase;
+  }
+  .sc-q-prompt { font-size: 13.5px; line-height: 1.4; color: var(--ink); margin-bottom: 8px; }
+  .sc-q-row { display: flex; align-items: center; gap: 8px; font-size: 12px; padding: 3px 0; }
+  .sc-q-row .dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 1.5px solid var(--ink-4);
+    flex-shrink: 0;
+  }
+  .sc-q.correct .sc-q-row.right { color: #1F8A5B; }
+  .sc-q.correct .sc-q-row.right .dot { background: #1F8A5B; border-color: #1F8A5B; }
+  .sc-q.wrong .sc-q-row.right { color: #1F8A5B; }
+  .sc-q.wrong .sc-q-row.right .dot { background: #1F8A5B; border-color: #1F8A5B; }
+  .sc-q.wrong .sc-q-row.bad { color: #E04B6F; }
+  .sc-q.wrong .sc-q-row.bad .dot { background: #E04B6F; border-color: #E04B6F; }
+
+  /* Vault preview */
+  .sc-vault { text-align: center; padding: 8px 0; }
+  .sc-vault-icon {
+    width: 64px; height: 64px;
+    background: var(--card);
+    border-radius: 18px;
+    color: var(--purple);
+    margin: 0 auto 14px;
+    display: inline-flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 30px -10px rgba(107, 63, 212, 0.3);
+  }
+  .sc-vault h4 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 26px; font-weight: 400;
+    margin: 0 0 4px;
+  }
+  .sc-vault p { font-size: 13px; color: var(--ink-3); margin: 0 0 16px; }
+  .sc-dots { display: inline-flex; gap: 12px; margin-bottom: 14px; }
+  .sc-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 1.5px solid var(--ink-4);
+    background: white;
+  }
+  .sc-dot.on { background: var(--purple); border-color: var(--purple); }
+  .sc-pad {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
+    max-width: 220px; margin: 0 auto;
+  }
+  .sc-key {
+    background: var(--card);
+    border: 1px solid var(--line);
+    height: 38px;
+    border-radius: 12px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+  }
+
+  /* themes preview */
+  .themes-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+  .theme-chip {
+    aspect-ratio: 1;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Geist', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    padding: 6px;
+    line-height: 1.1;
+  }
+
+  /* ── Pricing ── */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .price-card {
+    background: var(--card);
+    border: 1.5px solid var(--line);
+    border-radius: 22px;
+    padding: 36px;
+    position: relative;
+  }
+  .price-card.featured {
+    background: linear-gradient(160deg, #1B1426 0%, #3A2358 60%, #2D43E0 110%);
+    border-color: transparent;
+    color: white;
+  }
+  .price-card.featured h3,
+  .price-card.featured .price-num,
+  .price-card.featured .price-period { color: white; }
+  .price-card.featured .price-perks li { color: rgba(255,255,255,0.85); }
+  .price-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--brand-orange);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+  }
+  .price-card h3 {
+    margin: 0 0 4px;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .price-card .tagline {
+    margin: 0 0 22px;
+    font-size: 13.5px;
+    color: var(--ink-3);
+  }
+  .price-card.featured .tagline { color: rgba(255,255,255,0.75); }
+  .price-amount {
+    display: flex; align-items: baseline; gap: 6px;
+    margin-bottom: 4px;
+  }
+  .price-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 56px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .price-period {
+    font-size: 14px;
+    color: var(--ink-3);
+  }
+  .price-card.featured .price-period { color: rgba(255,255,255,0.7); }
+  .price-saving {
+    font-size: 12.5px;
+    color: var(--purple);
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+  .price-card.featured .price-saving {
+    color: #FFB39A;
+  }
+  .price-saving s { color: var(--ink-4); font-weight: 500; }
+  .price-card.featured .price-saving s { color: rgba(255,255,255,0.55); }
+  .price-perks {
+    list-style: none; padding: 0; margin: 0 0 26px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .price-perks li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.45;
+  }
+  .price-perks li::before {
+    content: '';
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--purple-tint);
+    color: var(--purple);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B3FD4' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 11px;
+  }
+  .price-card.featured .price-perks li::before {
+    background-color: rgba(255,255,255,0.18);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+  }
+  .price-cta {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    background: var(--ink);
+    color: white;
+    transition: all 0.15s ease;
+  }
+  .price-cta.dark { background: var(--ink); color: white; }
+  .price-cta.light { background: white; color: var(--ink); }
+  .price-cta:hover { transform: translateY(-1px); }
+  .price-finep {
+    margin: 14px 0 0;
+    font-size: 11.5px;
+    color: var(--ink-3);
+    text-align: center;
+  }
+  .price-card.featured .price-finep { color: rgba(255,255,255,0.6); }
+
+  /* ── Testimonials ── */
+  .testimonials {
+    background: linear-gradient(170deg, #f3edf9 0%, var(--bg) 100%);
+  }
+  .test-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .test {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 24px;
+    border: 1px solid var(--line);
+  }
+  .test .stars { color: #F2C744; font-size: 13px; letter-spacing: -1px; margin-bottom: 8px; }
+  .test blockquote {
+    margin: 0 0 16px;
+    font-family: 'Instrument Serif', serif;
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+  .test-by {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .test-av {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    color: white;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600;
+  }
+  .test-name strong { display: block; font-size: 13px; font-weight: 600; }
+  .test-name em { display: block; font-style: normal; font-size: 11.5px; color: var(--ink-3); margin-top: 1px; }
+
+  /* ── FAQ ── */
+  .faq-list {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .faq {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 20px 22px;
+  }
+  .faq h4 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
+    color: var(--ink);
+  }
+  .faq h4 .plus {
+    color: var(--purple); font-size: 20px; font-weight: 400; line-height: 1;
+  }
+  .faq p { margin: 0; color: var(--ink-2); font-size: 14px; line-height: 1.55; }
+
+  /* ── Final CTA ── */
+  .final-cta {
+    background:
+      radial-gradient(circle at 80% 0%, rgba(255, 107, 71, 0.18), transparent 50%),
+      radial-gradient(circle at 0% 100%, rgba(45, 67, 224, 0.22), transparent 50%),
+      linear-gradient(135deg, #1B1426 0%, #3A2358 100%);
+    color: white;
+    text-align: center;
+    border-radius: 24px;
+    padding: 80px 32px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .final-cta h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 54px;
+    font-weight: 400;
+    line-height: 1.05;
+    margin: 0 0 16px;
+    letter-spacing: -0.015em;
+  }
+  .final-cta h2 em { font-style: italic; color: #FF9678; }
+  .final-cta p {
+    color: rgba(255,255,255,0.7);
+    font-size: 17px;
+    margin: 0 auto 30px;
+    max-width: 520px;
+    line-height: 1.55;
+  }
+  .final-cta .btn.purple {
+    background: white;
+    color: var(--ink);
+    font-size: 16px;
+    padding: 16px 32px;
+    border-radius: 14px;
+    box-shadow: 0 20px 50px -10px rgba(0,0,0,0.3);
+  }
+  .final-cta .btn.purple:hover { background: var(--bg); color: var(--ink); transform: translateY(-2px); }
+  .final-cta-foot {
+    margin-top: 18px;
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.55);
+    font-family: 'Geist Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Footer ── */
+  footer {
+    padding: 56px 32px 36px;
+    border-top: 1px solid var(--line);
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 40px;
+  }
+  .footer-brand p {
+    margin: 14px 0 0;
+    color: var(--ink-3); font-size: 13px;
+    line-height: 1.5;
+    max-width: 280px;
+  }
+  .footer-col h5 {
+    margin: 0 0 14px;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .footer-col a {
+    display: block;
+    color: var(--ink-2);
+    font-size: 13.5px;
+    padding: 4px 0;
+  }
+  .footer-col a:hover { color: var(--purple); }
+  .footer-bottom {
+    max-width: 1200px; margin: 32px auto 0;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 12.5px; color: var(--ink-3);
+  }
+  .footer-bottom .socials { display: inline-flex; gap: 8px; }
+  .footer-bottom .socials a {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--ink-3);
+  }
+  .footer-bottom .socials a:hover { color: var(--purple); border-color: var(--purple-soft); }
+
+  /* ── Pebble (device) ── */
+  .pebble {
+    background:
+      radial-gradient(circle at 18% 12%, rgba(107,63,212,0.28), transparent 50%),
+      radial-gradient(circle at 92% 82%, rgba(255,107,71,0.16), transparent 55%),
+      linear-gradient(160deg, #14101F 0%, #221634 60%, #0F0B1A 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .pebble .section-eyebrow { color: #FF9678; }
+  .pebble .section-head h2 { color: white; }
+  .pebble .section-head h2 em { color: #B79CEE; }
+  .pebble .section-head p { color: rgba(255,255,255,0.72); }
+
+  .pebble-stage {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: stretch;
+  }
+  .pebble-hero {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #0a0810;
+    min-height: 580px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .pebble-hero img.main {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .pebble-hero .float {
+    position: absolute;
+    bottom: 24px; left: 24px;
+    width: 200px; height: 200px;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 4px solid #14101F;
+    box-shadow: 0 30px 50px -10px rgba(0,0,0,0.7);
+  }
+  .pebble-hero .float img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pebble-hero .stamp {
+    position: absolute;
+    top: 22px; right: 22px;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(20,16,31,0.65);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.14);
+    padding: 7px 13px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-family: 'Geist Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: white;
+  }
+  .pebble-hero .stamp .pulse {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #FF6B47;
+    box-shadow: 0 0 0 0 rgba(255,107,71,0.6);
+    animation: pebblePulse 2s ease-out infinite;
+  }
+  @keyframes pebblePulse {
+    0% { box-shadow: 0 0 0 0 rgba(255,107,71,0.6); }
+    70% { box-shadow: 0 0 0 10px rgba(255,107,71,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,107,71,0); }
+  }
+
+  .pebble-info { display: flex; flex-direction: column; gap: 24px; padding-top: 4px; }
+  .pebble-info .eyebrow {
+    background: rgba(255,107,71,0.16);
+    color: #FF9678;
+    margin-bottom: 0;
+  }
+  .pebble-info .eyebrow .dot { background: #FF6B47; }
+  .pebble-info h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 38px;
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .pebble-info h3 em { color: #FF9678; font-style: italic; }
+  .pebble-info > p {
+    margin: 0;
+    color: rgba(255,255,255,0.72);
+    font-size: 16px; line-height: 1.6;
+  }
+  .pebble-specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .pebble-spec {
+    padding: 16px 18px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+  }
+  .pebble-spec:last-child { border-right: none; }
+  .pebble-spec strong {
+    display: block;
+    font-family: 'Instrument Serif', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: white;
+    line-height: 1;
+    margin-bottom: 5px;
+  }
+  .pebble-spec span {
+    font-size: 10.5px;
+    color: rgba(255,255,255,0.55);
+    font-family: 'Geist Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .pebble-bullets { display: flex; flex-direction: column; gap: 12px; }
+  .pebble-bullet { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: rgba(255,255,255,0.78); line-height: 1.5; }
+  .pebble-bullet .pb-ic {
+    width: 30px; height: 30px;
+    border-radius: 9px;
+    background: rgba(183,156,238,0.15);
+    color: #B79CEE;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .pebble-bullet strong { color: white; font-weight: 600; }
+
+  .pebble-cta { display: inline-flex; gap: 10px; margin-top: 4px; flex-wrap: wrap; align-items: center; }
+  .btn.outline-light {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.28);
+  }
+  .btn.outline-light:hover { background: rgba(255,255,255,0.06); }
+  .btn.white { background: white; color: var(--ink); }
+  .btn.white:hover { background: var(--bg); }
+  .pebble-cta .priceline {
+    font-family: 'Geist Mono', monospace;
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.05em;
+  }
+  .pebble-cta .priceline b { color: white; font-weight: 600; }
+
+  /* form-factor row */
+  .pebble-forms {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+  }
+  .pebble-form {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 16px;
+    padding: 18px 20px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .pebble-form .glyph {
+    width: 40px; height: 40px;
+    background: rgba(183,156,238,0.14);
+    border-radius: 12px;
+    color: #B79CEE;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .pebble-form strong { display: block; font-size: 14px; color: white; font-weight: 600; }
+  .pebble-form em { display: block; font-style: normal; font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+
+  /* ── Contact ── */
+  .contact { background: linear-gradient(170deg, #f3edf9 0%, var(--bg) 100%); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 28px;
+    align-items: start;
+  }
+  .contact-form {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 34px;
+  }
+  .contact-form h3 {
+    margin: 0 0 6px;
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .contact-form h3 em { color: var(--purple); font-style: italic; }
+  .contact-form > p {
+    margin: 0 0 22px;
+    color: var(--ink-3);
+    font-size: 14px;
+  }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+  .field label {
+    font-size: 11px; font-weight: 700;
+    color: var(--ink-3);
+    font-family: 'Geist Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .field input, .field select, .field textarea {
+    font-family: inherit;
+    font-size: 14.5px;
+    color: var(--ink);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    padding: 12px 14px;
+    outline: none;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .field textarea { min-height: 120px; resize: vertical; line-height: 1.5; }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--purple);
+    background: white;
+  }
+  .form-foot {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 14px; margin-top: 6px; flex-wrap: wrap;
+  }
+  .form-foot small { font-size: 11.5px; color: var(--ink-3); }
+  .form-foot small a { color: var(--purple); font-weight: 600; }
+
+  .contact-side { display: flex; flex-direction: column; gap: 14px; }
+  .contact-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 22px 24px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .contact-card .ic {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    background: var(--purple-tint);
+    color: var(--purple);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .contact-card.orange .ic { background: #FFE4D6; color: #B5612B; }
+  .contact-card.blue .ic { background: #DDE9FB; color: #2A6FDB; }
+  .contact-card.dark {
+    background: linear-gradient(135deg, #1B1426 0%, #3A2358 100%);
+    border-color: transparent; color: white;
+  }
+  .contact-card.dark .ic { background: rgba(255,255,255,0.15); color: white; }
+  .contact-card.dark p { color: rgba(255,255,255,0.72); }
+  .contact-card h4 {
+    margin: 0 0 4px;
+    font-size: 16px; font-weight: 700;
+    letter-spacing: -0.005em;
+  }
+  .contact-card p { margin: 0 0 6px; font-size: 13.5px; color: var(--ink-2); line-height: 1.5; }
+  .contact-card a.link {
+    font-size: 13.5px;
+    color: var(--purple);
+    font-weight: 600;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .contact-card.dark a.link { color: #FF9678; }
+  .contact-card a.link:hover { text-decoration: underline; }
+  .contact-card .meta-row {
+    display: inline-flex; gap: 10px; font-size: 11.5px;
+    color: var(--ink-3);
+    font-family: 'Geist Mono', monospace;
+    letter-spacing: 0.04em;
+    margin-top: 6px;
+  }
+  .contact-card.dark .meta-row { color: rgba(255,255,255,0.55); }
+
+  /* ── Blog ── */
+  .blog-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 18px;
+  }
+  .post {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .post:hover { transform: translateY(-3px); border-color: var(--purple-soft); }
+  .post .thumb {
+    aspect-ratio: 16/10;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+  .post .thumb::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(135deg, rgba(255,255,255,0) 0, rgba(255,255,255,0) 14px, rgba(255,255,255,0.18) 14px, rgba(255,255,255,0.18) 15px);
+    pointer-events: none;
+  }
+  .post .thumb .label {
+    position: absolute;
+    top: 14px; left: 14px;
+    background: rgba(255,255,255,0.92);
+    color: var(--ink);
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'Geist Mono', monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .post .thumb .icon {
+    position: absolute;
+    inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.55);
+  }
+  .post .body {
+    padding: 22px 24px 24px;
+    display: flex; flex-direction: column; gap: 10px;
+    flex: 1;
+  }
+  .post .meta {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ink-3);
+    text-transform: uppercase;
+  }
+  .post h3 {
+    margin: 0;
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.15;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .post .lede {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .post .author {
+    margin-top: auto;
+    padding-top: 12px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+  .post .author .av {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    color: white;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600;
+  }
+  .post.feature { grid-row: span 2; }
+  .post.feature .thumb { aspect-ratio: 16/12; }
+  .post.feature h3 { font-size: 34px; line-height: 1.05; }
+  .post.feature .lede { font-size: 15.5px; }
+
+  .blog-foot {
+    margin-top: 28px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 12px;
+  }
+
+  /* responsive */
+  @media (max-width: 960px) {
+    .hero-inner, .showcase, .features-grid, .pricing-grid, .test-grid, .footer-inner {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .hero h1 { font-size: 46px; }
+    .section-head h2 { font-size: 36px; }
+    .final-cta h2 { font-size: 36px; }
+    .hero-phone-stack { height: 480px; max-width: 360px; margin: 0 auto; }
+    .feat.wide { grid-column: auto; }
+    .nav-links { display: none; }
+    section { padding: 64px 22px; }
+    .hero { padding: 40px 22px 70px; }
+    .pebble-stage, .contact-grid, .pebble-forms { grid-template-columns: 1fr; gap: 22px; }
+    .pebble-hero { min-height: 380px; }
+    .pebble-hero .float { width: 130px; height: 130px; }
+    .field-row { grid-template-columns: 1fr; }
+    .pebble-info h3 { font-size: 30px; }
+    .blog-grid { grid-template-columns: 1fr; }
+    .post.feature { grid-row: auto; }
+    .post.feature h3 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Nav ── -->
+<div class="nav-wrap">
+  <nav class="nav">
+    <a class="brand" href="#">
+      <svg width="32" height="32" viewBox="0 0 100 100">
+        <rect x="14" y="12" width="58" height="58" rx="11" fill="#B7C2F3"/>
+        <rect x="18" y="18" width="58" height="58" rx="11" fill="#8092E5"/>
+        <rect x="22" y="24" width="58" height="58" rx="11" fill="#2D43E0"/>
+        <circle cx="75" cy="25" r="13" fill="#FF6B47"/>
+        <text x="75" y="29.5" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-size="11" font-weight="700" fill="white">HQ</text>
+      </svg>
+      <span class="brand-word">NotesHQ</span>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#ai">AI</a>
+      <a href="pebble.html">Pebble</a>
+      <a href="#blog">Blog</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn ghost"  href="https://app.noteshq.ai" target="_blank" rel="noopener">Log in</a>
+      <a class="btn primary" href="signup.html">Sign up</a>
+    </div>
+  </nav>
+</div>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <span class="eyebrow">
+        <span class="dot"></span>
+        <span>Now with AI · NoteChat & NoteQ</span>
+      </span>
+      <h1>Your thinking, <em>finally organized.</em></h1>
+      <p class="lead">Capture text, sketches, voice memos and uploaded docs. Group them into colorful notebooks. Lock the private stuff. Ask AI anything across all of it.</p>
+      <div class="hero-cta">
+        <a class="btn purple big" href="signup.html">Get started — it's free</a>
+        <a class="btn ghost big" href="#features">See features</a>
+      </div>
+      <div class="trust">
+        <div class="avatars">
+          <span class="av a1">M</span>
+          <span class="av a2">D</span>
+          <span class="av a3">L</span>
+          <span class="av a4">S</span>
+        </div>
+        <div>
+          <span class="stars">★ ★ ★ ★ ★</span>
+          <span> · 4.9 from 12,000+ thinkers, students &amp; writers</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-phone-stack">
+      <!-- Phone 1: Home -->
+      <div class="phone left">
+        <div class="phone-screen ph-home" style="display: flex; flex-direction: column;">
+          <div class="ph-greet">Good morning,</div>
+          <div class="ph-name">Lukman</div>
+          <div class="ph-search">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            Search notes…
+          </div>
+          <div class="ph-tiles">
+            <div class="ph-tile"><span class="ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M4 19.5V4a2 2 0 0 1 2-2h13v18H6a2 2 0 0 0-2 2"/></svg></span><strong>Notebooks</strong><em>5 books</em></div>
+            <div class="ph-tile"><span class="ic" style="background: #FFE4D6; color: #B5612B;"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M9 11H7a2 2 0 0 0-2 2v7"/><path d="M15 11h2a2 2 0 0 1 2 2v7"/><circle cx="12" cy="7" r="4"/><path d="M12 11v9"/></svg></span><strong>NoteQ</strong><em>AI quizzes</em></div>
+            <div class="ph-tile"><span class="ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><strong>Vault</strong><em>Locked</em></div>
+          </div>
+          <div class="ph-card" style="background: linear-gradient(180deg, #F7F1FF 0%, white 70%);">
+            <div class="t">Saturday errands</div>
+            <div class="row"><span class="check"></span><span class="strike">Gym shoes (the new pair)</span></div>
+            <div class="row"><span class="check"></span><span class="strike">Tomatoes &amp; olive oil</span></div>
+            <div class="row"><span class="check"></span><span class="strike">Trash bags</span></div>
+            <div class="meta"><span>May 14 · 4/6 done</span><span class="pill">Personal</span></div>
+          </div>
+          <div class="ph-card">
+            <div class="t">Tomato sauce, finally written down</div>
+            <div style="font-size: 10px; color: var(--ink-3); line-height: 1.4;">One can good whole tomatoes. San Marzano if you can find them. Half a stick of butter.</div>
+            <div class="meta"><span>May 14</span><span class="pill" style="background: #FFE4D6; color: #B5612B;">Recipes</span></div>
+          </div>
+        </div>
+        <span class="ph-fab">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </span>
+      </div>
+
+      <!-- Phone 2: NoteChat -->
+      <div class="phone right">
+        <div class="phone-screen">
+          <div class="ph-chat">
+            <div class="ph-chat-bar">
+              <div class="ph-chat-glyph">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.7 5.5L19 9.2l-5.3 1.7L12 16.4l-1.7-5.5L5 9.2l5.3-1.7z"/></svg>
+              </div>
+              <div>
+                <div class="ph-chat-title">NoteChat</div>
+                <div class="ph-chat-sub">18 notes in context</div>
+              </div>
+            </div>
+            <div class="ph-bubble user">What's on my to-do list?</div>
+            <div class="ph-bubble bot">
+              Three open items: pick up a birthday card for Sam <span class="citation">#1</span>, return your library books by Sunday, and schedule the team sync.
+              <div class="ph-refs">
+                <span class="ph-ref">
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m8 12 3 3 5-6"/></svg>
+                  Saturday errands
+                </span>
+                <span class="ph-ref">
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/></svg>
+                  Quarterly review prep
+                </span>
+              </div>
+            </div>
+            <div class="ph-bubble user">Quiz me on apartment hunt</div>
+            <div class="ph-input">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.7 5.5L19 9.2l-5.3 1.7L12 16.4l-1.7-5.5L5 9.2l5.3-1.7z"/></svg>
+              <span style="flex: 1;">Ask your notes…</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Trust strip ── -->
+<div class="logos">
+  <div class="logos-inner">
+    <span class="logos-label">Built for</span>
+    <div class="logos-row">
+      <span>Students</span>
+      <span>Writers</span>
+      <span>Product teams</span>
+      <span>Researchers</span>
+      <span>Anyone with a head full of ideas</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── Features ── -->
+<section id="features">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="section-eyebrow">Everything in one place</span>
+      <h2>One app for every kind of <em>thinking</em></h2>
+      <p>Notes, checklists, sketches, voice memos, and documents — all searchable, organized, and yours.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feat">
+        <div class="ic">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg>
+        </div>
+        <h3>Text notes</h3>
+        <p>Type freely. Lines like <code style="font-family: 'Geist Mono', monospace; font-size: 12px; background: var(--bg-2); padding: 1px 5px; border-radius: 4px;">[ ]</code> and <code style="font-family: 'Geist Mono', monospace; font-size: 12px; background: var(--bg-2); padding: 1px 5px; border-radius: 4px;">[x]</code> become tasks automatically.</p>
+      </div>
+
+      <div class="feat">
+        <div class="ic">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m8 12 3 3 5-6"/></svg>
+        </div>
+        <h3>Checklists with reminders</h3>
+        <p>Add deadlines, get notifications. Tasks ping you before they slip.</p>
+      </div>
+
+      <div class="feat">
+        <div class="ic">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2"/><path d="M12 19v3"/></svg>
+        </div>
+        <h3>Voice memos</h3>
+        <p>Record on the go. We transcribe to text in the background.</p>
+      </div>
+
+      <div class="feat blue">
+        <span class="badge">AI</span>
+        <div class="ic">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.7 5.5L19 9.2l-5.3 1.7L12 16.4l-1.7-5.5L5 9.2l5.3-1.7z"/></svg>
+        </div>
+        <h3>NoteChat</h3>
+        <p>Ask your notes anything. Get cited answers in seconds, with @mentions to pull in specific notes.</p>
+      </div>
+
+      <div class="feat dark">
+        <span class="badge">AI</span>
+        <div class="ic">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11H7a2 2 0 0 0-2 2v7"/><path d="M15 11h2a2 2 0 0 1 2 2v7"/><circle cx="12" cy="7" r="4"/><path d="M12 11v9"/></svg>
+        </div>
+        <h3>NoteQ</h3>
+        <p>Auto-generate quizzes from your notes or uploaded PDFs. Multiple choice, true/false, flashcards, fill-in-the-blank.</p>
+      </div>
+
+      <div class="feat">
+        <div class="ic" style="background: #FFE5EE; color: #D9418C;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="11" cy="11" r="2"/></svg>
+        </div>
+        <h3>Canvas sketches</h3>
+        <p>Draw with your finger or stylus. Pen, eraser, six colors. Strokes persist, not pixels.</p>
+      </div>
+
+      <div class="feat">
+        <div class="ic" style="background: #DCFCE7; color: #1F8A5B;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h3>Private vault</h3>
+        <p>Lock sensitive notes behind a PIN, pattern, or fingerprint. Hidden from the main list.</p>
+      </div>
+
+      <div class="feat">
+        <div class="ic" style="background: #FEF3C7; color: #8A6B0F;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <h3>Import any file</h3>
+        <p>Pull in PDFs, DOCX, images, or audio. Turn each into a searchable note.</p>
+      </div>
+
+      <div class="feat">
+        <div class="ic" style="background: #DDE9FB; color: #2A6FDB;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        </div>
+        <h3>Sync everywhere</h3>
+        <p>Phone, tablet, web — same notes, always in step. Even offline.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── AI Showcase ── -->
+<section id="ai" style="background: var(--bg-2);">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="section-eyebrow">AI that actually knows your notes</span>
+      <h2>The smarter your notes get, <em>the smarter you get.</em></h2>
+      <p>Two AI features built on your real content — never generic answers, always grounded in what you've written.</p>
+    </div>
+
+    <!-- NoteChat -->
+    <div class="showcase">
+      <div class="showcase-text">
+        <span class="eyebrow" style="background: var(--purple-soft); color: var(--purple-deep);">
+          <span class="dot" style="background: var(--purple);"></span>
+          NoteChat
+        </span>
+        <h3>Chat with everything <em>you've ever written.</em></h3>
+        <p>Ask anything. NoteChat reads your notes, finds what's relevant, and answers with citations — so you can verify and jump straight to the source.</p>
+        <div class="bullets">
+          <div class="bullet">
+            <span class="bullet-mark"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>Cited answers.</strong> Tap any reference to open the source note.</span>
+          </div>
+          <div class="bullet">
+            <span class="bullet-mark"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>@mention any note</strong> to scope a question, like "@grocery list — what do I still need?"</span>
+          </div>
+          <div class="bullet">
+            <span class="bullet-mark"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>Summarize, plan, draft.</strong> Turn rough notes into clean output.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="show-card gradient-purple">
+        <div class="sc-chat">
+          <div class="sc-bubble user">Summarize my Sunday morning thoughts.</div>
+          <div class="sc-bubble bot">
+            Your week-ahead list, captured over coffee: kitchen shelf finish, call grandma, try Maya's lentil recipe <span class="citation">#1</span>, and a walk down the river loop. You also reminded yourself: no laptop before 10am on weekends <span class="citation">#1</span>.
+            <div class="sc-source">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/></svg>
+              <span>Sunday morning thoughts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NoteQ -->
+    <div class="showcase">
+      <div class="showcase-text">
+        <span class="eyebrow" style="background: #FFE4D6; color: #B5612B;">
+          <span class="dot" style="background: #FF6B47;"></span>
+          NoteQ
+        </span>
+        <h3>Turn any note into a <em>quiz, instantly.</em></h3>
+        <p>Pick notes or upload PDFs and DOCX. NoteQ generates multi-choice, true/false, short answer, flashcards, and fill-in-the-blank — with explanations and source citations.</p>
+        <div class="bullets">
+          <div class="bullet">
+            <span class="bullet-mark"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>5 question types,</strong> pick any combination. Set difficulty and length.</span>
+          </div>
+          <div class="bullet">
+            <span class="bullet-mark"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>Saved quizzes.</strong> Retake later. We track your best score.</span>
+          </div>
+          <div class="bullet">
+            <span class="bullet-mark"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>Cited explanations</strong> for every question. You learn the why, not just the what.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="show-card gradient-orange">
+        <div class="sc-quiz-bar">
+          <div>
+            <div class="score">2/3</div>
+            <div class="sub">67% · Apartment hunt</div>
+          </div>
+          <div style="text-align: right; font-family: 'Geist Mono', monospace; font-size: 11px; opacity: 0.8;">QUIZ</div>
+        </div>
+        <div class="sc-q correct">
+          <div class="sc-q-head">
+            <span class="sc-q-num">Q1 · True/False</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#1F8A5B"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="9" cy="10" r="1" fill="white"/><circle cx="15" cy="10" r="1" fill="white"/></svg>
+          </div>
+          <div class="sc-q-prompt">The landlord list includes a question about wall thickness.</div>
+          <div class="sc-q-row right"><span class="dot"></span>True</div>
+        </div>
+        <div class="sc-q wrong">
+          <div class="sc-q-head">
+            <span class="sc-q-num">Q2 · Multiple choice</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#E04B6F"><circle cx="12" cy="12" r="10"/><path d="M8 16s1.5-2 4-2 4 2 4 2" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="9" cy="10" r="1" fill="white"/><circle cx="15" cy="10" r="1" fill="white"/></svg>
+          </div>
+          <div class="sc-q-prompt">Which is listed as a concern for the tenant?</div>
+          <div class="sc-q-row right"><span class="dot"></span>Can I picture cooking dinner here?</div>
+          <div class="sc-q-row bad"><span class="dot"></span>Is heat included or separate?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Privacy + Themes ── -->
+<section>
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="section-eyebrow">Yours, fully</span>
+      <h2>Private by default. <em>Beautiful by design.</em></h2>
+      <p>Your notes are encrypted. Your aesthetic is yours. Pick from 14 themes plus dark mode.</p>
+    </div>
+
+    <div class="showcase">
+      <div class="showcase-text">
+        <h3>A <em>vault</em> for the things you don't share.</h3>
+        <p>Some thoughts stay private. Lock notes behind a PIN, drawn pattern, or fingerprint — they disappear from the main list and reappear only after you unlock.</p>
+        <div class="bullets">
+          <div class="bullet">
+            <span class="bullet-mark"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>3 unlock methods:</strong> PIN, pattern, or biometric.</span>
+          </div>
+          <div class="bullet">
+            <span class="bullet-mark"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>Auto-lock</strong> when you leave the app.</span>
+          </div>
+          <div class="bullet">
+            <span class="bullet-mark"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>End-to-end encrypted.</strong> Not even we can read your vault.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="show-card gradient-purple">
+        <div class="sc-vault">
+          <div class="sc-vault-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h4>Vault</h4>
+          <p>Enter your 4-digit PIN to unlock</p>
+          <div class="sc-dots">
+            <span class="sc-dot on"></span>
+            <span class="sc-dot on"></span>
+            <span class="sc-dot on"></span>
+            <span class="sc-dot"></span>
+          </div>
+          <div class="sc-pad">
+            <div class="sc-key">1</div><div class="sc-key">2</div><div class="sc-key">3</div>
+            <div class="sc-key">4</div><div class="sc-key">5</div><div class="sc-key">6</div>
+            <div class="sc-key">7</div><div class="sc-key">8</div><div class="sc-key">9</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="showcase">
+      <div class="showcase-text">
+        <h3>14 themes. <em>One you.</em></h3>
+        <p>From classic purple to slate, sienna, mint, butter — paint the app in the colors that match your day. Dark mode included.</p>
+        <div class="bullets">
+          <div class="bullet">
+            <span class="bullet-mark"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>14 curated themes</strong> — colorful and earth-toned.</span>
+          </div>
+          <div class="bullet">
+            <span class="bullet-mark"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>True dark mode</strong> for late-night writing.</span>
+          </div>
+          <div class="bullet">
+            <span class="bullet-mark"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>8 languages</strong> — including Arabic with full right-to-left layout.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="show-card gradient-blue">
+        <div class="themes-grid">
+          <div class="theme-chip" style="background: #6B3FD4;">Purple</div>
+          <div class="theme-chip" style="background: #D9418C;">Blush</div>
+          <div class="theme-chip" style="background: #3F8F6B;">Sage</div>
+          <div class="theme-chip" style="background: #2A6FDB;">Ocean</div>
+          <div class="theme-chip" style="background: #3A3A4A;">Ink</div>
+          <div class="theme-chip" style="background: #D9ACA8; color: #5D2C28;">Clay</div>
+          <div class="theme-chip" style="background: #525268;">Slate</div>
+          <div class="theme-chip" style="background: #EECE85; color: #5D4515;">Honey</div>
+          <div class="theme-chip" style="background: #DCDDDF; color: #4A4A55;">Fog</div>
+          <div class="theme-chip" style="background: #B5612B;">Sienna</div>
+          <div class="theme-chip" style="background: #825743;">Cocoa</div>
+          <div class="theme-chip" style="background: #C6A57A; color: #4D3818;">Caramel</div>
+          <div class="theme-chip" style="background: #B7DDC6; color: #2D5340;">Mint</div>
+          <div class="theme-chip" style="background: #F2E3C9; color: #5C4820;">Butter</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Pebble (device) ── -->
+<section id="pebble" class="pebble">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="section-eyebrow">Introducing — Pebble</span>
+      <h2>One press. <em>Hands free.</em></h2>
+      <p>A pocket-sized recorder that captures the thought you almost lost. Tap to record, double-tap to bookmark — it syncs to your notes the moment you're back in range.</p>
+    </div>
+
+    <div class="pebble-stage">
+      <div class="pebble-hero">
+        <img class="main" src="assets/device-pendant.png" alt="NotesHQ Pebble worn as a pendant" />
+        <span class="stamp">
+          <span class="pulse"></span>
+          Live · Recording
+        </span>
+        <div class="float">
+          <img src="assets/device-wrist.png" alt="NotesHQ Pebble worn on the wrist" />
+        </div>
+      </div>
+
+      <div class="pebble-info">
+        <span class="eyebrow">
+          <span class="dot"></span>
+          Hardware · ships May 2026
+        </span>
+        <h3>The thought-catcher you can <em>wear.</em></h3>
+        <p>Pebble is a 12-gram voice button with one job: catch the idea before it vanishes. Wear it as a pendant, swap to the wrist strap, or clip it to a bag. Everything you record lands in NotesHQ, transcribed and organized — no phone needed.</p>
+
+        <div class="pebble-specs">
+          <div class="pebble-spec">
+            <strong>12h</strong>
+            <span>Battery life</span>
+          </div>
+          <div class="pebble-spec">
+            <strong>32GB</strong>
+            <span>Offline storage</span>
+          </div>
+          <div class="pebble-spec">
+            <strong>IPX7</strong>
+            <span>Sweat &amp; rain</span>
+          </div>
+        </div>
+
+        <div class="pebble-bullets">
+          <div class="pebble-bullet">
+            <span class="pb-ic">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </span>
+            <span><strong>Tap to record, double-tap to bookmark.</strong> No screen, no menus — just the thing you wanted to remember.</span>
+          </div>
+          <div class="pebble-bullet">
+            <span class="pb-ic">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+            </span>
+            <span><strong>Bluetooth + Wi-Fi sync.</strong> Records offline, transcribes the moment it sees your phone.</span>
+          </div>
+          <div class="pebble-bullet">
+            <span class="pb-ic">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+            <span><strong>End-to-end encrypted.</strong> Audio never touches a server in the clear. You hold the key.</span>
+          </div>
+        </div>
+
+        <div class="pebble-cta">
+          <a class="btn white big" href="pebble.html">Reserve Pebble</a>
+          <a class="btn outline-light big" href="pebble.html">Learn more →</a>
+          <span class="priceline"><b>£129</b> · ships May 2026 · free shipping</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pebble-forms">
+      <div class="pebble-form">
+        <span class="glyph">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 8V2M12 22v-6"/></svg>
+        </span>
+        <div>
+          <strong>Pendant</strong>
+          <em>Lanyard, included</em>
+        </div>
+      </div>
+      <div class="pebble-form">
+        <span class="glyph">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="3"/><path d="M12 6V2M12 22v-4"/></svg>
+        </span>
+        <div>
+          <strong>Wrist strap</strong>
+          <em>Soft silicone, +£19</em>
+        </div>
+      </div>
+      <div class="pebble-form">
+        <span class="glyph">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v14M5 9l7-7 7 7"/><path d="M5 16h14"/></svg>
+        </span>
+        <div>
+          <strong>Magnetic clip</strong>
+          <em>For bags &amp; shirts, +£15</em>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Testimonials ── -->
+<section class="testimonials">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="section-eyebrow">Why people stay</span>
+      <h2>Loved by 12,000+ <em>note-takers.</em></h2>
+    </div>
+
+    <div class="test-grid">
+      <div class="test">
+        <div class="stars">★★★★★</div>
+        <blockquote>"I went from twelve apps to one. NoteChat finds things I forgot I'd written. Best decision this year."</blockquote>
+        <div class="test-by">
+          <span class="test-av" style="background: linear-gradient(135deg, #2D43E0, #6B3FD4);">D</span>
+          <div class="test-name"><strong>Daniel K.</strong><em>Product engineer</em></div>
+        </div>
+      </div>
+
+      <div class="test">
+        <div class="stars">★★★★★</div>
+        <blockquote>"NoteQ has changed how I study. I upload my lecture notes, get a quiz back in 10 seconds, and actually retain what I read."</blockquote>
+        <div class="test-by">
+          <span class="test-av" style="background: linear-gradient(135deg, #1F8A5B, #6FA688);">A</span>
+          <div class="test-name"><strong>Amara O.</strong><em>Med student</em></div>
+        </div>
+      </div>
+
+      <div class="test">
+        <div class="stars">★★★★★</div>
+        <blockquote>"I finally have one place for the messy stuff and the clean stuff. The vault means I'm not scared to write down what I really feel."</blockquote>
+        <div class="test-by">
+          <span class="test-av" style="background: linear-gradient(135deg, #FF6B47, #D9418C);">M</span>
+          <div class="test-name"><strong>Maya R.</strong><em>Freelance writer</em></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Pricing ── -->
+<section id="pricing">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="section-eyebrow">Simple pricing</span>
+      <h2>Free, forever. <em>Or pay once a year.</em></h2>
+      <p>The core app is — and always will be — completely free. Upgrade only when you want more AI.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>Free</h3>
+        <p class="tagline">For your everyday thinking.</p>
+        <div class="price-amount">
+          <span class="price-num">£0</span>
+          <span class="price-period">/ forever</span>
+        </div>
+        <div class="price-saving">Always free, no credit card needed.</div>
+        <ul class="price-perks">
+          <li>Unlimited text notes, checklists &amp; sketches</li>
+          <li>All 14 themes and dark mode</li>
+          <li>Notebooks &amp; vault with PIN lock</li>
+          <li>Voice memos with on-device transcription</li>
+          <li>Import PDFs, DOCX, and audio</li>
+          <li>Sync across phone, tablet &amp; web</li>
+        </ul>
+        <a class="price-cta dark" href="signup.html">Get started</a>
+        <p class="price-finep">No subscription. No credit card.</p>
+      </div>
+
+      <div class="price-card featured">
+        <span class="price-tag">★ Most popular</span>
+        <h3>Premium</h3>
+        <p class="tagline">When AI becomes your second brain.</p>
+        <div class="price-amount">
+          <span class="price-num">£59.99</span>
+          <span class="price-period">/ year</span>
+        </div>
+        <div class="price-saving">£60 cheaper than monthly billing <s>£119.88</s></div>
+        <ul class="price-perks">
+          <li><strong>Everything in Free</strong>, plus:</li>
+          <li>Unlimited <strong>NoteChat</strong> conversations</li>
+          <li>Unlimited <strong>NoteQ</strong> quizzes from notes &amp; uploads</li>
+          <li>Long-form summaries and AI drafts</li>
+          <li>Priority sync &amp; faster transcription</li>
+          <li>Priority email support</li>
+        </ul>
+        <a class="price-cta light" href="signup.html">Start free, upgrade anytime</a>
+        <p class="price-finep">Cancel anytime · 30-day money-back guarantee</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section id="faq">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="section-eyebrow">Good questions</span>
+      <h2>Frequently asked.</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq">
+        <h4>Is the free version really free? <span class="plus">+</span></h4>
+        <p>Yes — £0, no credit card, no time limit, no feature throttling. The free plan covers unlimited notes, sketches, voice memos, notebooks, vault, and sync forever. Only the AI features (NoteChat &amp; NoteQ) require Premium.</p>
+      </div>
+      <div class="faq">
+        <h4>What does Premium add? <span class="plus">+</span></h4>
+        <p>Unlimited NoteChat (chat with your notes) and NoteQ (AI-generated quizzes from your notes and uploaded documents), plus priority sync, faster transcription, AI-powered summaries, and priority support.</p>
+      </div>
+      <div class="faq">
+        <h4>Is my data private? <span class="plus">+</span></h4>
+        <p>Yes. Your notes are encrypted in transit and at rest. Vault notes use end-to-end encryption — we cannot decrypt them. We never sell data and never train AI models on your content.</p>
+      </div>
+      <div class="faq">
+        <h4>Does it work offline? <span class="plus">+</span></h4>
+        <p>Yes. Take notes offline; they'll sync to all your devices the moment you reconnect. AI features (NoteChat &amp; NoteQ) require an internet connection.</p>
+      </div>
+      <div class="faq">
+        <h4>What platforms are supported? <span class="plus">+</span></h4>
+        <p>iOS, Android, and the web. All three share the same data, same vault, same notebooks.</p>
+      </div>
+      <div class="faq">
+        <h4>Can I cancel anytime? <span class="plus">+</span></h4>
+        <p>Yes. Cancel from Settings, no questions asked. You keep all your notes; AI features simply pause. We also offer a 30-day money-back guarantee on annual plans.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Blog ── -->
+<section id="blog">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="section-eyebrow">From the journal</span>
+      <h2>Notes on building a <em>second brain.</em></h2>
+      <p>Quiet writing about thinking tools, memory, and the craft of building NotesHQ. New post every other Tuesday.</p>
+    </div>
+
+    <div class="blog-grid">
+      <a class="post feature" href="https://blog.noteshq.ai">
+        <div class="thumb" style="background: linear-gradient(135deg, #6B3FD4 0%, #B79CEE 100%);">
+          <span class="label">Featured</span>
+          <span class="icon">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </span>
+        </div>
+        <div class="body">
+          <span class="meta">May 12, 2026 · 8 min read · Philosophy</span>
+          <h3>The note you forgot you wrote is the one that mattered most.</h3>
+          <p class="lede">We built NoteChat because the value of a note isn't in the writing — it's in the finding. A short essay on why "search across everything" is the killer feature most note apps still don't have.</p>
+          <div class="author">
+            <span class="av" style="background: linear-gradient(135deg, #2D43E0, #6B3FD4);">U</span>
+            <span><strong style="color: var(--ink); font-weight: 600;">Usman A.</strong> · Founder, NotesHQ</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="post" href="https://blog.noteshq.ai">
+        <div class="thumb" style="background: linear-gradient(135deg, #FF6B47 0%, #FF9678 100%);">
+          <span class="label">Pebble</span>
+          <span class="icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2"/><path d="M12 19v3"/></svg>
+          </span>
+        </div>
+        <div class="body">
+          <span class="meta">May 6, 2026 · 5 min read</span>
+          <h3>How we designed Pebble's one-button interface.</h3>
+          <p class="lede">A button has to do everything a screen can't. Here's how we got there in 47 prototypes.</p>
+          <div class="author">
+            <span class="av" style="background: linear-gradient(135deg, #FF6B47, #D9418C);">D</span>
+            <span><strong style="color: var(--ink); font-weight: 600;">Demola O.</strong> · Hardware lead</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="post" href="https://blog.noteshq.ai">
+        <div class="thumb" style="background: linear-gradient(135deg, #2A6FDB 0%, #6B6FE5 100%);">
+          <span class="label">Engineering</span>
+          <span class="icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </span>
+        </div>
+        <div class="body">
+          <span class="meta">Apr 28, 2026 · 11 min read</span>
+          <h3>End-to-end encryption, in plain English.</h3>
+          <p class="lede">What it means when we say "we can't read your vault" — and what it took to keep that promise.</p>
+          <div class="author">
+            <span class="av" style="background: linear-gradient(135deg, #1F8A5B, #6FA688);">M</span>
+            <span><strong style="color: var(--ink); font-weight: 600;">Maya R.</strong> · Security engineer</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="post" href="https://blog.noteshq.ai">
+        <div class="thumb" style="background: linear-gradient(135deg, #1F8A5B 0%, #6FA688 100%);">
+          <span class="label">NoteQ</span>
+          <span class="icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11H7a2 2 0 0 0-2 2v7"/><path d="M15 11h2a2 2 0 0 1 2 2v7"/><circle cx="12" cy="7" r="4"/><path d="M12 11v9"/></svg>
+          </span>
+        </div>
+        <div class="body">
+          <span class="meta">Apr 22, 2026 · 6 min read</span>
+          <h3>Why active recall beats highlighting (and what NoteQ does about it).</h3>
+          <p class="lede">A short tour of the cognitive science underneath NoteQ — and how to actually use it for revision.</p>
+          <div class="author">
+            <span class="av" style="background: linear-gradient(135deg, #6B3FD4, #B79CEE);">A</span>
+            <span><strong style="color: var(--ink); font-weight: 600;">Amara O.</strong> · Learning research</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="blog-foot">
+      <a class="btn ghost big" href="https://blog.noteshq.ai">Read all posts
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ── -->
+<section id="contact" class="contact">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="section-eyebrow">Say hello</span>
+      <h2>Talk to a real <em>human.</em></h2>
+      <p>Questions, feedback, partnership ideas, or just want to say hi? Write to us. Replies usually come within a working day.</p>
+    </div>
+
+    <div class="contact-grid">
+      <form class="contact-form" onsubmit="event.preventDefault(); this.querySelector('button[type=submit]').textContent = 'Sent — thank you ✓';">
+        <h3>Send a <em>note.</em></h3>
+        <p>We read every message. Pick a topic so it gets to the right person.</p>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="contact-name">Your name</label>
+            <input id="contact-name" name="name" type="text" placeholder="Maya Reyes" required />
+          </div>
+          <div class="field">
+            <label for="contact-email">Email</label>
+            <input id="contact-email" name="email" type="email" placeholder="maya@hello.com" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="contact-topic">What's it about?</label>
+          <select id="contact-topic" name="topic">
+            <option>General — just saying hi</option>
+            <option>Support — I'm stuck on something</option>
+            <option>Pebble — pre-order &amp; hardware</option>
+            <option>Press &amp; media</option>
+            <option>Partnerships &amp; integrations</option>
+            <option>Careers — I want to work here</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="contact-msg">Your message</label>
+          <textarea id="contact-msg" name="message" placeholder="Tell us what's on your mind. The more context, the better." required></textarea>
+        </div>
+
+        <div class="form-foot">
+          <small>We never share your email. See <a href="privacy.html">our privacy promise</a>.</small>
+          <button type="submit" class="btn purple big">
+            Send message
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
+          </button>
+        </div>
+      </form>
+
+      <div class="contact-side">
+        <div class="contact-card">
+          <span class="ic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 6 10-6"/></svg>
+          </span>
+          <div>
+            <h4>Email us directly</h4>
+            <p>The fastest way for support questions and bug reports.</p>
+            <a class="link" href="/cdn-cgi/l/email-protection#08727b60616e7c48727b60616e7c266167"><span class="__cf_email__" data-cfemail="6c161f04050a182c161f04050a18420503">[email&#160;protected]</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+            <div class="meta-row"><span>Avg. reply · 6h</span><span>·</span><span>Mon–Fri</span></div>
+          </div>
+        </div>
+
+        <div class="contact-card orange">
+          <span class="ic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2"/><path d="M12 19v3"/></svg>
+          </span>
+          <div>
+            <h4>Pebble pre-orders</h4>
+            <p>Hardware sales, shipping windows, and bulk orders for teams.</p>
+            <a class="link" style="color: #B5612B;" href="/cdn-cgi/l/email-protection#6a1f19070b042a101902030c1e440305"><span class="__cf_email__" data-cfemail="285d5b45494668525b40414e5c064147">[email&#160;protected]</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="contact-card blue">
+          <span class="ic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2H7a3 3 0 0 0-3 3v14l4-3h9a3 3 0 0 0 3-3V5a3 3 0 0 0-3-3z"/><path d="M8 9h8M8 13h5"/></svg>
+          </span>
+          <div>
+            <h4>Press &amp; partnerships</h4>
+            <p>Media kits, interview requests, and integration proposals.</p>
+            <a class="link" style="color: #2A6FDB;" href="/cdn-cgi/l/email-protection#c6a2a3aba9aaa786bcb5aeafa0b2e8afa9"><span class="__cf_email__" data-cfemail="680c0d0507040928121b00010e1c460107">[email&#160;protected]</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="contact-card dark">
+          <span class="ic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </span>
+          <div>
+            <h4>NotesHQ HQ</h4>
+            <p>A product by <strong style="color: #FF9678; font-weight: 600;">ZShift</strong> — quietly built in the United Kingdom.</p>
+            <div class="meta-row" style="display: flex; flex-direction: column; gap: 2px; margin-top: 8px;">
+              <span>88 Gillingham Road</span>
+              <span>Gillingham, Kent ME7 4EP</span>
+              <span>United Kingdom</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Final CTA ── -->
+<section>
+  <div class="final-cta">
+    <h2>Start writing better. <em>Today.</em></h2>
+    <p>Free to start. No credit card. No spam. Just a beautiful place to think.</p>
+    <a class="btn purple big" href="signup.html">Get started — it's free</a>
+    <div class="final-cta-foot">Takes 10 seconds · No credit card</div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="#">
+        <svg width="32" height="32" viewBox="0 0 100 100">
+          <rect x="14" y="12" width="58" height="58" rx="11" fill="#B7C2F3"/>
+          <rect x="18" y="18" width="58" height="58" rx="11" fill="#8092E5"/>
+          <rect x="22" y="24" width="58" height="58" rx="11" fill="#2D43E0"/>
+          <circle cx="75" cy="25" r="13" fill="#FF6B47"/>
+          <text x="75" y="29.5" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-size="11" font-weight="700" fill="white">HQ</text>
+        </svg>
+        <span class="brand-word">NotesHQ</span>
+      </a>
+      <p>A quiet place for the things you think, the things you make, and the things you don't want to forget.</p>
+      <p style="margin-top: 12px; font-size: 12px; color: var(--ink-3);">
+        A product by <a href="https://zshift.io" style="color: var(--purple); font-weight: 600;">ZShift</a> · <a href="https://zshift.io" style="color: var(--ink-2);">zshift.io</a>
+      </p>
+    </div>
+    <div class="footer-col">
+      <h5>Product</h5>
+      <a href="#features">Features</a>
+      <a href="#ai">NoteChat &amp; NoteQ</a>
+      <a href="pebble.html">Pebble device</a>
+      <a href="#blog">Blog</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <a href="#">About</a>
+      <a href="#">Blog</a>
+      <a href="#">Careers</a>
+      <a href="#">Press kit</a>
+    </div>
+    <div class="footer-col">
+      <h5>Support</h5>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact us</a>
+      <a href="helpcenter.html">Help center</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 NotesHQ by <a href="https://zshift.io" style="color: var(--ink-2); font-weight: 600;">ZShift</a>. Made with care.</span>
+    <div class="socials">
+      <a href="#" aria-label="Twitter"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22 5.8a8.49 8.49 0 0 1-2.36.64 4.13 4.13 0 0 0 1.81-2.27 8.21 8.21 0 0 1-2.61 1 4.1 4.1 0 0 0-7 3.74 11.64 11.64 0 0 1-8.45-4.29 4.16 4.16 0 0 0-.55 2.07 4.09 4.09 0 0 0 1.82 3.41 4.05 4.05 0 0 1-1.86-.51v.05a4.1 4.1 0 0 0 3.3 4 3.93 3.93 0 0 1-1.85.07 4.11 4.11 0 0 0 3.83 2.84A8.22 8.22 0 0 1 2 18.34a11.59 11.59 0 0 0 6.29 1.85A11.59 11.59 0 0 0 20 8.45v-.53A8.43 8.43 0 0 0 22 5.8z"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.83-.26.83-.58v-2.17c-3.34.73-4-1.43-4-1.43a3.14 3.14 0 0 0-1.31-1.74c-1.07-.74.08-.72.08-.72a2.5 2.5 0 0 1 1.82 1.22 2.54 2.54 0 0 0 3.47 1 2.55 2.55 0 0 1 .76-1.6c-2.67-.31-5.47-1.33-5.47-5.95a4.66 4.66 0 0 1 1.23-3.23 4.33 4.33 0 0 1 .12-3.18s1-.32 3.3 1.23a11.36 11.36 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23a4.33 4.33 0 0 1 .12 3.18 4.66 4.66 0 0 1 1.23 3.23c0 4.64-2.8 5.64-5.48 5.94a2.85 2.85 0 0 1 .81 2.22v3.29c0 .32.22.69.83.58A12 12 0 0 0 12 .5z"/></svg></a>
+      <a href="#" aria-label="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.13 1.45-2.13 2.94v5.66H9.36V9h3.41v1.56h.05a3.75 3.75 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77A1.77 1.77 0 0 0 0 1.77v20.45A1.77 1.77 0 0 0 1.77 24h20.45A1.77 1.77 0 0 0 24 22.22V1.77A1.77 1.77 0 0 0 22.22 0z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>

@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Privacy — NotesHQ</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='14' y='12' width='58' height='58' rx='11' fill='%23B7C2F3'/><rect x='18' y='18' width='58' height='58' rx='11' fill='%238092E5'/><rect x='22' y='24' width='58' height='58' rx='11' fill='%232D43E0'/><circle cx='75' cy='25' r='13' fill='%23FF6B47'/><text x='75' y='30' text-anchor='middle' font-family='system-ui,sans-serif' font-size='11' font-weight='700' fill='white'>HQ</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="page.css">
+</head>
+<body>
+
+<div class="nav-wrap">
+  <nav class="nav">
+    <a class="brand" href="index.html">
+      <svg width="32" height="32" viewBox="0 0 100 100">
+        <rect x="14" y="12" width="58" height="58" rx="11" fill="#B7C2F3"/>
+        <rect x="18" y="18" width="58" height="58" rx="11" fill="#8092E5"/>
+        <rect x="22" y="24" width="58" height="58" rx="11" fill="#2D43E0"/>
+        <circle cx="75" cy="25" r="13" fill="#FF6B47"/>
+        <text x="75" y="29.5" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-size="11" font-weight="700" fill="white">HQ</text>
+      </svg>
+      <span class="brand-word">NotesHQ</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#ai">AI</a>
+      <a href="pebble.html">Pebble</a>
+      <a href="index.html#blog">Blog</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn ghost"  href="https://app.noteshq.ai" target="_blank" rel="noopener">Log in</a>
+      <a class="btn primary" href="signup.html">Sign up</a>
+    </div>
+  </nav>
+</div>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="crumb">
+      <a href="index.html">NotesHQ</a>
+      <span class="sep">/</span>
+      <span>Privacy</span>
+    </div>
+    <h1>Privacy you can <em>actually read.</em></h1>
+    <p class="lede">We keep this short because lawyer-speak is how trust dies. Plain English first, the legal version below.</p>
+    <div class="stamps">
+      <span class="stamp">Last updated · May 15, 2026</span>
+      <span class="stamp">v3.2</span>
+      <span class="stamp">UK GDPR · DPA 2018</span>
+    </div>
+  </div>
+</section>
+
+<div class="page-body has-toc">
+  <aside class="toc">
+    <span class="toc-label">On this page</span>
+    <a href="#promise">Our promise</a>
+    <a href="#what-we-collect">What we collect</a>
+    <a href="#what-we-dont">What we don't</a>
+    <a href="#ai">AI &amp; your notes</a>
+    <a href="#vault">Vault encryption</a>
+    <a href="#sharing">Sharing with third parties</a>
+    <a href="#retention">How long we keep things</a>
+    <a href="#rights">Your rights</a>
+    <a href="#cookies">Cookies</a>
+    <a href="#contact">Contact</a>
+  </aside>
+
+  <article class="prose">
+
+    <h2 id="promise">The promise, in one paragraph.</h2>
+    <p>Your notes belong to you. We store them so you can sync across your devices. We encrypt them in transit and at rest. We never sell your data, and we never train AI models on what you write. Vault notes are end-to-end encrypted — meaning even we cannot read them. If you delete your account, your data goes with it within 30 days.</p>
+
+    <blockquote>"If we wouldn't put it in our own notes, we don't put it in yours."</blockquote>
+
+    <h2 id="what-we-collect">What we collect.</h2>
+    <p>We try to collect as little as possible. Here's the full list:</p>
+    <ul>
+      <li><strong>Account data.</strong> Your email, a hashed password, your display name, and which subscription you're on.</li>
+      <li><strong>Your notes.</strong> The content you create — text, sketches, voice memos, uploaded files. Stored encrypted at rest on our servers in the EU.</li>
+      <li><strong>Device info.</strong> The kind of device you sync from (e.g. <code>iPhone 15</code>, <code>Chrome on macOS</code>) so we can deliver the right build and troubleshoot bugs.</li>
+      <li><strong>Anonymous usage events.</strong> Things like "user opened the app" or "user created a note" — never the contents of the note. We use this to decide what to build next.</li>
+    </ul>
+
+    <h2 id="what-we-dont">What we don't collect.</h2>
+    <ul>
+      <li>We don't read your notes. No human at NotesHQ has a button to open your content.</li>
+      <li>We don't track you across the internet. No third-party ad pixels.</li>
+      <li>We don't sell, rent, or share your data with advertisers. Ever.</li>
+      <li>We don't train AI models on your notes. Your content stays your content.</li>
+    </ul>
+
+    <h2 id="ai">AI &amp; your notes.</h2>
+    <p>When you use <strong>NoteChat</strong> or <strong>NoteQ</strong>, the relevant portions of your notes are sent — encrypted in transit — to our AI provider to generate the response. The provider is contractually bound to not retain, log, or train on your content. Responses are streamed back, shown to you, and the inference data is discarded.</p>
+    <p>If you'd rather not use AI features at all, switch them off in <strong>Settings → AI</strong>. The core app works fine without them.</p>
+
+    <div class="callout">
+      <span class="ic">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </span>
+      <div>
+        <h4>Vault notes never go to AI.</h4>
+        <p>By design, anything inside your vault is excluded from NoteChat context and NoteQ quizzes — it never leaves your device unencrypted.</p>
+      </div>
+    </div>
+
+    <h2 id="vault">Vault encryption.</h2>
+    <p>The vault is end-to-end encrypted. Your PIN, pattern, or fingerprint derives a key that lives only on your device. We store the ciphertext; the key never reaches our servers. If you forget your PIN, we cannot recover the vault — that's the point.</p>
+
+    <h2 id="sharing">Sharing with third parties.</h2>
+    <p>We use a small number of carefully chosen providers to run the service. Each has signed a Data Processing Agreement under UK GDPR. The current list:</p>
+    <ul>
+      <li><strong>Hetzner</strong> (Germany) — encrypted storage and compute.</li>
+      <li><strong>Anthropic</strong> — AI inference for NoteChat and NoteQ, with no-retention agreement.</li>
+      <li><strong>Stripe</strong> — payments. We never see your card details.</li>
+      <li><strong>Postmark</strong> — transactional email (e.g. password resets).</li>
+    </ul>
+
+    <h2 id="retention">How long we keep things.</h2>
+    <ul>
+      <li><strong>Your notes:</strong> until you delete them or close your account.</li>
+      <li><strong>Deleted notes:</strong> recoverable for 30 days, then permanently purged.</li>
+      <li><strong>Closed accounts:</strong> fully purged within 30 days.</li>
+      <li><strong>Backups:</strong> rolling 14-day window for disaster recovery.</li>
+      <li><strong>Logs:</strong> 30 days, IPs hashed.</li>
+    </ul>
+
+    <h2 id="rights">Your rights.</h2>
+    <p>Under UK GDPR, you can ask us to:</p>
+    <ul>
+      <li><strong>Access</strong> a copy of everything we hold about you.</li>
+      <li><strong>Export</strong> your notes (we also have a one-click export in <code>Settings → Data</code>).</li>
+      <li><strong>Correct</strong> any account information.</li>
+      <li><strong>Delete</strong> your account and everything in it.</li>
+      <li><strong>Object</strong> to anonymous usage analytics — opt out in <code>Settings → Privacy</code>.</li>
+    </ul>
+    <p>To exercise any of these, email <a href="/cdn-cgi/l/email-protection#374d445f5e5143774d445f5e5143195e58"><span class="__cf_email__" data-cfemail="96ece5fefff0e2d6ece5fefff0e2b8fff9">[email&#160;protected]</span></a>. We respond within 14 days, usually within one.</p>
+
+    <h2 id="cookies">Cookies.</h2>
+    <p>We use exactly one cookie: a session cookie to keep you logged in. No tracking pixels, no third-party advertising cookies. The website does not use Google Analytics or anything like it.</p>
+
+    <h2 id="contact">Talk to a real human.</h2>
+    <p>This is the bit where most policies stop. If anything here is unclear, or you want to raise a concern with our Data Protection Officer, write to:</p>
+    <p>
+      <strong>ZShift Ltd · Data Protection</strong><br>
+      88 Gillingham Road<br>
+      Gillingham, Kent ME7 4EP<br>
+      United Kingdom<br>
+      <a href="/cdn-cgi/l/email-protection#87fdf4efeee1f3c7fdf4efeee1f3a9eee8"><span class="__cf_email__" data-cfemail="86fcf5eeefe0f2c6fcf5eeefe0f2a8efe9">[email&#160;protected]</span></a>
+    </p>
+    <p>If you're not happy with how we respond, you can complain to the <a href="https://ico.org.uk">Information Commissioner's Office</a>.</p>
+
+    <hr>
+    <p style="font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--ink-3);">© 2026 ZShift Ltd. This policy was last updated on May 15, 2026. We'll tell you (by email) the next time we change anything material.</p>
+  </article>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="index.html">
+        <svg width="32" height="32" viewBox="0 0 100 100">
+          <rect x="14" y="12" width="58" height="58" rx="11" fill="#B7C2F3"/>
+          <rect x="18" y="18" width="58" height="58" rx="11" fill="#8092E5"/>
+          <rect x="22" y="24" width="58" height="58" rx="11" fill="#2D43E0"/>
+          <circle cx="75" cy="25" r="13" fill="#FF6B47"/>
+          <text x="75" y="29.5" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-size="11" font-weight="700" fill="white">HQ</text>
+        </svg>
+        <span class="brand-word">NotesHQ</span>
+      </a>
+      <p>A quiet place for the things you think, the things you make, and the things you don't want to forget.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Product</h5>
+      <a href="index.html#features">Features</a>
+      <a href="index.html#ai">NoteChat &amp; NoteQ</a>
+      <a href="pebble.html">Pebble device</a>
+      <a href="index.html#blog">Blog</a>
+      <a href="index.html#pricing">Pricing</a>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <a href="index.html#contact">Contact</a>
+      <a href="https://zshift.io">ZShift</a>
+      <a href="#">Careers</a>
+      <a href="#">Press kit</a>
+    </div>
+    <div class="footer-col">
+      <h5>Support</h5>
+      <a href="index.html#faq">FAQ</a>
+      <a href="helpcenter.html">Help center</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 NotesHQ by <a href="https://zshift.io" style="color: var(--ink-2); font-weight: 600;">ZShift</a>. Made with care in the UK.</span>
+    <div class="socials">
+      <a href="#" aria-label="Twitter"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22 5.8a8.49 8.49 0 0 1-2.36.64 4.13 4.13 0 0 0 1.81-2.27 8.21 8.21 0 0 1-2.61 1 4.1 4.1 0 0 0-7 3.74 11.64 11.64 0 0 1-8.45-4.29 4.16 4.16 0 0 0-.55 2.07 4.09 4.09 0 0 0 1.82 3.41 4.05 4.05 0 0 1-1.86-.51v.05a4.1 4.1 0 0 0 3.3 4 3.93 3.93 0 0 1-1.85.07 4.11 4.11 0 0 0 3.83 2.84A8.22 8.22 0 0 1 2 18.34a11.59 11.59 0 0 0 6.29 1.85A11.59 11.59 0 0 0 20 8.45v-.53A8.43 8.43 0 0 0 22 5.8z"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.83-.26.83-.58v-2.17c-3.34.73-4-1.43-4-1.43a3.14 3.14 0 0 0-1.31-1.74c-1.07-.74.08-.72.08-.72a2.5 2.5 0 0 1 1.82 1.22 2.54 2.54 0 0 0 3.47 1 2.55 2.55 0 0 1 .76-1.6c-2.67-.31-5.47-1.33-5.47-5.95a4.66 4.66 0 0 1 1.23-3.23 4.33 4.33 0 0 1 .12-3.18s1-.32 3.3 1.23a11.36 11.36 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23a4.33 4.33 0 0 1 .12 3.18 4.66 4.66 0 0 1 1.23 3.23c0 4.64-2.8 5.64-5.48 5.94a2.85 2.85 0 0 1 .81 2.22v3.29c0 .32.22.69.83.58A12 12 0 0 0 12 .5z"/></svg></a>
+      <a href="#" aria-label="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.13 1.45-2.13 2.94v5.66H9.36V9h3.41v1.56h.05a3.75 3.75 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77A1.77 1.77 0 0 0 0 1.77v20.45A1.77 1.77 0 0 0 1.77 24h20.45A1.77 1.77 0 0 0 24 22.22V1.77A1.77 1.77 0 0 0 22.22 0z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>

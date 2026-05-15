@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Help center — NotesHQ</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='14' y='12' width='58' height='58' rx='11' fill='%23B7C2F3'/><rect x='18' y='18' width='58' height='58' rx='11' fill='%238092E5'/><rect x='22' y='24' width='58' height='58' rx='11' fill='%232D43E0'/><circle cx='75' cy='25' r='13' fill='%23FF6B47'/><text x='75' y='30' text-anchor='middle' font-family='system-ui,sans-serif' font-size='11' font-weight='700' fill='white'>HQ</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="page.css">
+<style>
+  .help-hero { padding-bottom: 90px; }
+  .help-search {
+    margin-top: 28px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 8px 8px 8px 18px;
+    display: flex; align-items: center; gap: 12px;
+    box-shadow: 0 30px 60px -30px rgba(40,24,70,0.25);
+    max-width: 640px;
+  }
+  .help-search input {
+    flex: 1;
+    border: none; outline: none;
+    font: inherit; font-size: 16px;
+    background: transparent;
+    padding: 10px 0;
+    color: var(--ink);
+  }
+  .help-search input::placeholder { color: var(--ink-3); }
+  .help-search .go {
+    padding: 10px 18px;
+    background: var(--purple);
+    color: white;
+    border-radius: 11px;
+    font-size: 14px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .help-suggest {
+    margin-top: 14px;
+    display: flex; gap: 8px; flex-wrap: wrap;
+    font-size: 12.5px;
+    color: var(--ink-3);
+  }
+  .help-suggest span { color: var(--ink-3); }
+  .help-suggest a {
+    padding: 5px 12px;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--ink-2);
+    font-weight: 500;
+  }
+  .help-suggest a:hover { color: var(--purple); border-color: var(--purple-soft); }
+
+  .help-body { max-width: 1180px; margin: 0 auto; padding: 56px 32px 80px; }
+  .help-cats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 64px;
+  }
+  .help-cat {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 24px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    display: block;
+  }
+  .help-cat:hover { transform: translateY(-3px); border-color: var(--purple-soft); }
+  .help-cat .ic {
+    width: 44px; height: 44px;
+    border-radius: 13px;
+    background: var(--purple-tint);
+    color: var(--purple);
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+  }
+  .help-cat h3 {
+    margin: 0 0 4px;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+  }
+  .help-cat p {
+    margin: 0;
+    color: var(--ink-3);
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+  .help-cat .count {
+    margin-top: 12px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11.5px;
+    color: var(--purple);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .help-section { margin-bottom: 56px; }
+  .help-section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .help-section-head h2 {
+    margin: 0;
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 30px;
+    letter-spacing: -0.01em;
+  }
+  .help-section-head h2 em { color: var(--purple); font-style: italic; }
+  .help-section-head a {
+    font-size: 13.5px;
+    color: var(--purple);
+    font-weight: 600;
+  }
+
+  .help-articles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .help-article {
+    background: var(--card);
+    padding: 20px 22px;
+    display: flex; gap: 14px; align-items: flex-start;
+    transition: background 0.15s ease;
+  }
+  .help-article:hover { background: var(--purple-tint); }
+  .help-article .num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--ink-4);
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .help-article h4 {
+    margin: 0 0 4px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .help-article p {
+    margin: 0;
+    color: var(--ink-3);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .help-article .meta {
+    display: inline-flex; gap: 10px;
+    margin-top: 6px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 10.5px;
+    color: var(--ink-3);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .help-cta {
+    background: linear-gradient(135deg, #1B1426 0%, #3A2358 100%);
+    color: white;
+    border-radius: 24px;
+    padding: 36px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 28px;
+    align-items: center;
+  }
+  .help-cta h3 {
+    margin: 0 0 8px;
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+  }
+  .help-cta h3 em { color: #FF9678; font-style: italic; }
+  .help-cta p {
+    margin: 0;
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .help-cta .row {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    justify-self: end;
+  }
+  .help-cta .btn.outline-light {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.28);
+  }
+  .help-cta .btn.outline-light:hover { background: rgba(255,255,255,0.06); }
+
+  @media (max-width: 960px) {
+    .help-cats { grid-template-columns: 1fr; }
+    .help-articles { grid-template-columns: 1fr; }
+    .help-cta { grid-template-columns: 1fr; padding: 26px; }
+    .help-cta .row { justify-self: start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-wrap">
+  <nav class="nav">
+    <a class="brand" href="index.html">
+      <svg width="32" height="32" viewBox="0 0 100 100">
+        <rect x="14" y="12" width="58" height="58" rx="11" fill="#B7C2F3"/>
+        <rect x="18" y="18" width="58" height="58" rx="11" fill="#8092E5"/>
+        <rect x="22" y="24" width="58" height="58" rx="11" fill="#2D43E0"/>
+        <circle cx="75" cy="25" r="13" fill="#FF6B47"/>
+        <text x="75" y="29.5" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-size="11" font-weight="700" fill="white">HQ</text>
+      </svg>
+      <span class="brand-word">NotesHQ</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#ai">AI</a>
+      <a href="pebble.html">Pebble</a>
+      <a href="index.html#blog">Blog</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn ghost"  href="https://app.noteshq.ai" target="_blank" rel="noopener">Log in</a>
+      <a class="btn primary" href="signup.html">Sign up</a>
+    </div>
+  </nav>
+</div>
+
+<section class="page-hero help-hero">
+  <div class="page-hero-inner">
+    <div class="crumb">
+      <a href="index.html">NotesHQ</a>
+      <span class="sep">/</span>
+      <span>Help center</span>
+    </div>
+    <h1>How can we <em>help?</em></h1>
+    <p class="lede">Guides, walkthroughs, and answers — written by the people who built NotesHQ. Search below, or browse by category.</p>
+
+    <form class="help-search" onsubmit="event.preventDefault();">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#897A9E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" placeholder="Search 86 articles — try &quot;vault PIN&quot; or &quot;Pebble pairing&quot;" />
+      <button type="submit" class="go">
+        Search
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </button>
+    </form>
+
+    <div class="help-suggest">
+      <span>Try:</span>
+      <a href="#">Set up vault PIN</a>
+      <a href="#">Pair my Pebble</a>
+      <a href="#">Cancel Premium</a>
+      <a href="#">Import from Notion</a>
+      <a href="#">Sync stopped working</a>
+    </div>
+  </div>
+</section>
+
+<div class="help-body">
+
+  <div class="help-cats">
+    <a class="help-cat" href="#getting-started">
+      <span class="ic">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 19 22 12 13 5 13 19"/><polygon points="2 19 11 12 2 5 2 19"/></svg>
+      </span>
+      <h3>Getting started</h3>
+      <p>Make your first note, set up notebooks, and learn the basics.</p>
+      <span class="count">12 articles →</span>
+    </a>
+
+    <a class="help-cat" href="#ai">
+      <span class="ic" style="background: #DDE9FB; color: #2A6FDB;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.7 5.5L19 9.2l-5.3 1.7L12 16.4l-1.7-5.5L5 9.2l5.3-1.7z"/></svg>
+      </span>
+      <h3>NoteChat &amp; NoteQ</h3>
+      <p>Get the most out of the AI features — prompts, scopes, and quiz settings.</p>
+      <span class="count" style="color: #2A6FDB;">18 articles →</span>
+    </a>
+
+    <a class="help-cat" href="#vault">
+      <span class="ic" style="background: #DCFCE7; color: #1F8A5B;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </span>
+      <h3>Vault &amp; privacy</h3>
+      <p>PIN setup, biometric unlock, what's encrypted, and recovery.</p>
+      <span class="count" style="color: #1F8A5B;">9 articles →</span>
+    </a>
+
+    <a class="help-cat" href="#pebble">
+      <span class="ic" style="background: #FFE4D6; color: #B5612B;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2"/><path d="M12 19v3"/></svg>
+      </span>
+      <h3>Pebble device</h3>
+      <p>Pairing, charging, button shortcuts, and troubleshooting.</p>
+      <span class="count" style="color: #B5612B;">14 articles →</span>
+    </a>
+
+    <a class="help-cat" href="#billing">
+      <span class="ic" style="background: #FEF3C7; color: #8A6B0F;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h3"/></svg>
+      </span>
+      <h3>Billing &amp; account</h3>
+      <p>Upgrade, downgrade, invoices, refunds, and account deletion.</p>
+      <span class="count" style="color: #8A6B0F;">11 articles →</span>
+    </a>
+
+    <a class="help-cat" href="#troubleshooting">
+      <span class="ic" style="background: #FFE5EE; color: #D9418C;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      </span>
+      <h3>Troubleshooting</h3>
+      <p>Sync problems, missing notes, login issues, and crash reports.</p>
+      <span class="count" style="color: #D9418C;">22 articles →</span>
+    </a>
+  </div>
+
+  <div class="help-section">
+    <div class="help-section-head">
+      <h2>Most read this <em>week.</em></h2>
+      <a href="#">View all articles →</a>
+    </div>
+    <div class="help-articles">
+      <a class="help-article" href="#">
+        <span class="num">01</span>
+        <div>
+          <h4>Set up your vault PIN (and what happens if you forget it)</h4>
+          <p>A walkthrough of the vault unlock methods — PIN, pattern, biometric — and what we can and can't recover.</p>
+          <div class="meta"><span>4 min read</span><span>·</span><span>Vault</span></div>
+        </div>
+      </a>
+      <a class="help-article" href="#">
+        <span class="num">02</span>
+        <div>
+          <h4>Pair your Pebble with NotesHQ in 90 seconds</h4>
+          <p>First-time setup: charging, Bluetooth pairing, and your first recording.</p>
+          <div class="meta"><span>3 min read</span><span>·</span><span>Pebble</span></div>
+        </div>
+      </a>
+      <a class="help-article" href="#">
+        <span class="num">03</span>
+        <div>
+          <h4>Ask NoteChat the right questions</h4>
+          <p>Five prompt patterns that consistently get better answers from your notes.</p>
+          <div class="meta"><span>6 min read</span><span>·</span><span>AI</span></div>
+        </div>
+      </a>
+      <a class="help-article" href="#">
+        <span class="num">04</span>
+        <div>
+          <h4>Import from Notion, Apple Notes, or Obsidian</h4>
+          <p>Step-by-step for each — we keep your folder structure where possible.</p>
+          <div class="meta"><span>8 min read</span><span>·</span><span>Getting started</span></div>
+        </div>
+      </a>
+      <a class="help-article" href="#">
+        <span class="num">05</span>
+        <div>
+          <h4>Why is my sync stuck on "Updating…"?</h4>
+          <p>The three things that cause this and how to fix each in under a minute.</p>
+          <div class="meta"><span>3 min read</span><span>·</span><span>Troubleshooting</span></div>
+        </div>
+      </a>
+      <a class="help-article" href="#">
+        <span class="num">06</span>
+        <div>
+          <h4>Cancel Premium and get a refund</h4>
+          <p>How to cancel, when refunds apply, and what happens to your AI history.</p>
+          <div class="meta"><span>2 min read</span><span>·</span><span>Billing</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="help-cta">
+    <div>
+      <h3>Still <em>stuck?</em></h3>
+      <p>If you can't find the answer here, a real human at NotesHQ will write back — usually within six hours on weekdays.</p>
+    </div>
+    <div class="row">
+      <a class="btn white big" href="/cdn-cgi/l/email-protection#f68c859e9f9082b68c859e9f9082d89f99">Email support</a>
+      <a class="btn outline-light big" href="index.html#contact">Contact form →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="index.html">
+        <svg width="32" height="32" viewBox="0 0 100 100">
+          <rect x="14" y="12" width="58" height="58" rx="11" fill="#B7C2F3"/>
+          <rect x="18" y="18" width="58" height="58" rx="11" fill="#8092E5"/>
+          <rect x="22" y="24" width="58" height="58" rx="11" fill="#2D43E0"/>
+          <circle cx="75" cy="25" r="13" fill="#FF6B47"/>
+          <text x="75" y="29.5" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-size="11" font-weight="700" fill="white">HQ</text>
+        </svg>
+        <span class="brand-word">NotesHQ</span>
+      </a>
+      <p>A quiet place for the things you think, the things you make, and the things you don't want to forget.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Product</h5>
+      <a href="index.html#features">Features</a>
+      <a href="index.html#ai">NoteChat &amp; NoteQ</a>
+      <a href="pebble.html">Pebble device</a>
+      <a href="index.html#blog">Blog</a>
+      <a href="index.html#pricing">Pricing</a>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <a href="index.html#contact">Contact</a>
+      <a href="https://zshift.io">ZShift</a>
+      <a href="#">Careers</a>
+      <a href="#">Press kit</a>
+    </div>
+    <div class="footer-col">
+      <h5>Support</h5>
+      <a href="index.html#faq">FAQ</a>
+      <a href="helpcenter.html">Help center</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 NotesHQ by <a href="https://zshift.io" style="color: var(--ink-2); font-weight: 600;">ZShift</a>. Made with care in the UK.</span>
+    <div class="socials">
+      <a href="#" aria-label="Twitter"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22 5.8a8.49 8.49 0 0 1-2.36.64 4.13 4.13 0 0 0 1.81-2.27 8.21 8.21 0 0 1-2.61 1 4.1 4.1 0 0 0-7 3.74 11.64 11.64 0 0 1-8.45-4.29 4.16 4.16 0 0 0-.55 2.07 4.09 4.09 0 0 0 1.82 3.41 4.05 4.05 0 0 1-1.86-.51v.05a4.1 4.1 0 0 0 3.3 4 3.93 3.93 0 0 1-1.85.07 4.11 4.11 0 0 0 3.83 2.84A8.22 8.22 0 0 1 2 18.34a11.59 11.59 0 0 0 6.29 1.85A11.59 11.59 0 0 0 20 8.45v-.53A8.43 8.43 0 0 0 22 5.8z"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.83-.26.83-.58v-2.17c-3.34.73-4-1.43-4-1.43a3.14 3.14 0 0 0-1.31-1.74c-1.07-.74.08-.72.08-.72a2.5 2.5 0 0 1 1.82 1.22 2.54 2.54 0 0 0 3.47 1 2.55 2.55 0 0 1 .76-1.6c-2.67-.31-5.47-1.33-5.47-5.95a4.66 4.66 0 0 1 1.23-3.23 4.33 4.33 0 0 1 .12-3.18s1-.32 3.3 1.23a11.36 11.36 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23a4.33 4.33 0 0 1 .12 3.18 4.66 4.66 0 0 1 1.23 3.23c0 4.64-2.8 5.64-5.48 5.94a2.85 2.85 0 0 1 .81 2.22v3.29c0 .32.22.69.83.58A12 12 0 0 0 12 .5z"/></svg></a>
+      <a href="#" aria-label="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.13 1.45-2.13 2.94v5.66H9.36V9h3.41v1.56h.05a3.75 3.75 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77A1.77 1.77 0 0 0 0 1.77v20.45A1.77 1.77 0 0 0 1.77 24h20.45A1.77 1.77 0 0 0 24 22.22V1.77A1.77 1.77 0 0 0 22.22 0z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>

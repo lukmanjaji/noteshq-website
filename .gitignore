@@ -1,0 +1,13 @@
+# macOS / Windows housekeeping
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+
+# Local one-off scripts that aren't shipped artifacts
+.transform.js
+.fixlinks.js

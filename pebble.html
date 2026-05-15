@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pebble — A voice button for your second brain · NotesHQ</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='14' y='12' width='58' height='58' rx='11' fill='%23B7C2F3'/><rect x='18' y='18' width='58' height='58' rx='11' fill='%238092E5'/><rect x='22' y='24' width='58' height='58' rx='11' fill='%232D43E0'/><circle cx='75' cy='25' r='13' fill='%23FF6B47'/><text x='75' y='30' text-anchor='middle' font-family='system-ui,sans-serif' font-size='11' font-weight='700' fill='white'>HQ</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="page.css">
+<style>
+  /* ── Pebble page ── */
+  .pb-hero {
+    background:
+      radial-gradient(circle at 18% 12%, rgba(107,63,212,0.30), transparent 50%),
+      radial-gradient(circle at 92% 82%, rgba(255,107,71,0.18), transparent 55%),
+      linear-gradient(160deg, #14101F 0%, #221634 60%, #0F0B1A 100%);
+    color: white;
+    padding: 70px 32px 90px;
+    border-bottom: none;
+    overflow: hidden;
+    position: relative;
+  }
+  .pb-hero .crumb { color: rgba(255,255,255,0.55); }
+  .pb-hero .crumb a:hover { color: white; }
+  .pb-hero .crumb .sep { color: rgba(255,255,255,0.25); }
+  .pb-hero-inner {
+    max-width: 1200px; margin: 0 auto;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .pb-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,107,71,0.18);
+    color: #FF9678;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.06em;
+    margin-bottom: 18px;
+  }
+  .pb-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: #FF6B47; }
+  .pb-hero h1 {
+    margin: 0 0 18px;
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 68px;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: white;
+  }
+  .pb-hero h1 em { color: #FF9678; font-style: italic; }
+  .pb-hero .lede {
+    margin: 0 0 26px;
+    color: rgba(255,255,255,0.7);
+    font-size: 17.5px;
+    line-height: 1.6;
+    max-width: 480px;
+  }
+  .pb-hero-cta { display: inline-flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .btn.outline-light {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.28);
+  }
+  .btn.outline-light:hover { background: rgba(255,255,255,0.06); }
+  .pb-priceline {
+    margin-top: 18px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.04em;
+  }
+  .pb-priceline b { color: white; font-weight: 600; }
+
+  .pb-hero-img {
+    position: relative;
+    border-radius: 26px;
+    overflow: hidden;
+    background: #0a0810;
+    aspect-ratio: 1 / 1.05;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .pb-hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pb-hero-stamp {
+    position: absolute;
+    top: 22px; left: 22px;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(20,16,31,0.65);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.14);
+    padding: 7px 13px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-family: 'Geist Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: white;
+  }
+  .pb-hero-stamp .pulse {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #FF6B47;
+    animation: pbPulse 2s ease-out infinite;
+  }
+  @keyframes pbPulse {
+    0% { box-shadow: 0 0 0 0 rgba(255,107,71,0.6); }
+    70% { box-shadow: 0 0 0 10px rgba(255,107,71,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,107,71,0); }
+  }
+  .pb-hero-meta {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .pb-meta-tile {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 16px;
+  }
+  .pb-meta-tile strong {
+    display: block;
+    font-family: 'Instrument Serif', serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1;
+    margin-bottom: 5px;
+  }
+  .pb-meta-tile span {
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+    font-family: 'Geist Mono', monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* generic section style */
+  .pb-section { padding: 90px 32px; }
+  .pb-section .pb-inner { max-width: 1180px; margin: 0 auto; }
+  .pb-section-head { text-align: center; margin-bottom: 56px; }
+  .pb-section-eyebrow {
+    color: var(--purple);
+    font-family: 'Geist Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: inline-block;
+  }
+  .pb-section-head h2 {
+    margin: 0 auto 12px;
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    max-width: 720px;
+  }
+  .pb-section-head h2 em { color: var(--purple); font-style: italic; }
+  .pb-section-head p {
+    margin: 0 auto;
+    color: var(--ink-2);
+    font-size: 16.5px;
+    max-width: 560px;
+    line-height: 1.55;
+  }
+
+  /* "what it does" — 4 column step */
+  .pb-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .pb-step {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 26px;
+  }
+  .pb-step .num {
+    font-family: 'Geist Mono', monospace;
+    font-size: 12px;
+    color: var(--purple);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+  }
+  .pb-step .ic {
+    width: 44px; height: 44px;
+    border-radius: 13px;
+    background: var(--purple-tint);
+    color: var(--purple);
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+  }
+  .pb-step h3 { margin: 0 0 6px; font-size: 16px; font-weight: 700; letter-spacing: -0.005em; }
+  .pb-step p { margin: 0; color: var(--ink-2); font-size: 13.5px; line-height: 1.55; }
+
+  /* showcase split */
+  .pb-split { background: var(--bg-2); }
+  .pb-split-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .pb-split-art {
+    border-radius: 22px;
+    overflow: hidden;
+    background: #0a0810;
+    aspect-ratio: 4 / 5;
+    border: 1px solid var(--line);
+  }
+  .pb-split-art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pb-split-text h3 {
+    margin: 0 0 14px;
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .pb-split-text h3 em { color: var(--purple); font-style: italic; }
+  .pb-split-text p {
+    margin: 0 0 22px;
+    color: var(--ink-2);
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  .pb-bullets { display: flex; flex-direction: column; gap: 10px; }
+  .pb-bullet { display: flex; align-items: flex-start; gap: 10px; font-size: 14.5px; color: var(--ink-2); }
+  .pb-bullet .mark {
+    width: 22px; height: 22px;
+    border-radius: 7px;
+    background: var(--purple-tint);
+    color: var(--purple);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .pb-bullet strong { color: var(--ink); font-weight: 600; }
+
+  /* specs table */
+  .pb-specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+  }
+  .pb-spec-row {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+  }
+  .pb-spec-row:nth-child(2n) { border-right: none; }
+  .pb-spec-row:nth-last-child(-n+2) { border-bottom: none; }
+  .pb-spec-row dt {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 700;
+  }
+  .pb-spec-row dd {
+    margin: 0;
+    font-size: 14.5px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* in the box + form factors */
+  .pb-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .pb-box-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 24px;
+  }
+  .pb-box-card .glyph {
+    width: 48px; height: 48px;
+    background: var(--purple-tint);
+    color: var(--purple);
+    border-radius: 14px;
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+  }
+  .pb-box-card h4 { margin: 0 0 4px; font-size: 16px; font-weight: 700; }
+  .pb-box-card p { margin: 0 0 10px; font-size: 13px; color: var(--ink-2); line-height: 1.5; }
+  .pb-box-card .price {
+    display: inline-flex;
+    background: var(--bg-2);
+    color: var(--purple);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  /* faq */
+  .pb-faq { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+  .pb-faq-item {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 20px 22px;
+  }
+  .pb-faq-item h4 {
+    margin: 0 0 8px;
+    font-size: 15.5px;
+    font-weight: 600;
+    display: flex; justify-content: space-between;
+    gap: 12px;
+  }
+  .pb-faq-item h4 .plus { color: var(--purple); font-weight: 400; font-size: 20px; }
+  .pb-faq-item p { margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.6; }
+
+  /* final cta */
+  .pb-final {
+    background:
+      radial-gradient(circle at 80% 0%, rgba(255, 107, 71, 0.20), transparent 50%),
+      radial-gradient(circle at 0% 100%, rgba(45, 67, 224, 0.22), transparent 50%),
+      linear-gradient(135deg, #1B1426 0%, #3A2358 100%);
+    color: white;
+    border-radius: 24px;
+    padding: 70px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .pb-final h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 48px;
+    font-weight: 400;
+    line-height: 1.05;
+    margin: 0 0 14px;
+    letter-spacing: -0.015em;
+  }
+  .pb-final h2 em { color: #FF9678; font-style: italic; }
+  .pb-final p {
+    color: rgba(255,255,255,0.7);
+    font-size: 16.5px;
+    margin: 0 auto 28px;
+    max-width: 520px;
+    line-height: 1.55;
+  }
+  .pb-final .btn.white {
+    background: white;
+    color: var(--ink);
+    box-shadow: 0 20px 50px -10px rgba(0,0,0,0.3);
+  }
+  .pb-final-foot {
+    margin-top: 18px;
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.55);
+    font-family: 'Geist Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 960px) {
+    .pb-hero { padding: 50px 22px 70px; }
+    .pb-hero h1 { font-size: 42px; }
+    .pb-hero-inner { grid-template-columns: 1fr; gap: 32px; }
+    .pb-section { padding: 60px 22px; }
+    .pb-section-head h2 { font-size: 32px; }
+    .pb-steps, .pb-specs, .pb-box, .pb-split-grid { grid-template-columns: 1fr; }
+    .pb-specs .pb-spec-row { border-right: none; }
+    .pb-final { padding: 50px 24px; border-radius: 18px; }
+    .pb-final h2 { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-wrap">
+  <nav class="nav">
+    <a class="brand" href="index.html">
+      <svg width="32" height="32" viewBox="0 0 100 100">
+        <rect x="14" y="12" width="58" height="58" rx="11" fill="#B7C2F3"/>
+        <rect x="18" y="18" width="58" height="58" rx="11" fill="#8092E5"/>
+        <rect x="22" y="24" width="58" height="58" rx="11" fill="#2D43E0"/>
+        <circle cx="75" cy="25" r="13" fill="#FF6B47"/>
+        <text x="75" y="29.5" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-size="11" font-weight="700" fill="white">HQ</text>
+      </svg>
+      <span class="brand-word">NotesHQ</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#ai">AI</a>
+      <a href="pebble.html" style="color: var(--ink); font-weight: 600;">Pebble</a>
+      <a href="index.html#blog">Blog</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn ghost"  href="https://app.noteshq.ai" target="_blank" rel="noopener">Log in</a>
+      <a class="btn primary" href="signup.html">Sign up</a>
+    </div>
+  </nav>
+</div>
+
+<!-- ── Hero ── -->
+<section class="pb-hero">
+  <div class="pb-hero-inner">
+    <div>
+      <div class="crumb">
+        <a href="index.html">NotesHQ</a>
+        <span class="sep">/</span>
+        <span>Pebble</span>
+      </div>
+
+      <span class="pb-eyebrow">
+        <span class="dot"></span>
+        Hardware · Pre-orders open
+      </span>
+      <h1>Catch the thought <em>before it goes.</em></h1>
+      <p class="lede">Pebble is a 12-gram voice button you wear. One press records, double-press bookmarks, and everything lands transcribed inside NotesHQ. No phone in your hand. No idea lost on the walk home.</p>
+      <div class="pb-hero-cta">
+        <a class="btn purple big" href="signup.html">Reserve for £129</a>
+        <a class="btn outline-light big" href="#how">See how it works</a>
+      </div>
+      <div class="pb-priceline"><b>£129</b> · Free UK shipping · Ships May 2026</div>
+
+      <div class="pb-hero-meta">
+        <div class="pb-meta-tile">
+          <strong>12g</strong>
+          <span>Lighter than a key</span>
+        </div>
+        <div class="pb-meta-tile">
+          <strong>12h</strong>
+          <span>Continuous recording</span>
+        </div>
+        <div class="pb-meta-tile">
+          <strong>IPX7</strong>
+          <span>Sweat &amp; rain proof</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pb-hero-img">
+      <img src="assets/device-pendant.png" alt="NotesHQ Pebble worn as a pendant" />
+      <span class="pb-hero-stamp">
+        <span class="pulse"></span>
+        Live · Recording
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ── How it works ── -->
+<section class="pb-section" id="how">
+  <div class="pb-inner">
+    <div class="pb-section-head">
+      <span class="pb-section-eyebrow">How it works</span>
+      <h2>One button. <em>Four moments.</em></h2>
+      <p>Pebble is designed for the half-second between "I just thought of something" and "wait, where did it go?"</p>
+    </div>
+
+    <div class="pb-steps">
+      <div class="pb-step">
+        <div class="num">01</div>
+        <span class="ic">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="10"/></svg>
+        </span>
+        <h3>Press once</h3>
+        <p>A gentle haptic confirms recording started. The button lights warm orange. No screen needed.</p>
+      </div>
+      <div class="pb-step">
+        <div class="num">02</div>
+        <span class="ic">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2"/></svg>
+        </span>
+        <h3>Say the thing</h3>
+        <p>Talk like you'd talk to a friend. Background noise filtered with three on-device beam-forming mics.</p>
+      </div>
+      <div class="pb-step">
+        <div class="num">03</div>
+        <span class="ic">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        </span>
+        <h3>Sync on the way home</h3>
+        <p>When you're in Bluetooth range of your phone, Pebble uploads the audio and the transcript appears in your notes.</p>
+      </div>
+      <div class="pb-step">
+        <div class="num">04</div>
+        <span class="ic">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l1.7 5.5L19 9.2l-5.3 1.7L12 16.4l-1.7-5.5L5 9.2l5.3-1.7z"/></svg>
+        </span>
+        <h3>Ask NoteChat</h3>
+        <p>Your Pebble recordings are searchable like any other note. Ask "what did I think about on Tuesday's run?"</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Wear it your way ── -->
+<section class="pb-section pb-split">
+  <div class="pb-inner">
+    <div class="pb-split-grid">
+      <div class="pb-split-art">
+        <img src="assets/device-wrist.png" alt="Pebble worn on the wrist with the silicone strap" />
+      </div>
+      <div class="pb-split-text">
+        <span class="pb-section-eyebrow" style="margin-bottom: 8px;">Form factors</span>
+        <h3>Pendant, wrist, or <em>clip.</em></h3>
+        <p>Pebble's housing snaps into three different mounts depending on where you want it. Swap them out in seconds — no tools, no setup.</p>
+        <div class="pb-bullets">
+          <div class="pb-bullet">
+            <span class="mark"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>Lanyard pendant</strong> — included in every box. Three lanyard colours.</span>
+          </div>
+          <div class="pb-bullet">
+            <span class="mark"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>Wrist strap</strong> — soft medical-grade silicone. Three sizes, two colours.</span>
+          </div>
+          <div class="pb-bullet">
+            <span class="mark"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span><strong>Magnetic clip</strong> — for bags, lapels, and shirts. Powerful enough for a coat, gentle enough for silk.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Specs ── -->
+<section class="pb-section">
+  <div class="pb-inner">
+    <div class="pb-section-head">
+      <span class="pb-section-eyebrow">Technical specifications</span>
+      <h2>The full <em>spec sheet.</em></h2>
+      <p>Designed in Kent, manufactured in a small factory we visit four times a year.</p>
+    </div>
+
+    <dl class="pb-specs">
+      <div class="pb-spec-row"><dt>Weight</dt><dd>12 grams (with lanyard mount)</dd></div>
+      <div class="pb-spec-row"><dt>Dimensions</dt><dd>42 × 28 × 11 mm</dd></div>
+      <div class="pb-spec-row"><dt>Battery</dt><dd>180 mAh · 12 hours continuous record</dd></div>
+      <div class="pb-spec-row"><dt>Standby</dt><dd>14 days</dd></div>
+      <div class="pb-spec-row"><dt>Charging</dt><dd>USB-C · 0–100% in 45 minutes</dd></div>
+      <div class="pb-spec-row"><dt>Storage</dt><dd>32 GB on-device · ~480 hours of audio</dd></div>
+      <div class="pb-spec-row"><dt>Microphones</dt><dd>3× MEMS beam-forming · 64 kHz sampling</dd></div>
+      <div class="pb-spec-row"><dt>Wireless</dt><dd>Bluetooth 5.3 LE · Wi-Fi 6 (sync)</dd></div>
+      <div class="pb-spec-row"><dt>Water rating</dt><dd>IPX7 — survives 1 m for 30 min</dd></div>
+      <div class="pb-spec-row"><dt>Materials</dt><dd>Recycled aluminium body · medical-grade silicone</dd></div>
+      <div class="pb-spec-row"><dt>Encryption</dt><dd>AES-256 on device, end-to-end to NotesHQ</dd></div>
+      <div class="pb-spec-row"><dt>Warranty</dt><dd>2-year manufacturer warranty included</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ── In the box ── -->
+<section class="pb-section pb-split">
+  <div class="pb-inner">
+    <div class="pb-section-head">
+      <span class="pb-section-eyebrow">In the box</span>
+      <h2>What you'll <em>actually receive.</em></h2>
+      <p>£129 gets you the device, lanyard, charging cradle, and access to all future firmware updates.</p>
+    </div>
+
+    <div class="pb-box">
+      <div class="pb-box-card">
+        <span class="glyph">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="3"/><circle cx="12" cy="12" r="3"/></svg>
+        </span>
+        <h4>Pebble device</h4>
+        <p>The 12g recorder. Recycled aluminium body, silicone seal.</p>
+        <span class="price">Included</span>
+      </div>
+      <div class="pb-box-card">
+        <span class="glyph">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 8V2M12 22v-6"/></svg>
+        </span>
+        <h4>Lanyard + clip mount</h4>
+        <p>Black or warm-grey woven lanyard. Magnetic clip in the box too.</p>
+        <span class="price">Included</span>
+      </div>
+      <div class="pb-box-card">
+        <span class="glyph">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="3"/><path d="M22 11h-6"/></svg>
+        </span>
+        <h4>USB-C charging cradle</h4>
+        <p>Magnetic dock with a braided 1.2 m cable. Plug not included.</p>
+        <span class="price">Included</span>
+      </div>
+      <div class="pb-box-card">
+        <span class="glyph" style="background: #FFE4D6; color: #B5612B;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="3"/><path d="M12 6V2M12 22v-4"/></svg>
+        </span>
+        <h4>Wrist strap</h4>
+        <p>Soft silicone, three sizes (S/M/L). Swap in seconds.</p>
+        <span class="price" style="background: #FFE4D6; color: #B5612B;">+ £19</span>
+      </div>
+      <div class="pb-box-card">
+        <span class="glyph" style="background: #DDE9FB; color: #2A6FDB;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </span>
+        <h4>Travel pouch</h4>
+        <p>Felted wool sleeve for the device, cradle, and strap.</p>
+        <span class="price" style="background: #DDE9FB; color: #2A6FDB;">+ £15</span>
+      </div>
+      <div class="pb-box-card">
+        <span class="glyph" style="background: #DCFCE7; color: #1F8A5B;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </span>
+        <h4>NotesHQ Premium</h4>
+        <p>3 months on the house — Pebble sync transcription stays free forever.</p>
+        <span class="price" style="background: #DCFCE7; color: #1F8A5B;">Free with order</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section class="pb-section">
+  <div class="pb-inner">
+    <div class="pb-section-head">
+      <span class="pb-section-eyebrow">Common questions</span>
+      <h2>The things people ask <em>before ordering.</em></h2>
+    </div>
+
+    <div class="pb-faq">
+      <div class="pb-faq-item">
+        <h4>When does Pebble ship? <span class="plus">+</span></h4>
+        <p>We're shipping the first batch in <strong>May 2026</strong>, in the order pre-orders were placed. You'll get an email with a tracking number two days before dispatch.</p>
+      </div>
+      <div class="pb-faq-item">
+        <h4>Do I need a NotesHQ account? <span class="plus">+</span></h4>
+        <p>Yes — Pebble is a companion device. Recording works offline on the device, but transcripts and search live in the app. The free NotesHQ account is enough; Premium is not required.</p>
+      </div>
+      <div class="pb-faq-item">
+        <h4>Where does the audio go? <span class="plus">+</span></h4>
+        <p>Recorded audio is encrypted on the device with a key only your account holds. It uploads to NotesHQ over Bluetooth or Wi-Fi when in range of your phone, is transcribed, and is then stored encrypted on our EU servers. Your audio is never used to train AI models.</p>
+      </div>
+      <div class="pb-faq-item">
+        <h4>Can I return it? <span class="plus">+</span></h4>
+        <p>Yes — 14 days from delivery for a full refund, provided the device is in re-sellable condition. Email <a href="/cdn-cgi/l/email-protection#deabadb3bfb09ea4adb6b7b8aaf0b7b1" style="color: var(--purple); font-weight: 600;"><span class="__cf_email__" data-cfemail="6613150b0708261c150e0f0012480f09">[email&#160;protected]</span></a> and we'll send a pre-paid return label.</p>
+      </div>
+      <div class="pb-faq-item">
+        <h4>Does it work without the phone? <span class="plus">+</span></h4>
+        <p>It records without the phone. The 32 GB on-device storage holds about 480 hours of audio. Transcription and search happen when it next syncs.</p>
+      </div>
+      <div class="pb-faq-item">
+        <h4>Is there a bulk discount for teams? <span class="plus">+</span></h4>
+        <p>Yes — 10+ units gets 15% off, 25+ gets 25% off. Write to <a href="/cdn-cgi/l/email-protection#5c292f313d321c262f34353a28723533" style="color: var(--purple); font-weight: 600;"><span class="__cf_email__" data-cfemail="7603051b1718360c051e1f1002581f19">[email&#160;protected]</span></a> with your order size and we'll send a quote.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Final CTA ── -->
+<section class="pb-section" style="padding-top: 0;">
+  <div class="pb-final">
+    <h2>One press. <em>Hands free.</em></h2>
+    <p>Be among the first 500 to wear one. Pre-orders ship in May 2026, and the price stays at £129 — no Kickstarter dance, no surprise upcharge.</p>
+    <a class="btn purple big" href="signup.html" style="background: white; color: var(--ink);">Reserve Pebble — £129</a>
+    <div class="pb-final-foot">Free UK shipping · 14-day returns · 2-year warranty</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="index.html">
+        <svg width="32" height="32" viewBox="0 0 100 100">
+          <rect x="14" y="12" width="58" height="58" rx="11" fill="#B7C2F3"/>
+          <rect x="18" y="18" width="58" height="58" rx="11" fill="#8092E5"/>
+          <rect x="22" y="24" width="58" height="58" rx="11" fill="#2D43E0"/>
+          <circle cx="75" cy="25" r="13" fill="#FF6B47"/>
+          <text x="75" y="29.5" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-size="11" font-weight="700" fill="white">HQ</text>
+        </svg>
+        <span class="brand-word">NotesHQ</span>
+      </a>
+      <p>A quiet place for the things you think, the things you make, and the things you don't want to forget.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Product</h5>
+      <a href="index.html#features">Features</a>
+      <a href="index.html#ai">NoteChat &amp; NoteQ</a>
+      <a href="pebble.html">Pebble device</a>
+      <a href="index.html#blog">Blog</a>
+      <a href="index.html#pricing">Pricing</a>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <a href="index.html#contact">Contact</a>
+      <a href="https://zshift.io">ZShift</a>
+      <a href="#">Careers</a>
+      <a href="#">Press kit</a>
+    </div>
+    <div class="footer-col">
+      <h5>Support</h5>
+      <a href="index.html#faq">FAQ</a>
+      <a href="helpcenter.html">Help center</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 NotesHQ by <a href="https://zshift.io" style="color: var(--ink-2); font-weight: 600;">ZShift</a>. Made with care in the UK.</span>
+    <div class="socials">
+      <a href="#" aria-label="Twitter"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22 5.8a8.49 8.49 0 0 1-2.36.64 4.13 4.13 0 0 0 1.81-2.27 8.21 8.21 0 0 1-2.61 1 4.1 4.1 0 0 0-7 3.74 11.64 11.64 0 0 1-8.45-4.29 4.16 4.16 0 0 0-.55 2.07 4.09 4.09 0 0 0 1.82 3.41 4.05 4.05 0 0 1-1.86-.51v.05a4.1 4.1 0 0 0 3.3 4 3.93 3.93 0 0 1-1.85.07 4.11 4.11 0 0 0 3.83 2.84A8.22 8.22 0 0 1 2 18.34a11.59 11.59 0 0 0 6.29 1.85A11.59 11.59 0 0 0 20 8.45v-.53A8.43 8.43 0 0 0 22 5.8z"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.83-.26.83-.58v-2.17c-3.34.73-4-1.43-4-1.43a3.14 3.14 0 0 0-1.31-1.74c-1.07-.74.08-.72.08-.72a2.5 2.5 0 0 1 1.82 1.22 2.54 2.54 0 0 0 3.47 1 2.55 2.55 0 0 1 .76-1.6c-2.67-.31-5.47-1.33-5.47-5.95a4.66 4.66 0 0 1 1.23-3.23 4.33 4.33 0 0 1 .12-3.18s1-.32 3.3 1.23a11.36 11.36 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23a4.33 4.33 0 0 1 .12 3.18 4.66 4.66 0 0 1 1.23 3.23c0 4.64-2.8 5.64-5.48 5.94a2.85 2.85 0 0 1 .81 2.22v3.29c0 .32.22.69.83.58A12 12 0 0 0 12 .5z"/></svg></a>
+      <a href="#" aria-label="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.13 1.45-2.13 2.94v5.66H9.36V9h3.41v1.56h.05a3.75 3.75 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77A1.77 1.77 0 0 0 0 1.77v20.45A1.77 1.77 0 0 0 1.77 24h20.45A1.77 1.77 0 0 0 24 22.22V1.77A1.77 1.77 0 0 0 22.22 0z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>
