@@ -1,0 +1,23 @@
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: self-hosted
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Copy files
+      run:  cp -r /home/noteshq/ci/_work/noteshq-web/noteshq-web/*.html  /home/noteshq/
+    - name: Copy save
+      run:  cp -r /home/noteshq/ci/_work/noteshq-web/noteshq-web/assets/*.png  /home/noteshq/assets/
