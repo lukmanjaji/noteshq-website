@@ -684,17 +684,19 @@
   /* ── Pricing ── */
   .pricing-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-    max-width: 880px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+    max-width: 1240px;
     margin: 0 auto;
   }
   .price-card {
     background: var(--card);
     border: 1.5px solid var(--line);
-    border-radius: 22px;
-    padding: 36px;
+    border-radius: 20px;
+    padding: 24px 22px;
     position: relative;
+    display: flex;
+    flex-direction: column;
   }
   .price-card.featured {
     background: linear-gradient(160deg, #1B1426 0%, #3A2358 60%, #2D43E0 110%);
@@ -718,37 +720,41 @@
   }
   .price-card h3 {
     margin: 0 0 4px;
-    font-size: 22px;
+    font-size: 19px;
     font-weight: 700;
     letter-spacing: -0.01em;
   }
   .price-card .tagline {
-    margin: 0 0 22px;
-    font-size: 13.5px;
+    margin: 0 0 16px;
+    font-size: 12.5px;
     color: var(--ink-3);
+    line-height: 1.45;
+    min-height: 36px;
   }
   .price-card.featured .tagline { color: rgba(255,255,255,0.75); }
   .price-amount {
-    display: flex; align-items: baseline; gap: 6px;
+    display: flex; align-items: baseline; gap: 4px;
     margin-bottom: 4px;
+    flex-wrap: wrap;
   }
   .price-num {
     font-family: 'Instrument Serif', serif;
-    font-size: 56px;
+    font-size: 42px;
     font-weight: 400;
     letter-spacing: -0.02em;
     line-height: 1;
   }
   .price-period {
-    font-size: 14px;
+    font-size: 12.5px;
     color: var(--ink-3);
   }
   .price-card.featured .price-period { color: rgba(255,255,255,0.7); }
   .price-saving {
-    font-size: 12.5px;
+    font-size: 11.5px;
     color: var(--purple);
     font-weight: 600;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
+    min-height: 16px;
   }
   .price-card.featured .price-saving {
     color: #FFB39A;
@@ -756,14 +762,15 @@
   .price-saving s { color: var(--ink-4); font-weight: 500; }
   .price-card.featured .price-saving s { color: rgba(255,255,255,0.55); }
   .price-perks {
-    list-style: none; padding: 0; margin: 0 0 26px;
-    display: flex; flex-direction: column; gap: 10px;
+    list-style: none; padding: 0; margin: 0 0 20px;
+    display: flex; flex-direction: column; gap: 8px;
+    flex: 1;
   }
   .price-perks li {
-    display: flex; align-items: flex-start; gap: 10px;
-    font-size: 14px;
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 12.5px;
     color: var(--ink-2);
-    line-height: 1.45;
+    line-height: 1.4;
   }
   .price-perks li::before {
     content: '';
@@ -785,9 +792,9 @@
   }
   .price-cta {
     width: 100%;
-    padding: 14px;
-    border-radius: 12px;
-    font-size: 14px;
+    padding: 12px;
+    border-radius: 11px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     border: none;
@@ -1344,6 +1351,13 @@
   }
 
   /* responsive */
+  @media (max-width: 1180px) {
+    .pricing-grid {
+      grid-template-columns: 1fr 1fr;
+      max-width: 720px;
+      gap: 16px;
+    }
+  }
   @media (max-width: 960px) {
     .hero-inner, .showcase, .features-grid, .pricing-grid, .test-grid, .footer-inner {
       grid-template-columns: 1fr;
@@ -1948,8 +1962,8 @@
   <div class="section-inner">
     <div class="section-head">
       <span class="section-eyebrow">Simple pricing</span>
-      <h2>Free, forever. <em>Or pay once a year.</em></h2>
-      <p>The core app is — and always will be — completely free. Upgrade only when you want more AI.</p>
+      <h2>Free, forever. <em>Or pay how you like.</em></h2>
+      <p>The core app is — and always will be — completely free. Upgrade for AI when you want it, at whatever cadence suits you.</p>
     </div>
 
     <div class="pricing-grid">
@@ -1960,38 +1974,88 @@
           <span class="price-num">£0</span>
           <span class="price-period">/ forever</span>
         </div>
-        <div class="price-saving">Always free, no credit card needed.</div>
+        <div class="price-saving">Always free, no card needed.</div>
         <ul class="price-perks">
-          <li>Unlimited text notes, checklists &amp; sketches</li>
-          <li>All 14 themes and dark mode</li>
-          <li>Notebooks &amp; vault with PIN lock</li>
-          <li>Voice memos with on-device transcription</li>
-          <li>Import PDFs, DOCX, and audio</li>
-          <li>Sync across phone, tablet &amp; web</li>
+          <li>Unlimited notes &amp; sketches</li>
+          <li>Notebooks &amp; vault with PIN</li>
+          <li>Voice memos with transcription</li>
+          <li>Sync across all your devices</li>
         </ul>
-        <a class="price-cta dark"  href="https://app.noteshq.ai/signup" target="_blank" rel="noopener">Get started</a>
-        <p class="price-finep">No subscription. No credit card.</p>
+        <a class="price-cta dark" href="https://app.noteshq.ai/signup" target="_blank" rel="noopener">Get started</a>
+        <p class="price-finep">No subscription. No card.</p>
+      </div>
+
+      <div class="price-card">
+        <h3>Monthly</h3>
+        <p class="tagline">Premium, billed every month.</p>
+        <div class="price-amount">
+          <span class="price-num">£9.99</span>
+          <span class="price-period">/ month</span>
+        </div>
+        <div class="price-saving">&nbsp;</div>
+        <ul class="price-perks">
+          <li><strong>Everything in Free</strong></li>
+          <li>Unlimited NoteChat &amp; NoteQ</li>
+          <li>AI summaries &amp; drafts</li>
+          <li>Priority sync &amp; support</li>
+        </ul>
+        <a class="price-cta dark" href="https://app.noteshq.ai/signup?plan=monthly" target="_blank" rel="noopener">Choose monthly</a>
+        <p class="price-finep">Cancel anytime.</p>
+      </div>
+
+      <div class="price-card">
+        <h3>Quarterly</h3>
+        <p class="tagline">Premium, billed every 3 months.</p>
+        <div class="price-amount">
+          <span class="price-num">£25.99</span>
+          <span class="price-period">/ 3 months</span>
+        </div>
+        <div class="price-saving">Save 13% <s>£29.97</s></div>
+        <ul class="price-perks">
+          <li><strong>Everything in Free</strong></li>
+          <li>Unlimited NoteChat &amp; NoteQ</li>
+          <li>AI summaries &amp; drafts</li>
+          <li>Priority sync &amp; support</li>
+        </ul>
+        <a class="price-cta dark" href="https://app.noteshq.ai/signup?plan=quarterly" target="_blank" rel="noopener">Choose quarterly</a>
+        <p class="price-finep">~£8.66 per month.</p>
+      </div>
+
+      <div class="price-card">
+        <h3>6 months</h3>
+        <p class="tagline">Premium, billed twice a year.</p>
+        <div class="price-amount">
+          <span class="price-num">£41.99</span>
+          <span class="price-period">/ 6 months</span>
+        </div>
+        <div class="price-saving">Save 30% <s>£59.94</s></div>
+        <ul class="price-perks">
+          <li><strong>Everything in Free</strong></li>
+          <li>Unlimited NoteChat &amp; NoteQ</li>
+          <li>AI summaries &amp; drafts</li>
+          <li>Priority sync &amp; support</li>
+        </ul>
+        <a class="price-cta dark" href="https://app.noteshq.ai/signup?plan=semiannual" target="_blank" rel="noopener">Choose 6 months</a>
+        <p class="price-finep">~£7.00 per month.</p>
       </div>
 
       <div class="price-card featured">
-        <span class="price-tag">★ Most popular</span>
-        <h3>Premium</h3>
-        <p class="tagline">When AI becomes your second brain.</p>
+        <span class="price-tag">★ Best value</span>
+        <h3>Yearly</h3>
+        <p class="tagline">Premium, billed once a year.</p>
         <div class="price-amount">
           <span class="price-num">£59.99</span>
           <span class="price-period">/ year</span>
         </div>
-        <div class="price-saving">£60 cheaper than monthly billing <s>£119.88</s></div>
+        <div class="price-saving">Save 50% <s>£119.88</s></div>
         <ul class="price-perks">
-          <li><strong>Everything in Free</strong>, plus:</li>
-          <li>Unlimited <strong>NoteChat</strong> conversations</li>
-          <li>Unlimited <strong>NoteQ</strong> quizzes from notes &amp; uploads</li>
-          <li>Long-form summaries and AI drafts</li>
-          <li>Priority sync &amp; faster transcription</li>
-          <li>Priority email support</li>
+          <li><strong>Everything in Free</strong></li>
+          <li>Unlimited NoteChat &amp; NoteQ</li>
+          <li>AI summaries &amp; drafts</li>
+          <li>Priority sync &amp; support</li>
         </ul>
-        <a class="price-cta light"  href="https://app.noteshq.ai/signup" target="_blank" rel="noopener">Start free, upgrade anytime</a>
-        <p class="price-finep">Cancel anytime · 30-day money-back guarantee</p>
+        <a class="price-cta light" href="https://app.noteshq.ai/signup?plan=yearly" target="_blank" rel="noopener">Choose yearly</a>
+        <p class="price-finep">£5.00 per month · 30-day money-back.</p>
       </div>
     </div>
   </div>
