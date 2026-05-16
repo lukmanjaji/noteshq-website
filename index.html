@@ -2133,7 +2133,7 @@
     </div>
 
     <div class="contact-grid">
-      <form class="contact-form" onsubmit="event.preventDefault(); this.querySelector('button[type=submit]').textContent = 'Sent — thank you ✓';">
+      <form class="contact-form" id="contact-form" novalidate>
         <h3>Send a <em>note.</em></h3>
         <p>We read every message. Pick a topic so it gets to the right person.</p>
 
@@ -2165,14 +2165,90 @@
           <textarea id="contact-msg" name="message" placeholder="Tell us what's on your mind. The more context, the better." required></textarea>
         </div>
 
+        <!-- Honeypot — humans don't fill this; bots do. Server rejects any
+             submission where it's non-empty. Hidden via inline CSS so we
+             don't depend on page.css for it. -->
+        <div style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden" aria-hidden="true">
+          <label>Leave this empty <input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
+        </div>
+
         <div class="form-foot">
           <small>We never share your email. See <a href="privacy.html">our privacy promise</a>.</small>
-          <button type="submit" class="btn purple big">
+          <button type="submit" class="btn purple big" id="contact-submit">
             Send message
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
           </button>
         </div>
+
+        <!-- Status line — populated by the submit handler. Empty by default
+             so it takes no visual space; success/error sets text + colour. -->
+        <p id="contact-status" role="status" aria-live="polite" style="margin: 10px 0 0; font-size: 13px; min-height: 18px;"></p>
       </form>
+
+      <script>
+        (function () {
+          // Contact form → POST to api.noteshq.ai/api/contact. Same shape as
+          // every other api.noteshq.ai endpoint: JSON in, JSON out. Honeypot
+          // field is rejected server-side; we still send it so the server can
+          // count bot traffic in logs.
+          var form = document.getElementById('contact-form');
+          if (!form) return;
+          var submit = document.getElementById('contact-submit');
+          var status = document.getElementById('contact-status');
+          var originalLabel = submit.innerHTML;
+          var ENDPOINT = 'https://api.noteshq.ai/api/contact';
+
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            status.textContent = '';
+            status.style.color = '';
+
+            // Cheap client-side validation. The server validates too, but
+            // catching obvious empties here avoids a round trip.
+            var data = {
+              name:    form.elements.name.value.trim(),
+              email:   form.elements.email.value.trim(),
+              topic:   form.elements.topic.value,
+              message: form.elements.message.value.trim(),
+              company: form.elements.company.value,  // honeypot
+            };
+            if (!data.name || !data.email || !data.message) {
+              status.textContent = 'Please fill in your name, email, and message.';
+              status.style.color = '#A2275F';
+              return;
+            }
+
+            submit.disabled = true;
+            submit.textContent = 'Sending…';
+
+            fetch(ENDPOINT, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify(data),
+            })
+              .then(function (res) {
+                if (!res.ok) {
+                  return res.text().then(function (txt) {
+                    throw new Error(txt || ('Server returned ' + res.status));
+                  });
+                }
+                return res.json().catch(function () { return {}; });
+              })
+              .then(function () {
+                submit.innerHTML = 'Sent — thank you ✓';
+                status.textContent = 'Got it. You’ll hear back within a working day.';
+                status.style.color = '#1F8A5B';
+                form.reset();
+              })
+              .catch(function (err) {
+                submit.disabled = false;
+                submit.innerHTML = originalLabel;
+                status.textContent = 'Couldn’t send: ' + (err.message || 'try again in a moment.');
+                status.style.color = '#A2275F';
+              });
+          });
+        })();
+      </script>
 
       <div class="contact-side">
         <div class="contact-card">
@@ -2182,7 +2258,7 @@
           <div>
             <h4>Email us directly</h4>
             <p>The fastest way for support questions and bug reports.</p>
-            <a class="link" href="/cdn-cgi/l/email-protection#08727b60616e7c48727b60616e7c266167"><span class="__cf_email__" data-cfemail="6c161f04050a182c161f04050a18420503">[email&#160;protected]</span>
+            <a class="link" href="mailto:support@noteshq.ai">support@noteshq.ai
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
             </a>
             <div class="meta-row"><span>Avg. reply · 6h</span><span>·</span><span>Mon–Fri</span></div>
@@ -2196,7 +2272,7 @@
           <div>
             <h4>Pebble pre-orders</h4>
             <p>Hardware sales, shipping windows, and bulk orders for teams.</p>
-            <a class="link" style="color: #B5612B;" href="/cdn-cgi/l/email-protection#6a1f19070b042a101902030c1e440305"><span class="__cf_email__" data-cfemail="285d5b45494668525b40414e5c064147">[email&#160;protected]</span>
+            <a class="link" style="color: #B5612B;" href="mailto:orders@noteshq.ai">orders@noteshq.ai
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
             </a>
           </div>
@@ -2209,7 +2285,7 @@
           <div>
             <h4>Press &amp; partnerships</h4>
             <p>Media kits, interview requests, and integration proposals.</p>
-            <a class="link" style="color: #2A6FDB;" href="/cdn-cgi/l/email-protection#c6a2a3aba9aaa786bcb5aeafa0b2e8afa9"><span class="__cf_email__" data-cfemail="680c0d0507040928121b00010e1c460107">[email&#160;protected]</span>
+            <a class="link" style="color: #2A6FDB;" href="mailto:press@noteshq.ai">press@noteshq.ai
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
             </a>
           </div>
@@ -2297,5 +2373,5 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</body>
 </html>
