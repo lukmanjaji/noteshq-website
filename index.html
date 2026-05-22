@@ -969,6 +969,158 @@
   }
   .footer-bottom .socials a:hover { color: var(--purple); border-color: var(--purple-soft); }
 
+  /* ── Web app showcase ─────────────────────────────────────── */
+  .web-showcase {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(220px, 1fr);
+    gap: 32px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .web-showcase { grid-template-columns: 1fr; }
+  }
+
+  /* Carousel wrapper. position: relative so absolute children (arrows,
+     dots, caption) can pin to its edges. The card itself is just a
+     rounded container with a soft shadow — no browser chrome. */
+  .web-carousel {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.10);
+  }
+
+  /* Slide track: stack all slides at the same coords, fade between them
+     with opacity. Using opacity (not transform translate) lets the
+     surrounding card stay a stable size while images of slightly
+     different aspect ratios swap in. */
+  .web-slides {
+    position: relative;
+    /* 16:10-ish window — close to the screenshots' native ratio but
+       leaves room for the caption strip below to sit cleanly. */
+    aspect-ratio: 16 / 10;
+    background: linear-gradient(180deg, #F7F1FF 0%, #ECE3F7 100%);
+  }
+  .web-slide {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+  .web-slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .web-slide img {
+    width: 100%;
+    height: 100%;
+    /* contain (not cover) so the full screenshot stays visible — no
+       chrome cropping. The gradient background fills any letterbox
+       bars. */
+    object-fit: contain;
+    object-position: center top;
+    display: block;
+  }
+
+  /* Caption strip. position: absolute over the bottom of the slide so
+     it floats on top of the image with a soft scrim — keeps the slide
+     window a single rounded rectangle without an extra row pushing it
+     taller. */
+  .web-caption {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 14px 80px 18px;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(20, 16, 38, 0.55) 100%);
+    color: white;
+    font-size: 13px;
+    line-height: 1.45;
+    text-align: center;
+    pointer-events: none;
+    min-height: 44px;
+  }
+
+  /* Prev / next arrows — vertically centered on the slide, dimmed
+     until hover. */
+  .web-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 0;
+    background: rgba(255, 255, 255, 0.78);
+    color: var(--ink);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .web-arrow:hover { background: white; transform: translateY(-50%) scale(1.06); }
+  .web-arrow-prev { left: 14px; }
+  .web-arrow-next { right: 14px; }
+
+  /* Dot row — sits below the caption strip. */
+  .web-dots {
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    z-index: 2;
+  }
+  .web-dot {
+    width: 8px;
+    height: 8px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.15s ease, width 0.15s ease;
+  }
+  .web-dot.is-active {
+    width: 22px;
+    border-radius: 100px;
+    background: white;
+  }
+
+  /* Right column of bullets next to the carousel. */
+  .web-bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .web-bullet {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .web-bullet strong {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+  .web-bullet p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+
   /* ── Pebble (device) ── */
   .pebble {
     background:
@@ -1399,6 +1551,7 @@
     </a>
     <div class="nav-links">
       <a href="#features">Features</a>
+      <a href="#web">Web app</a>
       <a href="#ai">AI</a>
       <a href="pebble.html">Pebble</a>
       <a href="https://blog.noteshq.ai" target="_blank" rel="noopener">Blog</a>
@@ -1420,10 +1573,10 @@
     <div class="hero-text">
       <span class="eyebrow">
         <span class="dot"></span>
-        <span>Now with AI · NoteChat & NoteQ</span>
+        <span>Web · iOS · Android — all in sync</span>
       </span>
       <h1>Your thinking, <em>finally organized.</em></h1>
-      <p class="lead">Capture text, sketches, voice memos and uploaded docs. Group them into colorful notebooks. Lock the private stuff. Ask AI anything across all of it.</p>
+      <p class="lead">A rich web editor, native mobile apps, and AI that actually reads your notes. Rich text + checklists + freehand canvas + voice memos — round-tripping across every device.</p>
       <div class="hero-cta">
         <a class="btn purple big"  href="https://app.noteshq.ai/signup" target="_blank" rel="noopener">Get started — it's free</a>
         <a class="btn ghost big" href="#features">See features</a>
@@ -1543,8 +1696,8 @@
         <div class="ic">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg>
         </div>
-        <h3>Text notes</h3>
-        <p>Type freely. Lines like <code style="font-family: 'Geist Mono', monospace; font-size: 12px; background: var(--bg-2); padding: 1px 5px; border-radius: 4px;">[ ]</code> and <code style="font-family: 'Geist Mono', monospace; font-size: 12px; background: var(--bg-2); padding: 1px 5px; border-radius: 4px;">[x]</code> become tasks automatically.</p>
+        <h3>Rich text editor</h3>
+        <p>Slash commands, tables, math, headings, inline images, and L/C/R/J alignment. <code style="font-family: 'Geist Mono', monospace; font-size: 12px; background: var(--bg-2); padding: 1px 5px; border-radius: 4px;">[[Note titles]]</code> auto-link.</p>
       </div>
 
       <div class="feat">
@@ -1552,15 +1705,15 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m8 12 3 3 5-6"/></svg>
         </div>
         <h3>Checklists with reminders</h3>
-        <p>Add deadlines, get notifications. Tasks ping you before they slip.</p>
+        <p>Add deadlines, recurring schedules, and browser-push notifications. Tasks ping you before they slip.</p>
       </div>
 
       <div class="feat">
         <div class="ic">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2"/><path d="M12 19v3"/></svg>
         </div>
-        <h3>Voice memos</h3>
-        <p>Record on the go. We transcribe to text in the background.</p>
+        <h3>Voice memos with transcripts</h3>
+        <p>Record on the go. Auto-transcribed to text. Variable playback speed (0.5×–2×) on web and mobile.</p>
       </div>
 
       <div class="feat blue">
@@ -1569,7 +1722,7 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.7 5.5L19 9.2l-5.3 1.7L12 16.4l-1.7-5.5L5 9.2l5.3-1.7z"/></svg>
         </div>
         <h3>NoteChat</h3>
-        <p>Ask your notes anything. Get cited answers in seconds, with @mentions to pull in specific notes.</p>
+        <p>Ask your notes anything. Cited answers with sources, @mentions to pull in specific notes.</p>
       </div>
 
       <div class="feat dark">
@@ -1578,31 +1731,31 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11H7a2 2 0 0 0-2 2v7"/><path d="M15 11h2a2 2 0 0 1 2 2v7"/><circle cx="12" cy="7" r="4"/><path d="M12 11v9"/></svg>
         </div>
         <h3>NoteQ</h3>
-        <p>Auto-generate quizzes from your notes or uploaded PDFs. Multiple choice, true/false, flashcards, fill-in-the-blank.</p>
+        <p>Auto-generate quizzes from your notes or uploaded PDFs. MCQ, true/false, flashcards, fill-in-the-blank.</p>
       </div>
 
       <div class="feat">
         <div class="ic" style="background: #FFE5EE; color: #D9418C;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="11" cy="11" r="2"/></svg>
         </div>
-        <h3>Canvas sketches</h3>
-        <p>Draw with your finger or stylus. Pen, eraser, six colors. Strokes persist, not pixels.</p>
+        <h3>Freehand canvas</h3>
+        <p>Pen, eraser, rect / ellipse / line / arrow shape tools. Sticky notes, inline images. Strokes persist as vectors, not pixels.</p>
       </div>
 
       <div class="feat">
         <div class="ic" style="background: #DCFCE7; color: #1F8A5B;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         </div>
-        <h3>Private vault</h3>
-        <p>Lock sensitive notes behind a PIN, pattern, or fingerprint. Hidden from the main list.</p>
+        <h3>Vault &amp; trash</h3>
+        <p>Lock sensitive notes behind a PIN or fingerprint. 30-day trash recovery. Soft-delete by default — undo any time.</p>
       </div>
 
       <div class="feat">
         <div class="ic" style="background: #FEF3C7; color: #8A6B0F;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
         </div>
-        <h3>Import any file</h3>
-        <p>Pull in PDFs, DOCX, images, or audio. Turn each into a searchable note.</p>
+        <h3>Markdown import / export</h3>
+        <p>Import .md, ZIP, or folders. Export your whole library as a Markdown zip with YAML frontmatter. Your data is yours.</p>
       </div>
 
       <div class="feat">
@@ -1610,7 +1763,55 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
         </div>
         <h3>Sync everywhere</h3>
-        <p>Phone, tablet, web — same notes, always in step. Even offline.</p>
+        <p>Phone, tablet, web — same notes, always in step. Mobile keeps working offline; web stays live.</p>
+      </div>
+
+      <div class="feat">
+        <div class="ic" style="background: #EDE3FF; color: #6B3FD4;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h6v6H4z"/><path d="M14 4h6v6h-6z"/><path d="M4 14h6v6H4z"/><path d="M14 14h6v6h-6z"/></svg>
+        </div>
+        <h3>Nested notebooks &amp; smart folders</h3>
+        <p>Group books inside books. Save searches as smart folders that auto-update — <code style="font-family: 'Geist Mono', monospace; font-size: 11px; background: var(--bg-2); padding: 1px 5px; border-radius: 4px;">#work color:red since:7d</code>.</p>
+      </div>
+
+      <div class="feat">
+        <div class="ic" style="background: #FFE4D6; color: #B5612B;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+        </div>
+        <h3>Writing streak &amp; focus timer</h3>
+        <p>Daily word goal with streak. Pomodoro-style focus sessions auto-engage reading mode and credit your streak when the timer ends.</p>
+      </div>
+
+      <div class="feat">
+        <div class="ic" style="background: #E0F7FF; color: #1FA8A6;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>
+        </div>
+        <h3>Public share links</h3>
+        <p>Read-only public URLs with optional password and expiry date. Rotate or revoke anytime. Recipients can translate to their language.</p>
+      </div>
+
+      <div class="feat">
+        <div class="ic" style="background: #F5E1D8; color: #B5612B;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <h3>Translate &amp; localize</h3>
+        <p>Translate any note into 8 languages — replace in place or save as new. App UI also fully localized (English, Spanish, French, German, Portuguese, Arabic, Chinese, Swahili).</p>
+      </div>
+
+      <div class="feat">
+        <div class="ic" style="background: #FFF1B0; color: #8A6B0F;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3>Version history</h3>
+        <p>30 snapshots per note, auto-saved. Side-by-side word-level diff against any version, restore in one click.</p>
+      </div>
+
+      <div class="feat">
+        <div class="ic" style="background: #DEE9FB; color: #2A6FDB;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        </div>
+        <h3>Gallery, calendar &amp; outline</h3>
+        <p>Every image across your library in one grid. Reminders on a month calendar. Auto-generated outline for every long note.</p>
       </div>
 
     </div>
@@ -1714,6 +1915,86 @@
           <div class="sc-q-prompt">Which is listed as a concern for the tenant?</div>
           <div class="sc-q-row right"><span class="dot"></span>Can I picture cooking dinner here?</div>
           <div class="sc-q-row bad"><span class="dot"></span>Is heat included or separate?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Web app showcase ── -->
+<section id="web" style="background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="section-eyebrow">On every screen, no install</span>
+      <h2>The web app is a <em>first-class home</em> for your notes.</h2>
+      <p>A three-pane workspace built for keyboard-driven thinking. Everything from your phone, plus the things only a big screen can do well.</p>
+    </div>
+
+    <div class="web-showcase">
+      <!-- Auto-advancing carousel of real app screenshots. Each slide is
+           a full-bleed PNG (no faux browser chrome around it — those
+           screenshots already show the app's own header). Dots + prev/
+           next arrows let the user steer manually; auto-advance pauses
+           while they're hovering. Swipe support comes for free from the
+           pointer-events JS at the bottom of the file. -->
+      <div class="web-carousel" id="webCarousel" aria-roledescription="carousel">
+        <div class="web-slides">
+          <figure class="web-slide is-active" data-caption="Rich text editor — slash commands, suggested tags, [[backlinks]], outline panel, alignment toolbar.">
+            <img src="assets/web-voice-memo.png"
+                 alt="NotesHQ web — voice-memo note with suggested tags, alignment toolbar, and the backlink popover"
+                 loading="lazy" />
+          </figure>
+          <figure class="web-slide" data-caption="Freehand canvas — pen, eraser, rect/ellipse/line/arrow tools, with strokes that round-trip across web and mobile.">
+            <img src="assets/web-canvas.png"
+                 alt="NotesHQ web — freehand canvas note titled “Doodle of the day” with shapes"
+                 loading="lazy" />
+          </figure>
+          <figure class="web-slide" data-caption="NoteChat — ask your notes anything. Cited answers with sources; @-mention any note to pull it into context.">
+            <img src="assets/web-ai-chat.png"
+                 alt="NotesHQ web — NoteChat AI panel with cited answers and source chips"
+                 loading="lazy" />
+          </figure>
+          <figure class="web-slide" data-caption="Dark mode + Vault — biometric-locked notes, full dark theme, and the Related panel for discovery.">
+            <img src="assets/web-dark-vault.png"
+                 alt="NotesHQ web — Vault view in dark mode with the Related panel open"
+                 loading="lazy" />
+          </figure>
+        </div>
+
+        <button class="web-arrow web-arrow-prev" type="button" aria-label="Previous slide">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="web-arrow web-arrow-next" type="button" aria-label="Next slide">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+
+        <div class="web-caption" aria-live="polite"></div>
+
+        <div class="web-dots" role="tablist" aria-label="Choose slide">
+          <button class="web-dot is-active" type="button" data-index="0" aria-label="Slide 1"></button>
+          <button class="web-dot" type="button" data-index="1" aria-label="Slide 2"></button>
+          <button class="web-dot" type="button" data-index="2" aria-label="Slide 3"></button>
+          <button class="web-dot" type="button" data-index="3" aria-label="Slide 4"></button>
+        </div>
+      </div>
+
+      <!-- Feature bullets next to the carousel. -->
+      <div class="web-bullets">
+        <div class="web-bullet">
+          <strong>Three-pane workspace</strong>
+          <p>Sidebar with nested notebooks + smart folders, scrollable note list, full editor, contextual right rail.</p>
+        </div>
+        <div class="web-bullet">
+          <strong>Keyboard-first</strong>
+          <p>⌘K to jump to any note. ⌘\ for reading mode. Slash commands inside the editor. Drag-to-reorder + multi-select.</p>
+        </div>
+        <div class="web-bullet">
+          <strong>Right rail you'll actually use</strong>
+          <p>Tags, related notes, NoteChat, and NoteQ — one tab away. Outline panel docks alongside long notes.</p>
+        </div>
+        <div class="web-bullet">
+          <strong>Dark mode + 8 languages</strong>
+          <p>Full UI translation in English, Spanish, French, German, Portuguese, Arabic (RTL), Chinese, and Swahili.</p>
         </div>
       </div>
     </div>
@@ -2346,6 +2627,98 @@
     </div>
   </div>
 </footer>
+
+<!-- ── Web-app carousel logic ────────────────────────────────────
+     Auto-advances every 5 s, pauses while the cursor is over the
+     carousel or the tab is hidden. Arrow keys move slides when the
+     carousel has focus; horizontal swipes work on touch.
+
+     Vanilla JS (no build step). All state lives in module-scoped
+     consts; safe to load synchronously at end-of-body. -->
+<script>
+(function () {
+  const root = document.getElementById('webCarousel');
+  if (!root) return;
+  const slides  = Array.from(root.querySelectorAll('.web-slide'));
+  const dots    = Array.from(root.querySelectorAll('.web-dot'));
+  const caption = root.querySelector('.web-caption');
+  const prevBtn = root.querySelector('.web-arrow-prev');
+  const nextBtn = root.querySelector('.web-arrow-next');
+  if (slides.length < 2) return;
+
+  let index = 0;
+  let timer = null;
+  const INTERVAL_MS = 5000;
+
+  function show(next) {
+    next = (next + slides.length) % slides.length;
+    slides[index].classList.remove('is-active');
+    dots[index] && dots[index].classList.remove('is-active');
+    index = next;
+    slides[index].classList.add('is-active');
+    dots[index] && dots[index].classList.add('is-active');
+    if (caption) caption.textContent = slides[index].dataset.caption || '';
+  }
+
+  function next() { show(index + 1); }
+  function prev() { show(index - 1); }
+
+  // Auto-advance — restart the timer whenever the user nudges things
+  // manually so the next auto-advance lands a full interval later
+  // and doesn't surprise-jump immediately.
+  function start() {
+    stop();
+    timer = setInterval(next, INTERVAL_MS);
+  }
+  function stop() {
+    if (timer) { clearInterval(timer); timer = null; }
+  }
+
+  prevBtn && prevBtn.addEventListener('click', () => { prev(); start(); });
+  nextBtn && nextBtn.addEventListener('click', () => { next(); start(); });
+  dots.forEach((d, i) => d.addEventListener('click', () => { show(i); start(); }));
+
+  // Pause auto-advance while the user is hovering (reading the
+  // current slide) or the tab is in the background.
+  root.addEventListener('mouseenter', stop);
+  root.addEventListener('mouseleave', start);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stop(); else start();
+  });
+
+  // Keyboard nav when the carousel is focused.
+  root.tabIndex = 0;
+  root.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { next(); start(); }
+    else if (e.key === 'ArrowLeft') { prev(); start(); }
+  });
+
+  // Touch swipe — horizontal drag past 40 px commits to the next/prev
+  // slide. Vertical drags (page scroll) are left alone.
+  let touchStartX = null;
+  let touchStartY = null;
+  root.addEventListener('touchstart', (e) => {
+    if (!e.touches[0]) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  root.addEventListener('touchend', (e) => {
+    if (touchStartX == null) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchStartX;
+    const dy = t.clientY - touchStartY;
+    touchStartX = touchStartY = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+      if (dx < 0) next(); else prev();
+      start();
+    }
+  });
+
+  // Seed the caption from the initially-active slide.
+  if (caption) caption.textContent = slides[index].dataset.caption || '';
+  start();
+})();
+</script>
 
 </body>
 </html>
