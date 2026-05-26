@@ -19,10 +19,16 @@ jobs:
     - name: Clone repository
       run: |
         set -e
-        TARGET="$GITHUB_WORKSPACE"
-        rm -rf "$TARGET"
+        WORK="$GITHUB_WORKSPACE"
+        # cd out of $WORK before deleting it — the runner cd'd into
+        # this directory before running the script, and `rm -rf` on
+        # the current working directory leaves the shell in a
+        # phantom-dir state where every subsequent command fails
+        # with "Unable to read current working directory".
+        cd /tmp
+        rm -rf "$WORK"
         git clone --depth 1 --branch "${GITHUB_REF_NAME:-main}" \
-          "https://github.com/$GITHUB_REPOSITORY.git" "$TARGET"
+          "https://github.com/$GITHUB_REPOSITORY.git" "$WORK"
 
     - name: Copy site files
       run: cp -r /home/noteshq-website/_work/noteshq-website/noteshq-website/*.* /home/noteshq/
