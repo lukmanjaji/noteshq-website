@@ -9,14 +9,9 @@ jobs:
   build: 
 
     runs-on: self-hosted
-
-    strategy:
-      matrix:
-        node-version: [16.x]
-
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     - name: Copy files
       run:  cp -r /home/noteshq/ci/_work/noteshq-landing/noteshq-landing/*.*  /home/noteshq/
     - name: Copy save
