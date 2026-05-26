@@ -689,6 +689,23 @@
     max-width: 1240px;
     margin: 0 auto;
   }
+  /* Tier-card grid. After the May 2026 collapse to two tiers
+     (Basic + Premium) the grid sits in a tighter 2-column layout;
+     the legacy three-column shape is preserved on the modifier
+     class `.tiers-three` in case we revive a middle option. */
+  .pricing-grid.tiers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    max-width: 820px;
+  }
+  .pricing-grid.tiers.tiers-three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 1080px;
+  }
+  @media (max-width: 760px) {
+    .pricing-grid.tiers,
+    .pricing-grid.tiers.tiers-three { grid-template-columns: 1fr; }
+  }
   .price-card {
     background: var(--card);
     border: 1.5px solid var(--line);
@@ -812,6 +829,135 @@
     text-align: center;
   }
   .price-card.featured .price-finep { color: rgba(255,255,255,0.6); }
+
+  /* AI tier — purple-to-pink gradient border with a soft halo so it
+     visually pairs with NoteChat / NoteQ branding without competing
+     with the dark "featured" Premium card next door. */
+  .price-card.ai {
+    background:
+      linear-gradient(var(--card), var(--card)) padding-box,
+      linear-gradient(135deg, var(--purple) 0%, var(--brand-orange) 100%) border-box;
+    border: 2px solid transparent;
+    box-shadow: 0 14px 36px rgba(107, 63, 212, 0.15);
+  }
+  .price-tag.ai-tag {
+    background: linear-gradient(135deg, var(--purple) 0%, var(--brand-orange) 100%);
+  }
+
+  /* ── Compare-every-feature table ─────────────────────────────
+     Collapsed by default behind a <details> so the page doesn't
+     scroll forever. Tier columns are highlighted via subtle
+     backgrounds so eye flow stays vertical (Basic | Premium | Brain). */
+  .cmp-details {
+    max-width: 1080px;
+    margin: 36px auto 0;
+  }
+  .cmp-summary {
+    list-style: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .cmp-summary::-webkit-details-marker { display: none; }
+  .cmp-summary:hover {
+    border-color: var(--purple-soft);
+    color: var(--purple-deep);
+  }
+  .cmp-summary svg {
+    transition: transform 0.2s ease;
+  }
+  .cmp-details[open] .cmp-summary svg {
+    transform: rotate(180deg);
+  }
+
+  .cmp-wrap {
+    margin-top: 18px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.06);
+    /* Lets the wide table scroll horizontally on phones without
+       breaking the page layout. */
+    overflow-x: auto;
+  }
+  .cmp-table {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .cmp-table thead th {
+    position: sticky;
+    top: 0;
+    background: var(--card);
+    z-index: 1;
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    border-bottom: 2px solid var(--line);
+  }
+  .cmp-table thead th.cmp-featured {
+    background: linear-gradient(180deg, var(--purple-tint) 0%, var(--card) 100%);
+    color: var(--purple-deep);
+  }
+  .cmp-table thead th.cmp-ai {
+    background: linear-gradient(180deg, #FFF1EC 0%, var(--card) 100%);
+    color: var(--brand-orange);
+  }
+
+  /* Category divider rows — full-width band per group. */
+  .cmp-group td {
+    background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 100%);
+    padding: 10px 16px;
+    font-weight: 700;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--ink-2);
+    border-top: 1px solid var(--line);
+  }
+
+  .cmp-table tbody th,
+  .cmp-table tbody td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+  }
+  .cmp-table tbody th {
+    text-align: left;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .cmp-table tbody td {
+    text-align: center;
+    color: var(--ink-2);
+    font-size: 13px;
+  }
+  /* Column-band shading — the two paid columns get a soft tint so
+     the eye can trace down them without losing place. */
+  .cmp-table tbody td:nth-child(3) { background: rgba(247, 241, 255, 0.45); }
+  .cmp-table tbody td:nth-child(4) { background: rgba(255, 241, 235, 0.55); }
+
+  .cmp-table tbody tr:last-child th,
+  .cmp-table tbody tr:last-child td { border-bottom: 0; }
+
+  /* Render a "—" placeholder in muted ink so its absence reads as a
+     deliberate "not in this tier" rather than a layout mistake. */
+  .cmp-table tbody td {
+    color: var(--ink-2);
+  }
 
   /* ── Testimonials ── */
   .testimonials {
@@ -1555,7 +1701,7 @@
       <a href="#ai">AI</a>
       <a href="pebble.html">Pebble</a>
       <a href="https://blog.noteshq.ai" target="_blank" rel="noopener">Blog</a>
-      <a href="#pricing">Pricing</a>
+      <a href="pricing.html">Pricing</a>
       <a href="#contact">Contact</a>
       <a href="careers.html">Careers</a>
     </div>
@@ -2243,102 +2389,213 @@
   <div class="section-inner">
     <div class="section-head">
       <span class="section-eyebrow">Simple pricing</span>
-      <h2>Free, forever. <em>Or pay how you like.</em></h2>
-      <p>The core app is — and always will be — completely free. Upgrade for AI when you want it, at whatever cadence suits you.</p>
+      <h2>Free, forever. <em>Premium when you need more.</em></h2>
+      <p>The core app is — and always will be — completely free. One upgrade unlocks unlimited notes, the full editor, and every AI feature.</p>
     </div>
 
-    <div class="pricing-grid">
+    <div class="pricing-grid tiers tiers-two">
+      <!-- Tier 1: Basic / Free ─────────────────────────────────── -->
       <div class="price-card">
-        <h3>Free</h3>
-        <p class="tagline">For your everyday thinking.</p>
+        <h3>Basic</h3>
+        <p class="tagline">All the capture tools, modest caps.</p>
         <div class="price-amount">
           <span class="price-num">£0</span>
           <span class="price-period">/ forever</span>
         </div>
         <div class="price-saving">Always free, no card needed.</div>
         <ul class="price-perks">
-          <li>Unlimited notes &amp; sketches</li>
-          <li>Notebooks &amp; vault with PIN</li>
-          <li>Voice memos with transcription</li>
-          <li>Sync across all your devices</li>
+          <li>Up to <strong>50 notes</strong> (20 text · 10 canvas)</li>
+          <li><strong>5 notebooks</strong> · <strong>1 smart folder</strong></li>
+          <li>Voice memos — <strong>1 min</strong> per recording</li>
+          <li>Canvas with shapes &amp; math equations</li>
+          <li>Outline panel &amp; find / replace in the editor</li>
+          <li>Vault, trash &amp; 30-day recovery</li>
+          <li>Sync across web, iOS, Android</li>
         </ul>
         <a class="price-cta dark" href="https://app.noteshq.ai/signup" target="_blank" rel="noopener">Get started</a>
         <p class="price-finep">No subscription. No card.</p>
       </div>
 
-      <div class="price-card">
-        <h3>Monthly</h3>
-        <p class="tagline">Premium, billed every month.</p>
+      <!-- Tier 2: Premium — everything (AI included) ─────────── -->
+      <div class="price-card featured">
+        <span class="price-tag">★ Most popular</span>
+        <h3>Premium</h3>
+        <p class="tagline">Unlimited notes, full editor, all AI features.</p>
         <div class="price-amount">
-          <span class="price-num">£9.99</span>
+          <span class="price-num">£5.99</span>
           <span class="price-period">/ month</span>
         </div>
-        <div class="price-saving">&nbsp;</div>
+        <div class="price-saving">or £59.90 / year — save 17%</div>
         <ul class="price-perks">
-          <li><strong>Everything in Free</strong></li>
-          <li>Unlimited NoteChat &amp; NoteQ</li>
-          <li>AI summaries &amp; drafts</li>
-          <li>Priority sync &amp; support</li>
+          <li><strong>Unlimited notes &amp; notebooks</strong></li>
+          <li>Voice memos — <strong>20 min</strong> recordings · unlimited transcription</li>
+          <li>Tables &amp; <strong>Linked notes</strong> (one note references another)</li>
+          <li>Public share links with password &amp; expiry</li>
+          <li>Version history with word-level diff</li>
+          <li>Focus timer &amp; recurring reminders</li>
+          <li><strong>NoteChat</strong> — ask your notes anything</li>
+          <li><strong>NoteQ</strong> — auto-generated quizzes</li>
+          <li>AI summaries, rewrites, tag suggestions &amp; translation</li>
+          <li>Phone &amp; email priority support</li>
         </ul>
-        <a class="price-cta dark" href="https://app.noteshq.ai/signup?plan=monthly" target="_blank" rel="noopener">Choose monthly</a>
-        <p class="price-finep">Cancel anytime.</p>
-      </div>
-
-      <div class="price-card">
-        <h3>Quarterly</h3>
-        <p class="tagline">Premium, billed every 3 months.</p>
-        <div class="price-amount">
-          <span class="price-num">£25.99</span>
-          <span class="price-period">/ 3 months</span>
-        </div>
-        <div class="price-saving">Save 13% <s>£29.97</s></div>
-        <ul class="price-perks">
-          <li><strong>Everything in Free</strong></li>
-          <li>Unlimited NoteChat &amp; NoteQ</li>
-          <li>AI summaries &amp; drafts</li>
-          <li>Priority sync &amp; support</li>
-        </ul>
-        <a class="price-cta dark" href="https://app.noteshq.ai/signup?plan=quarterly" target="_blank" rel="noopener">Choose quarterly</a>
-        <p class="price-finep">~£8.66 per month.</p>
-      </div>
-
-      <div class="price-card">
-        <h3>6 months</h3>
-        <p class="tagline">Premium, billed twice a year.</p>
-        <div class="price-amount">
-          <span class="price-num">£41.99</span>
-          <span class="price-period">/ 6 months</span>
-        </div>
-        <div class="price-saving">Save 30% <s>£59.94</s></div>
-        <ul class="price-perks">
-          <li><strong>Everything in Free</strong></li>
-          <li>Unlimited NoteChat &amp; NoteQ</li>
-          <li>AI summaries &amp; drafts</li>
-          <li>Priority sync &amp; support</li>
-        </ul>
-        <a class="price-cta dark" href="https://app.noteshq.ai/signup?plan=semiannual" target="_blank" rel="noopener">Choose 6 months</a>
-        <p class="price-finep">~£7.00 per month.</p>
-      </div>
-
-      <div class="price-card featured">
-        <span class="price-tag">★ Best value</span>
-        <h3>Yearly</h3>
-        <p class="tagline">Premium, billed once a year.</p>
-        <div class="price-amount">
-          <span class="price-num">£59.99</span>
-          <span class="price-period">/ year</span>
-        </div>
-        <div class="price-saving">Save 50% <s>£119.88</s></div>
-        <ul class="price-perks">
-          <li><strong>Everything in Free</strong></li>
-          <li>Unlimited NoteChat &amp; NoteQ</li>
-          <li>AI summaries &amp; drafts</li>
-          <li>Priority sync &amp; support</li>
-        </ul>
-        <a class="price-cta light" href="https://app.noteshq.ai/signup?plan=yearly" target="_blank" rel="noopener">Choose yearly</a>
-        <p class="price-finep">£5.00 per month · 30-day money-back.</p>
+        <a class="price-cta light" href="https://app.noteshq.ai/signup?plan=premium" target="_blank" rel="noopener">Go Premium</a>
+        <p class="price-finep">Cancel anytime · 30-day money-back.</p>
       </div>
     </div>
+
+    <!-- ── Link out to the full comparison ─────────────────────────
+         The full side-by-side matrix moved to a dedicated pricing
+         page so the homepage stays scannable. People who want the
+         exhaustive answer get a clean URL they can bookmark. -->
+    <div style="text-align: center; margin-top: 36px;">
+      <a class="cmp-summary" href="pricing.html" style="text-decoration: none;">
+        <span>See full comparison</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </div>
+
+    <!-- Old inline comparison table — kept hidden so the cmp- CSS
+         in this file isn't dead code if other pages reference it.
+         Source of truth now lives in pricing.html. -->
+    <details class="cmp-details" hidden>
+      <summary class="cmp-summary">
+        <span>Compare every feature</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </summary>
+
+      <div class="cmp-wrap">
+        <table class="cmp-table">
+          <thead>
+            <tr>
+              <th scope="col">Feature</th>
+              <th scope="col">Basic</th>
+              <th scope="col" class="cmp-featured">Premium</th>
+              <th scope="col" class="cmp-ai">Brain</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Capture & note kinds ── -->
+            <tr class="cmp-group"><td colspan="4">Capture &amp; note kinds</td></tr>
+            <tr><th scope="row">Notes total</th><td>50</td><td>Unlimited</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Text notes</th><td>20</td><td>Unlimited</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Canvas notes</th><td>10</td><td>Unlimited</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Checklists &amp; daily notes</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Voice memo — recording length</th><td>1 min</td><td>10 min</td><td>20 min</td></tr>
+            <tr><th scope="row">Voice transcription quota</th><td>30 min/mo</td><td>5 hrs/mo</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Templates</th><td>Use only</td><td>Create &amp; manage</td><td>Create &amp; manage</td></tr>
+
+            <!-- Organization ── -->
+            <tr class="cmp-group"><td colspan="4">Organization</td></tr>
+            <tr><th scope="row">Notebooks</th><td>5</td><td>Unlimited</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Sub-notebooks (nested)</th><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Notebook archive</th><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Tags &amp; color labels</th><td>Unlimited</td><td>Unlimited</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Tag rename / merge</th><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Smart folders</th><td>1</td><td>Unlimited</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Pin to top &amp; drag-to-reorder</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Vault (biometric / PIN)</th><td>5 notes</td><td>Unlimited</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Trash &amp; 30-day recovery</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Note merge</th><td>—</td><td>✓</td><td>✓</td></tr>
+
+            <!-- Editor ── -->
+            <tr class="cmp-group"><td colspan="4">Editor</td></tr>
+            <tr><th scope="row">Rich text + slash commands</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Inline images storage</th><td>50 MB</td><td>10 GB</td><td>10 GB</td></tr>
+            <tr><th scope="row">Resizable images &amp; alignment</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Math / LaTeX equations</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Outline panel</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Find &amp; replace</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Tables</th><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Linked notes <span style="color:var(--ink-3);font-size:11px;font-weight:400;">(one note references another)</span></th><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Linked-notes hover preview</th><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Reading mode</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Focus / pomodoro timer</th><td>—</td><td>✓</td><td>✓</td></tr>
+
+            <!-- Canvas ── -->
+            <tr class="cmp-group"><td colspan="4">Canvas</td></tr>
+            <tr><th scope="row">Pen, eraser &amp; pan</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Shape tools (rect / ellipse / line / arrow)</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Move / drag shapes</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Sticky notes on canvas</th><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Inline images on canvas</th><td>✓</td><td>✓</td><td>✓</td></tr>
+
+            <!-- Reminders ── -->
+            <tr class="cmp-group"><td colspan="4">Reminders &amp; calendar</td></tr>
+            <tr><th scope="row">Per-note reminders</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Recurring reminders</th><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Browser push notifications</th><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Mobile local notifications</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Calendar view</th><td>✓</td><td>✓</td><td>✓</td></tr>
+
+            <!-- Sharing ── -->
+            <tr class="cmp-group"><td colspan="4">Sharing</td></tr>
+            <tr><th scope="row">Public share links</th><td>3 active</td><td>Unlimited</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Password gate</th><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Expiration dates</th><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Rotate / revoke token</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Mobile system share</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Translate in share view</th><td>—</td><td>—</td><td>✓</td></tr>
+
+            <!-- Search & discovery ── -->
+            <tr class="cmp-group"><td colspan="4">Search &amp; discovery</td></tr>
+            <tr><th scope="row">Quick switcher (⌘K)</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Universal search</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Related-notes panel</th><td>Top 3</td><td>Top 5</td><td>Top 5, AI-tuned</td></tr>
+            <tr><th scope="row">Image gallery</th><td>✓</td><td>✓</td><td>✓</td></tr>
+
+            <!-- Version history ── -->
+            <tr class="cmp-group"><td colspan="4">Version history</td></tr>
+            <tr><th scope="row">Snapshots per note</th><td>5</td><td>30</td><td>30</td></tr>
+            <tr><th scope="row">Restore any snapshot</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Word-level diff</th><td>—</td><td>✓</td><td>✓</td></tr>
+
+            <!-- AI ── -->
+            <tr class="cmp-group"><td colspan="4">AI</td></tr>
+            <tr><th scope="row">NoteChat</th><td>—</td><td>—</td><td>500 msgs/mo</td></tr>
+            <tr><th scope="row">NoteQ quizzes</th><td>—</td><td>—</td><td>100/mo</td></tr>
+            <tr><th scope="row">AI summarize note</th><td>—</td><td>—</td><td>✓</td></tr>
+            <tr><th scope="row">AI rewrite selection</th><td>—</td><td>—</td><td>✓</td></tr>
+            <tr><th scope="row">Smart tag suggestions (AI)</th><td>—</td><td>—</td><td>✓</td></tr>
+            <tr><th scope="row">Auto-tag suggestions (frequency-based)</th><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Note translation (8 languages)</th><td>—</td><td>3 / mo</td><td>Unlimited</td></tr>
+
+            <!-- Writing tracking ── -->
+            <tr class="cmp-group"><td colspan="4">Writing tracking</td></tr>
+            <tr><th scope="row">Daily word-goal chip</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Server-side streak tracking</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Writing-activity heatmap</th><td>—</td><td>✓</td><td>✓</td></tr>
+
+            <!-- Import / export ── -->
+            <tr class="cmp-group"><td colspan="4">Import / export</td></tr>
+            <tr><th scope="row">Markdown export (per note)</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Markdown export — entire library</th><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Markdown import</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">PDF export</th><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Print</th><td>✓</td><td>✓</td><td>✓</td></tr>
+
+            <!-- Sync & devices ── -->
+            <tr class="cmp-group"><td colspan="4">Sync &amp; devices</td></tr>
+            <tr><th scope="row">Web + iOS + Android</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Multi-device sync</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Offline editing (mobile)</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Tablet split-view</th><td>✓</td><td>✓</td><td>✓</td></tr>
+
+            <!-- Customization ── -->
+            <tr class="cmp-group"><td colspan="4">Customization &amp; UI</td></tr>
+            <tr><th scope="row">Dark mode + theme palettes</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">8 UI languages</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Right-click / long-press context</th><td>✓</td><td>✓</td><td>✓</td></tr>
+
+            <!-- Account & security ── -->
+            <tr class="cmp-group"><td colspan="4">Account &amp; security</td></tr>
+            <tr><th scope="row">Email + Google + Apple sign-in</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Biometric / PIN vault</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Priority support</th><td>—</td><td>Email + phone</td><td>Email + phone (fastest)</td></tr>
+            <tr><th scope="row">Auto-archive</th><td>—</td><td>✓</td><td>✓</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -2600,7 +2857,7 @@
       <a href="#ai">NoteChat &amp; NoteQ</a>
       <a href="pebble.html">Pebble device</a>
       <a href="https://blog.noteshq.ai" target="_blank" rel="noopener">Blog</a>
-      <a href="#pricing">Pricing</a>
+      <a href="pricing.html">Pricing</a>
     </div>
     <div class="footer-col">
       <h5>Company</h5>

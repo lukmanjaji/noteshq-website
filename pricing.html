@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pricing — NotesHQ</title>
+<meta name="description" content="Pick the plan that fits — Basic (free forever) or Premium (£5.99/mo) for unlimited notes, the full editor, and every AI feature." />
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='14' y='12' width='58' height='58' rx='11' fill='%23B7C2F3'/><rect x='18' y='18' width='58' height='58' rx='11' fill='%238092E5'/><rect x='22' y='24' width='58' height='58' rx='11' fill='%232D43E0'/><circle cx='75' cy='25' r='13' fill='%23FF6B47'/><text x='75' y='30' text-anchor='middle' font-family='system-ui,sans-serif' font-size='11' font-weight='700' fill='white'>HQ</text></svg>" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+<!-- Shared nav/footer/btn styles. -->
+<link rel="stylesheet" href="page.css">
+
+<style>
+  /* Pricing-page-local styles. Lifted verbatim from the pricing
+     block in index.html so this page can stand on its own — when
+     pricing CSS is finalized we can DRY it back into page.css. */
+  :root {
+    --ink: #1B1426;
+    --ink-2: #4A3F5C;
+    --ink-3: #897A9E;
+    --ink-4: #C7BCD8;
+    --bg: #FBF9FF;
+    --bg-2: #F4EEFF;
+    --line: #ECE3F7;
+    --card: #FFFFFF;
+    --purple: #6B3FD4;
+    --purple-deep: #4A1FB0;
+    --purple-soft: #EDE3FF;
+    --purple-tint: #F7F1FF;
+    --brand-blue: #2D43E0;
+    --brand-orange: #FF6B47;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    font-family: 'Geist', system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ── Page hero ─────────────────────────────────────────────── */
+  .pricing-hero {
+    padding: 56px 32px 24px;
+    text-align: center;
+    background:
+      radial-gradient(circle at 50% 0%, var(--purple-soft) 0%, transparent 70%),
+      var(--bg);
+  }
+  .pricing-hero .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--purple-tint);
+    color: var(--purple-deep);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    margin-bottom: 18px;
+  }
+  .pricing-hero h1 {
+    margin: 0 0 14px;
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 52px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .pricing-hero h1 em {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--purple) 0%, var(--brand-orange) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .pricing-hero p {
+    max-width: 620px;
+    margin: 0 auto;
+    color: var(--ink-2);
+    font-size: 17px;
+  }
+  @media (max-width: 700px) {
+    .pricing-hero { padding: 40px 22px 18px; }
+    .pricing-hero h1 { font-size: 36px; }
+    .pricing-hero p { font-size: 15px; }
+  }
+
+  /* ── Section shell ─────────────────────────────────────────── */
+  .section-inner { max-width: 1200px; margin: 0 auto; padding: 40px 32px; }
+  @media (max-width: 700px) { .section-inner { padding: 30px 20px; } }
+
+  /* ── Pricing cards — copy of index.html .pricing-grid block ── */
+  .pricing-grid.tiers {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .pricing-grid.tiers.tiers-two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 760px;
+  }
+  @media (max-width: 900px) {
+    .pricing-grid.tiers,
+    .pricing-grid.tiers.tiers-two { grid-template-columns: 1fr; }
+  }
+  .price-card {
+    background: var(--card);
+    border: 1.5px solid var(--line);
+    border-radius: 20px;
+    padding: 24px 22px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .price-card.featured {
+    background: linear-gradient(160deg, #1B1426 0%, #3A2358 60%, #2D43E0 110%);
+    border-color: transparent;
+    color: white;
+  }
+  .price-card.featured h3,
+  .price-card.featured .price-num,
+  .price-card.featured .price-period { color: white; }
+  .price-card.featured .price-perks li { color: rgba(255,255,255,0.85); }
+  .price-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--brand-orange);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+  }
+  .price-card h3 {
+    margin: 0 0 4px;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .price-card .tagline {
+    margin: 0 0 16px;
+    font-size: 12.5px;
+    color: var(--ink-3);
+    line-height: 1.45;
+    min-height: 36px;
+  }
+  .price-card.featured .tagline { color: rgba(255,255,255,0.75); }
+  .price-amount { display: flex; align-items: baseline; gap: 4px; margin-bottom: 4px; flex-wrap: wrap; }
+  .price-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 42px; font-weight: 400; letter-spacing: -0.02em; line-height: 1;
+  }
+  .price-period { font-size: 12.5px; color: var(--ink-3); }
+  .price-card.featured .price-period { color: rgba(255,255,255,0.7); }
+  .price-saving {
+    font-size: 11.5px; color: var(--purple); font-weight: 600;
+    margin-bottom: 18px; min-height: 16px;
+  }
+  .price-card.featured .price-saving { color: #FFB39A; }
+  .price-perks {
+    list-style: none; padding: 0; margin: 0 0 20px;
+    display: flex; flex-direction: column; gap: 8px;
+    flex: 1;
+  }
+  .price-perks li {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 12.5px; color: var(--ink-2); line-height: 1.4;
+  }
+  .price-perks li::before {
+    content: '';
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--purple-tint);
+    color: var(--purple);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B3FD4' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 11px;
+  }
+  .price-card.featured .price-perks li::before {
+    background-color: rgba(255,255,255,0.18);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+  }
+  .price-cta {
+    width: 100%; padding: 12px;
+    border-radius: 11px;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; border: none;
+    background: var(--ink); color: white;
+    transition: all 0.15s ease;
+    text-align: center;
+    display: block;
+  }
+  .price-cta.dark { background: var(--ink); color: white; }
+  .price-cta.light { background: white; color: var(--ink); }
+  .price-cta:hover { transform: translateY(-1px); }
+  .price-finep {
+    margin: 14px 0 0;
+    font-size: 11.5px;
+    color: var(--ink-3);
+    text-align: center;
+  }
+  .price-card.featured .price-finep { color: rgba(255,255,255,0.6); }
+  .price-card.ai {
+    background:
+      linear-gradient(var(--card), var(--card)) padding-box,
+      linear-gradient(135deg, var(--purple) 0%, var(--brand-orange) 100%) border-box;
+    border: 2px solid transparent;
+    box-shadow: 0 14px 36px rgba(107, 63, 212, 0.15);
+  }
+  .price-tag.ai-tag {
+    background: linear-gradient(135deg, var(--purple) 0%, var(--brand-orange) 100%);
+  }
+
+  /* ── Compare-every-feature table ────────────────────────────── */
+  .cmp-section {
+    background: linear-gradient(180deg, var(--bg) 0%, #F8F2FF 100%);
+    padding: 30px 0 60px;
+  }
+  .cmp-head {
+    text-align: center;
+    margin-bottom: 22px;
+  }
+  .cmp-head h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 36px;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+  }
+  .cmp-head p { color: var(--ink-3); font-size: 14px; margin: 0; }
+
+  .cmp-wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.06);
+    overflow-x: auto;
+  }
+  .cmp-table {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .cmp-table thead th {
+    position: sticky;
+    top: 0;
+    background: var(--card);
+    z-index: 1;
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    border-bottom: 2px solid var(--line);
+  }
+  .cmp-table thead th.cmp-featured {
+    background: linear-gradient(180deg, var(--purple-tint) 0%, var(--card) 100%);
+    color: var(--purple-deep);
+  }
+  .cmp-table thead th.cmp-ai {
+    background: linear-gradient(180deg, #FFF1EC 0%, var(--card) 100%);
+    color: var(--brand-orange);
+  }
+  .cmp-group td {
+    background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 100%);
+    padding: 10px 16px;
+    font-weight: 700;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--ink-2);
+    border-top: 1px solid var(--line);
+  }
+  .cmp-table tbody th,
+  .cmp-table tbody td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+  }
+  .cmp-table tbody th {
+    text-align: left;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .cmp-table tbody td {
+    text-align: center;
+    color: var(--ink-2);
+    font-size: 13px;
+  }
+  .cmp-table tbody td:nth-child(3) { background: rgba(247, 241, 255, 0.45); }
+  .cmp-table tbody tr:last-child th,
+  .cmp-table tbody tr:last-child td { border-bottom: 0; }
+
+  /* ── FAQ strip at the bottom ───────────────────────────────── */
+  .faq-mini {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 50px 32px 80px;
+  }
+  .faq-mini h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 32px;
+    text-align: center;
+    margin: 0 0 24px;
+  }
+  .faq-mini details {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+  }
+  .faq-mini summary {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    list-style: none;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .faq-mini summary::-webkit-details-marker { display: none; }
+  .faq-mini summary::after {
+    content: '+';
+    color: var(--ink-3);
+    font-size: 18px;
+    font-weight: 400;
+    margin-left: 12px;
+  }
+  .faq-mini details[open] summary::after { content: '−'; }
+  .faq-mini details p {
+    margin: 12px 0 0;
+    color: var(--ink-2);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── Final CTA strip ───────────────────────────────────────── */
+  .pricing-cta {
+    background: linear-gradient(135deg, #1B1426 0%, #3A2358 60%, #2D43E0 110%);
+    color: white;
+    padding: 60px 32px 70px;
+    text-align: center;
+  }
+  .pricing-cta h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 38px;
+    margin: 0 0 12px;
+    letter-spacing: -0.01em;
+  }
+  .pricing-cta p {
+    color: rgba(255,255,255,0.78);
+    margin: 0 auto 26px;
+    max-width: 540px;
+    font-size: 16px;
+  }
+  .pricing-cta .btn {
+    background: white;
+    color: var(--ink);
+    padding: 14px 26px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 15px;
+    display: inline-block;
+    transition: transform 0.15s ease;
+  }
+  .pricing-cta .btn:hover { transform: translateY(-1px); }
+</style>
+</head>
+<body>
+
+<!-- ── Nav (matches pebble.html / index.html scaffolding) ── -->
+<div class="nav-wrap">
+  <nav class="nav">
+    <a class="brand" href="index.html">
+      <svg width="32" height="32" viewBox="0 0 100 100">
+        <rect x="14" y="12" width="58" height="58" rx="11" fill="#B7C2F3"/>
+        <rect x="18" y="18" width="58" height="58" rx="11" fill="#8092E5"/>
+        <rect x="22" y="24" width="58" height="58" rx="11" fill="#2D43E0"/>
+        <circle cx="75" cy="25" r="13" fill="#FF6B47"/>
+        <text x="75" y="29.5" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-size="11" font-weight="700" fill="white">HQ</text>
+      </svg>
+      <span class="brand-word">NotesHQ</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#web">Web app</a>
+      <a href="index.html#ai">AI</a>
+      <a href="pebble.html">Pebble</a>
+      <a href="https://blog.noteshq.ai" target="_blank" rel="noopener">Blog</a>
+      <a href="pricing.html" style="color: var(--ink); font-weight: 600;">Pricing</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="careers.html">Careers</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn ghost" href="https://app.noteshq.ai/login" target="_blank" rel="noopener">Log in</a>
+      <a class="btn primary" href="https://app.noteshq.ai/signup" target="_blank" rel="noopener">Sign up</a>
+    </div>
+  </nav>
+</div>
+
+<!-- ── Hero ── -->
+<section class="pricing-hero">
+  <span class="eyebrow">
+    <span>Pricing</span>
+  </span>
+  <h1>Free, forever.<br><em>Premium when you need more.</em></h1>
+  <p>The core app is — and always will be — completely free. One upgrade unlocks unlimited notes, the full editor, and every AI feature.</p>
+</section>
+
+<!-- ── Two plan cards ── -->
+<section>
+  <div class="section-inner">
+    <div class="pricing-grid tiers tiers-two">
+      <!-- Tier 1: Basic / Free ─────────────────────────────────── -->
+      <div class="price-card">
+        <h3>Basic</h3>
+        <p class="tagline">All the capture tools, modest caps.</p>
+        <div class="price-amount">
+          <span class="price-num">£0</span>
+          <span class="price-period">/ forever</span>
+        </div>
+        <div class="price-saving">Always free, no card needed.</div>
+        <ul class="price-perks">
+          <li>Up to <strong>50 notes</strong> (20 text · 10 canvas)</li>
+          <li><strong>5 notebooks</strong> · <strong>1 smart folder</strong></li>
+          <li>Voice memos — <strong>1 min</strong> per recording</li>
+          <li>Canvas with shapes &amp; math equations</li>
+          <li>Outline panel &amp; find / replace in the editor</li>
+          <li>Vault, trash &amp; 30-day recovery</li>
+          <li>Sync across web, iOS, Android</li>
+        </ul>
+        <a class="price-cta dark" href="https://app.noteshq.ai/signup" target="_blank" rel="noopener">Get started</a>
+        <p class="price-finep">No subscription. No card.</p>
+      </div>
+
+      <!-- Tier 2: Premium — featured card with everything ──────── -->
+      <div class="price-card featured">
+        <span class="price-tag">★ Most popular</span>
+        <h3>Premium</h3>
+        <p class="tagline">Unlimited notes, the full editor, every AI feature.</p>
+        <div class="price-amount">
+          <span class="price-num">£5.99</span>
+          <span class="price-period">/ month</span>
+        </div>
+        <div class="price-saving">or £59.90 / year — save 17%</div>
+        <ul class="price-perks">
+          <li><strong>Unlimited notes &amp; notebooks</strong></li>
+          <li>Voice memos — <strong>20 min</strong> recordings · <strong>unlimited</strong> transcription</li>
+          <li>Tables &amp; <strong>Linked notes</strong> (one note references another)</li>
+          <li>Public share links with password &amp; expiry</li>
+          <li>Version history with word-level diff</li>
+          <li>Focus timer &amp; recurring reminders</li>
+          <li><strong>NoteChat</strong> — ask your notes anything (500 msgs/mo)</li>
+          <li><strong>NoteQ</strong> — auto-generated quizzes (100/mo)</li>
+          <li>AI summaries &amp; selection rewrites</li>
+          <li>Smart tag suggestions</li>
+          <li>Unlimited note translation (8 languages)</li>
+          <li>Phone &amp; email priority support</li>
+        </ul>
+        <a class="price-cta light" href="https://app.noteshq.ai/signup?plan=premium" target="_blank" rel="noopener">Go Premium</a>
+        <p class="price-finep">Cancel anytime · 30-day money-back.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Full feature comparison ────────────────────────────────── -->
+<section class="cmp-section">
+  <div class="section-inner" style="padding-top: 10px;">
+    <div class="cmp-head">
+      <h2>Compare every feature</h2>
+      <p>Everything that ships in NotesHQ today, laid out side-by-side.</p>
+    </div>
+
+    <div class="cmp-wrap">
+      <table class="cmp-table">
+        <thead>
+          <tr>
+            <th scope="col">Feature</th>
+            <th scope="col">Basic</th>
+            <th scope="col" class="cmp-featured">Premium</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Capture & note kinds ── -->
+          <tr class="cmp-group"><td colspan="3">Capture &amp; note kinds</td></tr>
+          <tr><th scope="row">Notes total</th><td>50</td><td>Unlimited</td></tr>
+          <tr><th scope="row">Text notes</th><td>20</td><td>Unlimited</td></tr>
+          <tr><th scope="row">Canvas notes</th><td>10</td><td>Unlimited</td></tr>
+          <tr><th scope="row">Checklists &amp; daily notes</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Voice memo — recording length</th><td>1 min</td><td>20 min</td></tr>
+          <tr><th scope="row">Voice transcription quota</th><td>30 min/mo</td><td>Unlimited</td></tr>
+          <tr><th scope="row">Templates</th><td>Use only</td><td>Create &amp; manage</td></tr>
+
+          <!-- Organization ── -->
+          <tr class="cmp-group"><td colspan="3">Organization</td></tr>
+          <tr><th scope="row">Notebooks</th><td>5</td><td>Unlimited</td></tr>
+          <tr><th scope="row">Sub-notebooks (nested)</th><td>—</td><td>✓</td></tr>
+          <tr><th scope="row">Notebook archive</th><td>—</td><td>✓</td></tr>
+          <tr><th scope="row">Tags &amp; color labels</th><td>Unlimited</td><td>Unlimited</td></tr>
+          <tr><th scope="row">Tag rename / merge</th><td>—</td><td>✓</td></tr>
+          <tr><th scope="row">Smart folders</th><td>1</td><td>Unlimited</td></tr>
+          <tr><th scope="row">Pin to top &amp; drag-to-reorder</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Vault (biometric / PIN)</th><td>5 notes</td><td>Unlimited</td></tr>
+          <tr><th scope="row">Trash &amp; 30-day recovery</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Note merge</th><td>—</td><td>✓</td></tr>
+
+          <!-- Editor ── -->
+          <tr class="cmp-group"><td colspan="3">Editor</td></tr>
+          <tr><th scope="row">Rich text + slash commands</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Inline images storage</th><td>50 MB</td><td>Unlimited</td></tr>
+          <tr><th scope="row">Resizable images &amp; alignment</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Math / LaTeX equations</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Outline panel</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Find &amp; replace</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Tables</th><td>—</td><td>✓</td></tr>
+          <tr><th scope="row">Linked notes <span style="color:var(--ink-3);font-size:11px;font-weight:400;">(one note references another)</span></th><td>—</td><td>✓</td></tr>
+          <tr><th scope="row">Linked-notes hover preview</th><td>—</td><td>✓</td></tr>
+          <tr><th scope="row">Reading mode</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Focus / pomodoro timer</th><td>—</td><td>✓</td></tr>
+
+          <!-- Canvas ── -->
+          <tr class="cmp-group"><td colspan="3">Canvas</td></tr>
+          <tr><th scope="row">Pen, eraser &amp; pan</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Shape tools (rect / ellipse / line / arrow)</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Move / drag shapes</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Sticky notes on canvas</th><td>—</td><td>✓</td></tr>
+          <tr><th scope="row">Inline images on canvas</th><td>✓</td><td>✓</td></tr>
+
+          <!-- Reminders ── -->
+          <tr class="cmp-group"><td colspan="3">Reminders &amp; calendar</td></tr>
+          <tr><th scope="row">Per-note reminders</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Recurring reminders</th><td>—</td><td>✓</td></tr>
+          <tr><th scope="row">Browser push notifications</th><td>—</td><td>✓</td></tr>
+          <tr><th scope="row">Mobile local notifications</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Calendar view</th><td>✓</td><td>✓</td></tr>
+
+          <!-- Sharing ── -->
+          <tr class="cmp-group"><td colspan="3">Sharing</td></tr>
+          <tr><th scope="row">Public share links</th><td>3 active</td><td>Unlimited</td></tr>
+          <tr><th scope="row">Password gate</th><td>—</td><td>✓</td></tr>
+          <tr><th scope="row">Expiration dates</th><td>—</td><td>✓</td></tr>
+          <tr><th scope="row">Rotate / revoke token</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Mobile system share</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Translate in share view</th><td>—</td><td>✓</td></tr>
+
+          <!-- Search & discovery ── -->
+          <tr class="cmp-group"><td colspan="3">Search &amp; discovery</td></tr>
+          <tr><th scope="row">Quick switcher (⌘K)</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Universal search</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Related-notes panel</th><td>Top 3</td><td>Top 5, AI-tuned</td></tr>
+          <tr><th scope="row">Image gallery</th><td>✓</td><td>✓</td></tr>
+
+          <!-- Version history ── -->
+          <tr class="cmp-group"><td colspan="3">Version history</td></tr>
+          <tr><th scope="row">Snapshots per note</th><td>5</td><td>30</td></tr>
+          <tr><th scope="row">Restore any snapshot</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Word-level diff</th><td>—</td><td>✓</td></tr>
+
+          <!-- AI ── -->
+          <tr class="cmp-group"><td colspan="3">AI</td></tr>
+          <tr><th scope="row">NoteChat</th><td>—</td><td>500 msgs/mo</td></tr>
+          <tr><th scope="row">NoteQ quizzes</th><td>—</td><td>100/mo</td></tr>
+          <tr><th scope="row">AI summarize note</th><td>—</td><td>✓</td></tr>
+          <tr><th scope="row">AI rewrite selection</th><td>—</td><td>✓</td></tr>
+          <tr><th scope="row">Smart tag suggestions (AI)</th><td>—</td><td>✓</td></tr>
+          <tr><th scope="row">Auto-tag suggestions (frequency-based)</th><td>—</td><td>✓</td></tr>
+          <tr><th scope="row">Note translation (8 languages)</th><td>—</td><td>Unlimited</td></tr>
+
+          <!-- Writing tracking ── -->
+          <tr class="cmp-group"><td colspan="3">Writing tracking</td></tr>
+          <tr><th scope="row">Daily word-goal chip</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Server-side streak tracking</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Writing-activity heatmap</th><td>—</td><td>✓</td></tr>
+
+          <!-- Import / export ── -->
+          <tr class="cmp-group"><td colspan="3">Import / export</td></tr>
+          <tr><th scope="row">Markdown export (per note)</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Markdown export — entire library</th><td>—</td><td>✓</td></tr>
+          <tr><th scope="row">Markdown import</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">PDF export</th><td>—</td><td>✓</td></tr>
+          <tr><th scope="row">Print</th><td>✓</td><td>✓</td></tr>
+
+          <!-- Sync & devices ── -->
+          <tr class="cmp-group"><td colspan="3">Sync &amp; devices</td></tr>
+          <tr><th scope="row">Web + iOS + Android</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Multi-device sync</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Offline editing (mobile)</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Tablet split-view</th><td>✓</td><td>✓</td></tr>
+
+          <!-- Customization ── -->
+          <tr class="cmp-group"><td colspan="3">Customization &amp; UI</td></tr>
+          <tr><th scope="row">Dark mode + theme palettes</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">8 UI languages</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Right-click / long-press context</th><td>✓</td><td>✓</td></tr>
+
+          <!-- Account & security ── -->
+          <tr class="cmp-group"><td colspan="3">Account &amp; security</td></tr>
+          <tr><th scope="row">Email + Google + Apple sign-in</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Biometric / PIN vault</th><td>✓</td><td>✓</td></tr>
+          <tr><th scope="row">Priority support</th><td>—</td><td>Email + phone</td></tr>
+          <tr><th scope="row">Auto-archive</th><td>—</td><td>✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<div class="faq-mini">
+  <h2>Pricing FAQ</h2>
+
+  <details>
+    <summary>Can I switch plans any time?</summary>
+    <p>Yes — upgrade, downgrade, or cancel anytime from Settings → Account. Upgrades take effect immediately; downgrades apply at the end of your billing cycle so you don't lose paid days.</p>
+  </details>
+
+  <details>
+    <summary>What happens to my notes if I downgrade to Basic?</summary>
+    <p>Nothing gets deleted. If you have more than 50 notes when you drop to Basic, the existing ones stay safe and readable — you just can't create new notes until you're under the limit (delete, archive, or merge). Premium-only features (sub-notebooks, version diff, etc.) become read-only.</p>
+  </details>
+
+  <details>
+    <summary>Do I need a card for Basic?</summary>
+    <p>No. Basic is free forever — no card, no trial expiry. We only ask for a card when you upgrade.</p>
+  </details>
+
+  <details>
+    <summary>What counts as a "voice memo recording"?</summary>
+    <p>Each individual recording session. On Basic you can record for up to 1 minute at a time; on Premium 20 minutes. Separately, the monthly transcription quota caps how much audio you can convert to text in a calendar month — Premium is unlimited.</p>
+  </details>
+
+  <details>
+    <summary>How does the AI quota work on Premium?</summary>
+    <p>Premium includes 500 NoteChat messages and 100 NoteQ quiz generations per calendar month. Resets on the 1st. If you ever need more, contact us — power users get the conversation.</p>
+  </details>
+
+  <details>
+    <summary>What is a "Linked note"?</summary>
+    <p>A reference from one note to another. Type <code style="font-family:'Geist Mono',monospace;font-size:12px;background:var(--bg-2);padding:1px 5px;border-radius:4px;">[[Note title]]</code> in the editor and we'll auto-link to that note; you can click the link to jump straight to it, and the target shows a "Linked from" panel listing every note that points to it.</p>
+  </details>
+
+  <details>
+    <summary>Do you offer student or non-profit discounts?</summary>
+    <p>50% off Premium for verified students; non-profits and educators get Premium free. Email <a href="mailto:hello@noteshq.ai" style="color:var(--purple);">hello@noteshq.ai</a> from your institutional address to enable it.</p>
+  </details>
+
+  <details>
+    <summary>Is there a team plan?</summary>
+    <p>Not yet — we're focused on the single-user experience first. Shared spaces and team billing are on the roadmap. Reach out if that's blocking you.</p>
+  </details>
+</div>
+
+<!-- ── Final CTA ── -->
+<section class="pricing-cta">
+  <h2>Start free. Upgrade when you want.</h2>
+  <p>Capture, organize, and search every kind of thinking. Basic is free forever — Premium is £5.99/mo, cancel anytime at the click of a button.</p>
+  <a class="btn" href="https://app.noteshq.ai/signup" target="_blank" rel="noopener">Create your account →</a>
+</section>
+
+<!-- ── Footer (matches pebble.html) ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="index.html">
+        <svg width="32" height="32" viewBox="0 0 100 100">
+          <rect x="14" y="12" width="58" height="58" rx="11" fill="#B7C2F3"/>
+          <rect x="18" y="18" width="58" height="58" rx="11" fill="#8092E5"/>
+          <rect x="22" y="24" width="58" height="58" rx="11" fill="#2D43E0"/>
+          <circle cx="75" cy="25" r="13" fill="#FF6B47"/>
+          <text x="75" y="29.5" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-size="11" font-weight="700" fill="white">HQ</text>
+        </svg>
+        <span class="brand-word">NotesHQ</span>
+      </a>
+      <p>A quiet place for the things you think, the things you make, and the things you don't want to forget.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Product</h5>
+      <a href="index.html#features">Features</a>
+      <a href="index.html#ai">NoteChat &amp; NoteQ</a>
+      <a href="pebble.html">Pebble device</a>
+      <a href="https://blog.noteshq.ai" target="_blank" rel="noopener">Blog</a>
+      <a href="pricing.html">Pricing</a>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <a href="index.html#contact">Contact</a>
+      <a href="https://zshift.io">ZShift</a>
+      <a href="careers.html">Careers</a>
+      <a href="#">Press kit</a>
+    </div>
+    <div class="footer-col">
+      <h5>Support</h5>
+      <a href="index.html#faq">FAQ</a>
+      <a href="helpcenter.html">Help center</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 NotesHQ by <a href="https://zshift.io" style="color: var(--ink-2); font-weight: 600;">ZShift</a>. Made with care in the UK.</span>
+    <div class="socials">
+      <a href="#" aria-label="Twitter"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22 5.8a8.49 8.49 0 0 1-2.36.64 4.13 4.13 0 0 0 1.81-2.27 8.21 8.21 0 0 1-2.61 1 4.1 4.1 0 0 0-7 3.74 11.64 11.64 0 0 1-8.45-4.29 4.16 4.16 0 0 0-.55 2.07 4.09 4.09 0 0 0 1.82 3.41 4.05 4.05 0 0 1-1.86-.51v.05a4.1 4.1 0 0 0 3.3 4 3.93 3.93 0 0 1-1.85.07 4.11 4.11 0 0 0 3.83 2.84A8.22 8.22 0 0 1 2 18.34a11.59 11.59 0 0 0 6.29 1.85A11.59 11.59 0 0 0 20 8.45v-.53A8.43 8.43 0 0 0 22 5.8z"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.83-.26.83-.58v-2.17c-3.34.73-4-1.43-4-1.43a3.14 3.14 0 0 0-1.31-1.74c-1.07-.74.08-.72.08-.72a2.5 2.5 0 0 1 1.82 1.22 2.54 2.54 0 0 0 3.47 1 2.55 2.55 0 0 1 .76-1.6c-2.67-.31-5.47-1.33-5.47-5.95a4.66 4.66 0 0 1 1.23-3.23 4.33 4.33 0 0 1 .12-3.18s1-.32 3.3 1.23a11.36 11.36 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23a4.33 4.33 0 0 1 .12 3.18 4.66 4.66 0 0 1 1.23 3.23c0 4.64-2.8 5.64-5.48 5.94a2.85 2.85 0 0 1 .81 2.22v3.29c0 .32.22.69.83.58A12 12 0 0 0 12 .5z"/></svg></a>
+      <a href="#" aria-label="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.13 1.45-2.13 2.94v5.66H9.36V9h3.41v1.56h.05a3.75 3.75 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77A1.77 1.77 0 0 0 0 1.77v20.45A1.77 1.77 0 0 0 1.77 24h20.45A1.77 1.77 0 0 0 24 22.22V1.77A1.77 1.77 0 0 0 22.22 0z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
