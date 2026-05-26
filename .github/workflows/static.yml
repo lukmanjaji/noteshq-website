@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Simple workflow for deploying static content
 #
 # Bypasses actions/checkout because codeload.github.com is unreachable
@@ -5,6 +6,10 @@
 # github.com works because that's the regular git endpoint, not the
 # codeload archive CDN.
 name: Deploy static content
+=======
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages co
+>>>>>>> e0e31b88abf591211557a613cc9f93707bb60512
 
 on:
   push:
@@ -14,6 +19,7 @@ on:
 jobs:
   build:
     runs-on: self-hosted
+<<<<<<< HEAD
 
     steps:
     - name: Clone repository
@@ -29,3 +35,12 @@ jobs:
 
     - name: Copy assets
       run: cp -r /home/noteshq-website/_work/noteshq-website/noteshq-website/assets/*.png /home/noteshq/assets/
+=======
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Copy files
+      run:  cp -r /home/noteshq/ci/_work/noteshq-landing/noteshq-landing/*.*  /home/noteshq/
+    - name: Copy save
+      run:  cp -r /home/noteshq/ci/_work/noteshq-landing/noteshq-landing/assets/*.png  /home/noteshq/assets/
+>>>>>>> e0e31b88abf591211557a613cc9f93707bb60512
