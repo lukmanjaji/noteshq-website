@@ -1,23 +1,31 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+# Simple workflow for deploying static content
+#
+# Bypasses actions/checkout because codeload.github.com is unreachable
+# from this VPS (returns 404 / times out). Plain `git clone` against
+# github.com works because that's the regular git endpoint, not the
+# codeload archive CDN.
+name: Deploy static content
 
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
-  build: 
-
+  build:
     runs-on: self-hosted
 
-    strategy:
-      matrix:
-        node-version: [16.x]
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Copy files
-      run:  cp -r /home/noteshq/ci/_work/noteshq-landing/noteshq-landing/*.*  /home/noteshq/
-    - name: Copy save
-      run:  cp -r /home/noteshq/ci/_work/noteshq-landing/noteshq-landing/assets/*.png  /home/noteshq/assets/
+    - name: Clone repository
+      run: |
+        set -e
+        TARGET="$GITHUB_WORKSPACE"
+        rm -rf "$TARGET"
+        git clone --depth 1 --branch "${GITHUB_REF_NAME:-main}" \
+          "https://github.com/$GITHUB_REPOSITORY.git" "$TARGET"
+
+    - name: Copy site files
+      run: cp -r /home/noteshq-website/_work/noteshq-website/noteshq-website/*.* /home/noteshq/
+
+    - name: Copy assets
+      run: cp -r /home/noteshq-website/_work/noteshq-website/noteshq-website/assets/*.png /home/noteshq/assets/
