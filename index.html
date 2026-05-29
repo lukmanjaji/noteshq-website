@@ -163,11 +163,11 @@
   /* Hero phone art */
   .hero-phone-stack {
     position: relative;
-    height: 540px;
+    height: 620px;
   }
   .phone {
     position: absolute;
-    width: 280px;
+    width: 260px;
     aspect-ratio: 9 / 19;
     background: #1a1a1f;
     border-radius: 36px;
@@ -185,13 +185,155 @@
     position: relative;
   }
   .phone.left {
-    left: 0; top: 40px;
-    transform: rotate(-5deg);
+    left: -10px; top: 200px;
+    transform: rotate(-7deg);
+    z-index: 2;
   }
   .phone.right {
-    right: 0; top: 0;
-    transform: rotate(5deg);
-    z-index: 2;
+    right: -10px; top: 170px;
+    transform: rotate(7deg);
+    z-index: 3;
+  }
+
+  /* Tablet — landscape, sits behind the two phones at the top of
+     the stack. Shows the two-pane app layout (notebook list +
+     checklist detail) so the hero advertises the full multi-device
+     workflow at a glance. Hidden on narrow viewports where the
+     phones already make the point. */
+  .tablet {
+    position: absolute;
+    width: 520px;
+    aspect-ratio: 16 / 11;
+    background: #1a1a1f;
+    border-radius: 24px;
+    padding: 11px;
+    box-shadow:
+      0 50px 100px -30px rgba(40, 24, 70, 0.4),
+      0 0 0 1.5px rgba(0,0,0,0.05),
+      inset 0 0 0 2px rgba(255,255,255,0.04);
+    left: 50%; top: 0;
+    transform: translateX(-50%) rotate(-1.5deg);
+    z-index: 1;
+  }
+  .tablet-screen {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    border-radius: 16px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .tb-pane { padding: 12px 11px; overflow: hidden; }
+  .tb-pane.right { background: var(--bg-2); border-left: 1px solid var(--line); }
+
+  .tb-greet { font-size: 9.5px; color: var(--ink-3); }
+  .tb-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px; line-height: 1.0;
+    margin-bottom: 8px;
+  }
+  .tb-search {
+    background: var(--bg-2);
+    border-radius: 7px;
+    padding: 5px 7px;
+    font-size: 9px; color: var(--ink-3);
+    margin-bottom: 7px;
+  }
+  .tb-tiles { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; margin-bottom: 8px; }
+  .tb-tile {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 5px 4px;
+    text-align: center;
+  }
+  .tb-tile .ic {
+    width: 16px; height: 16px;
+    background: var(--purple-tint);
+    color: var(--purple);
+    border-radius: 5px;
+    margin: 0 auto 2px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .tb-tile strong { display: block; font-size: 8.5px; font-weight: 600; }
+  .tb-tile em { display: block; font-style: normal; font-size: 7.5px; color: var(--ink-3); margin-top: 0; }
+
+  .tb-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 7px 9px;
+    margin-bottom: 5px;
+  }
+  .tb-card.picked {
+    background: linear-gradient(180deg, #F7F1FF 0%, #FFFFFF 70%);
+    border-color: rgba(107, 63, 212, 0.35);
+  }
+  .tb-card .t {
+    font-family: 'Instrument Serif', serif;
+    font-size: 12px; line-height: 1.05;
+    margin-bottom: 3px;
+  }
+  .tb-card .row {
+    display: flex; gap: 4px; align-items: center;
+    font-size: 8px; color: var(--ink-2);
+    line-height: 1.2;
+  }
+  .tb-card .check {
+    width: 7px; height: 7px; border-radius: 2px;
+    background: var(--purple); flex-shrink: 0;
+  }
+  .tb-card .strike { text-decoration: line-through; color: var(--ink-4); }
+  .tb-card .meta {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 7.5px; color: var(--ink-3);
+    margin-top: 5px;
+    font-family: 'Geist Mono', monospace;
+  }
+  .tb-card .pill {
+    display: inline-flex; padding: 1px 5px; border-radius: 4px;
+    font-size: 7px; font-weight: 600;
+    background: #DCFCE7; color: #1F8A5B;
+  }
+
+  /* Right pane: checklist detail */
+  .tb-detail-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px; line-height: 1.0;
+    margin-bottom: 3px;
+  }
+  .tb-detail-meta {
+    font-size: 8.5px; color: var(--ink-3);
+    margin-bottom: 10px;
+    font-family: 'Geist Mono', monospace;
+  }
+  .tb-item {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 6px 8px;
+    margin-bottom: 5px;
+    font-size: 9.5px;
+  }
+  .tb-item .head {
+    display: flex; align-items: center; gap: 7px;
+  }
+  .tb-item .box {
+    width: 11px; height: 11px; border-radius: 3px;
+    background: var(--purple); flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .tb-item .box.empty { background: transparent; border: 1.5px solid var(--line); }
+  .tb-item .box svg { color: white; }
+  .tb-item .label { font-size: 9.5px; flex: 1; }
+  .tb-item .label.strike { text-decoration: line-through; color: var(--ink-4); }
+  .tb-item .chips { display: flex; gap: 4px; margin-top: 5px; margin-left: 18px; }
+  .tb-item .chip {
+    display: inline-flex; align-items: center; gap: 3px;
+    padding: 2px 6px;
+    border-radius: 100px;
+    font-size: 7.5px; font-weight: 600;
+    background: #FFE9D9; color: #B5612B;
   }
   /* Phone 1 — home */
   .ph-home { padding: 14px 12px; }
@@ -1665,6 +1807,11 @@
     .section-head h2 { font-size: 36px; }
     .final-cta h2 { font-size: 36px; }
     .hero-phone-stack { height: 480px; max-width: 360px; margin: 0 auto; }
+    /* On narrow screens the tablet has nowhere to fit between the
+       two phones — drop it and let the phones carry the hero alone. */
+    .tablet { display: none; }
+    .phone.left { left: 0; top: 40px; transform: rotate(-5deg); z-index: 2; }
+    .phone.right { right: 0; top: 0; transform: rotate(5deg); z-index: 3; }
     .feat.wide { grid-column: auto; }
     .nav-links { display: none; }
     section { padding: 64px 22px; }
@@ -1735,6 +1882,69 @@
     </div>
 
     <div class="hero-phone-stack">
+      <!-- Tablet: sits behind the two phones, advertising the
+           desktop / tablet two-pane workflow. Same visual language
+           as the in-app screenshot but condensed for hero scale. -->
+      <div class="tablet">
+        <div class="tablet-screen">
+          <div class="tb-pane left">
+            <div class="tb-greet">Good morning,</div>
+            <div class="tb-name">Tamara</div>
+            <div class="tb-search">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+              Search notes…
+            </div>
+            <div class="tb-tiles">
+              <div class="tb-tile"><span class="ic"><svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M4 19.5V4a2 2 0 0 1 2-2h13v18H6a2 2 0 0 0-2 2"/></svg></span><strong>Notebooks</strong><em>5 books</em></div>
+              <div class="tb-tile"><span class="ic" style="background: #FFE4D6; color: #B5612B;"><svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M9 11H7a2 2 0 0 0-2 2v7"/><path d="M15 11h2a2 2 0 0 1 2 2v7"/><circle cx="12" cy="7" r="4"/><path d="M12 11v9"/></svg></span><strong>NoteQ</strong><em>AI quizzes</em></div>
+              <div class="tb-tile"><span class="ic"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><strong>Vault</strong><em>Locked</em></div>
+            </div>
+            <div class="tb-card picked">
+              <div class="t">Saturday errands</div>
+              <div class="row"><span class="check"></span><span class="strike">Gym shoes (the new pair)</span></div>
+              <div class="row"><span class="check"></span><span class="strike">Tomatoes &amp; olive oil</span></div>
+              <div class="row"><span class="check"></span><span class="strike">Trash bags</span></div>
+              <div class="meta"><span>May 14 · 4/6 done</span><span class="pill">Personal</span></div>
+            </div>
+            <div class="tb-card">
+              <div class="t">Tomato sauce, finally written down</div>
+              <div class="meta"><span>May 14</span><span class="pill" style="background: #FFE4D6; color: #B5612B;">Recipes</span></div>
+            </div>
+          </div>
+          <div class="tb-pane right">
+            <div class="tb-detail-title">Saturday errands</div>
+            <div class="tb-detail-meta">May 14 · 4/6 done</div>
+            <div class="tb-item">
+              <div class="head">
+                <span class="box"><svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <span class="label strike">Gym shoes (the new pair)</span>
+              </div>
+              <div class="chips"><span class="chip">Tue</span><span class="chip" style="background: #E2F0DC; color: #2E6B1F;">Reminder</span></div>
+            </div>
+            <div class="tb-item">
+              <div class="head">
+                <span class="box"><svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <span class="label strike">Tomatoes &amp; olive oil</span>
+              </div>
+            </div>
+            <div class="tb-item">
+              <div class="head">
+                <span class="box empty"></span>
+                <span class="label">Birthday card for Sam</span>
+              </div>
+              <div class="chips"><span class="chip">Wed</span><span class="chip" style="background: #E2F0DC; color: #2E6B1F;">Wed</span></div>
+            </div>
+            <div class="tb-item">
+              <div class="head">
+                <span class="box empty"></span>
+                <span class="label">Library books — return by Sun</span>
+              </div>
+              <div class="chips"><span class="chip">Sun</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Phone 1: Home -->
       <div class="phone left">
         <div class="phone-screen ph-home" style="display: flex; flex-direction: column;">
