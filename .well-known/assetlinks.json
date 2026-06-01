@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.zshift.noteshq",
+      "sha256_cert_fingerprints": [
+        "F4:47:1D:A0:64:9E:BB:E2:66:D6:A6:D7:A3:26:3E:37:C5:CA:ED:F2:CA:0E:D2:F2:C0:22:11:3F:59:32:75:01",
+        "88:51:5B:F9:BE:92:E3:10:B0:F8:9A:37:FB:3A:18:69:CA:80:D7:91:D2:53:08:AA:E7:5C:FC:9A:CF:98:41:F1"
+      ]
+    }
+  }
+]
