@@ -442,7 +442,9 @@
         <ul class="price-perks">
           <li>Up to <strong>50 notes</strong> (20 text · 10 canvas)</li>
           <li><strong>5 notebooks</strong> · <strong>1 smart folder</strong></li>
-          <li>Voice memos — <strong>1 min</strong> per recording</li>
+          <li>Voice memos — <strong>1 min</strong> per recording, 30 min/mo transcribed</li>
+          <li><strong>5 saved</strong> un-transcribed audios (retry later)</li>
+          <li>Note translation — <strong>first 1,000 words</strong> (24 languages)</li>
           <li>Canvas with shapes &amp; math equations</li>
           <li>Outline panel &amp; find / replace in the editor</li>
           <li>Vault, trash &amp; 30-day recovery</li>
@@ -473,7 +475,6 @@
           <li><strong>NoteQ</strong> — auto-generated quizzes (100/mo)</li>
           <li>AI summaries &amp; selection rewrites</li>
           <li>Smart tag suggestions</li>
-          <li>Unlimited note translation (8 languages)</li>
           <li>Phone &amp; email priority support</li>
         </ul>
         <a class="price-cta light" href="https://app.noteshq.ai/signup?plan=premium" target="_blank" rel="noopener">Go Premium</a>
@@ -509,6 +510,25 @@
           <tr><th scope="row">Checklists &amp; daily notes</th><td>✓</td><td>✓</td></tr>
           <tr><th scope="row">Voice memo — recording length</th><td>1 min</td><td>20 min</td></tr>
           <tr><th scope="row">Voice transcription quota</th><td>30 min/mo</td><td>Unlimited</td></tr>
+          <tr>
+            <th scope="row">Transcription languages
+              <span style="color:var(--ink-3);font-size:11px;font-weight:400;">
+                (auto-detect + 25: Arabic, Belarusian, Bengali, Bulgarian, Catalan,
+                Chinese, Czech, Danish, Dutch, English, French, German, Greek, Italian,
+                Japanese, Polish, Portuguese, Russian, Slovak, Slovene, Spanish,
+                Swedish, Turkmen, Turkish, Welsh)
+              </span>
+            </th>
+            <td>All 25</td>
+            <td>All 25</td>
+          </tr>
+          <tr>
+            <th scope="row">Save voice memos un-transcribed
+              <span style="color:var(--ink-3);font-size:11px;font-weight:400;">(retry when you have quota)</span>
+            </th>
+            <td>5 saved</td>
+            <td>Unlimited</td>
+          </tr>
           <tr><th scope="row">Templates</th><td>Use only</td><td>Create &amp; manage</td></tr>
 
           <!-- Organization ── -->
@@ -553,6 +573,20 @@
           <tr><th scope="row">Browser push notifications</th><td>—</td><td>✓</td></tr>
           <tr><th scope="row">Mobile local notifications</th><td>✓</td><td>✓</td></tr>
           <tr><th scope="row">Calendar view</th><td>✓</td><td>✓</td></tr>
+          <tr>
+            <th scope="row">Calendar subscription (webcal / ICS)
+              <span style="color:var(--ink-3);font-size:11px;font-weight:400;">(Google, Apple, Outlook, Thunderbird — any iCalendar client)</span>
+            </th>
+            <td>✓</td>
+            <td>✓</td>
+          </tr>
+          <tr>
+            <th scope="row">Daily review email
+              <span style="color:var(--ink-3);font-size:11px;font-weight:400;">(morning summary of today's reminders + overdue items, at the hour you pick)</span>
+            </th>
+            <td>✓</td>
+            <td>✓</td>
+          </tr>
 
           <!-- Sharing ── -->
           <tr class="cmp-group"><td colspan="3">Sharing</td></tr>
@@ -565,8 +599,21 @@
 
           <!-- Search & discovery ── -->
           <tr class="cmp-group"><td colspan="3">Search &amp; discovery</td></tr>
-          <tr><th scope="row">Quick switcher (⌘K)</th><td>✓</td><td>✓</td></tr>
-          <tr><th scope="row">Universal search</th><td>✓</td><td>✓</td></tr>
+          <tr>
+            <th scope="row">Quick switcher (⌘K)
+              <span style="color:var(--ink-3);font-size:11px;font-weight:400;">(jump to any note / notebook / setting by typing)</span>
+            </th>
+            <td>✓</td>
+            <td>✓</td>
+          </tr>
+          <tr><th scope="row">Search (title + body)</th><td>✓</td><td>✓</td></tr>
+          <tr>
+            <th scope="row">Search filters
+              <span style="color:var(--ink-3);font-size:11px;font-weight:400;">(notebook, tag, kind, vault, attachments)</span>
+            </th>
+            <td>—</td>
+            <td>✓</td>
+          </tr>
           <tr><th scope="row">Related-notes panel</th><td>Top 3</td><td>Top 5, AI-tuned</td></tr>
           <tr><th scope="row">Image gallery</th><td>✓</td><td>✓</td></tr>
 
@@ -584,7 +631,18 @@
           <tr><th scope="row">AI rewrite selection</th><td>—</td><td>✓</td></tr>
           <tr><th scope="row">Smart tag suggestions (AI)</th><td>—</td><td>✓</td></tr>
           <tr><th scope="row">Auto-tag suggestions (frequency-based)</th><td>—</td><td>✓</td></tr>
-          <tr><th scope="row">Note translation (8 languages)</th><td>—</td><td>Unlimited</td></tr>
+          <tr>
+            <th scope="row">Note translation
+              <span style="color:var(--ink-3);font-size:11px;font-weight:400;">
+                (24 targets: Arabic, Bengali, Bulgarian, Catalan, Chinese,
+                Czech, Danish, Dutch, English, French, German, Greek, Hindi,
+                Italian, Japanese, Korean, Polish, Portuguese, Russian, Slovak,
+                Slovene, Spanish, Swedish, Turkish)
+              </span>
+            </th>
+            <td>First 1,000 words</td>
+            <td>Unlimited</td>
+          </tr>
 
           <!-- Writing tracking ── -->
           <tr class="cmp-group"><td colspan="3">Writing tracking</td></tr>
@@ -595,7 +653,13 @@
           <!-- Import / export ── -->
           <tr class="cmp-group"><td colspan="3">Import / export</td></tr>
           <tr><th scope="row">Markdown export (per note)</th><td>✓</td><td>✓</td></tr>
-          <tr><th scope="row">Markdown export — entire library</th><td>—</td><td>✓</td></tr>
+          <tr>
+            <th scope="row">Markdown export — entire library
+              <span style="color:var(--ink-3);font-size:11px;font-weight:400;">(zip of every note, organised by notebook, with attachments)</span>
+            </th>
+            <td>✓</td>
+            <td>✓</td>
+          </tr>
           <tr><th scope="row">Markdown import</th><td>✓</td><td>✓</td></tr>
           <tr><th scope="row">PDF export</th><td>—</td><td>✓</td></tr>
           <tr><th scope="row">Print</th><td>✓</td><td>✓</td></tr>

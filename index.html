@@ -1409,6 +1409,116 @@
     line-height: 1.5;
   }
 
+  /* ── Calendar integration ── */
+  .integrations-section { background: var(--bg-2); }
+  .cal-apps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    max-width: 1080px;
+    margin: 40px auto 0;
+  }
+  .cal-app {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 26px 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  .cal-app:hover {
+    transform: translateY(-3px);
+    border-color: var(--purple-soft);
+    box-shadow: 0 14px 32px -16px rgba(40, 24, 70, 0.25);
+  }
+  .cal-app-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: var(--bg);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+  }
+  .cal-app h3 {
+    font-family: 'Geist', sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    margin: 0;
+    color: var(--ink);
+  }
+  .cal-app p {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .integrations-universal {
+    max-width: 720px;
+    margin: 32px auto 0;
+    text-align: center;
+    font-size: 14px;
+    color: var(--ink-3);
+    line-height: 1.6;
+  }
+  .integrations-universal strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .integrations-aside {
+    max-width: 720px;
+    margin: 32px auto 0;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 22px 24px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .integrations-aside-icon {
+    flex-shrink: 0;
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: var(--purple-tint);
+    color: var(--purple-deep);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .integrations-aside h4 {
+    margin: 0 0 6px;
+    font-family: 'Geist', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .integrations-aside p {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-2);
+  }
+  .integrations-aside code {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 12.5px;
+    background: var(--bg-2);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--purple-deep);
+  }
+  @media (max-width: 980px) {
+    .cal-apps { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .cal-apps { grid-template-columns: 1fr; }
+    .integrations-aside { flex-direction: column; }
+  }
+
   /* ── Pebble (device) ── */
   .pebble {
     background:
@@ -1846,6 +1956,7 @@
       <a href="#features">Features</a>
       <a href="#web">Web app</a>
       <a href="#ai">AI</a>
+      <a href="#integrations">Integrations</a>
       <a href="pebble.html">Pebble</a>
       <a href="https://blog.noteshq.ai" target="_blank" rel="noopener">Blog</a>
       <a href="pricing.html">Pricing</a>
@@ -2443,6 +2554,105 @@
   </div>
 </section>
 
+<!-- ── Calendar integration ─────────────────────────────────────
+     Shows every calendar app NotesHQ syncs into via the standard
+     webcal/ICS subscription. Brand icons are inline SVGs (simplified
+     for trademark safety + dark-mode tint compatibility) — kept in
+     a 4-column grid that collapses to 2 on tablet and 1 on mobile.
+     The whole section is tier-neutral: this feature is free. -->
+<section id="integrations" class="integrations-section">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="section-eyebrow">Calendar integration</span>
+      <h2>Lives where your <em>schedule already does.</em></h2>
+      <p>Every NotesHQ reminder and checklist deadline syncs into the calendar app you already use. One URL, set it once, refreshed automatically. No browser extensions, no OAuth dance, no second app to open.</p>
+    </div>
+
+    <div class="cal-apps">
+      <!-- Google Calendar -->
+      <div class="cal-app">
+        <div class="cal-app-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="48" height="48">
+            <rect x="4" y="8" width="56" height="52" rx="6" fill="white" stroke="#dadce0" stroke-width="1.5"/>
+            <rect x="4" y="8" width="56" height="14" rx="6" fill="#fff"/>
+            <text x="32" y="44" text-anchor="middle" font-family="'Geist',sans-serif" font-weight="700" font-size="22" fill="#4285f4">31</text>
+            <rect x="14" y="2" width="3" height="12" rx="1.5" fill="#5f6368"/>
+            <rect x="47" y="2" width="3" height="12" rx="1.5" fill="#5f6368"/>
+          </svg>
+        </div>
+        <h3>Google Calendar</h3>
+        <p>Settings → Add calendar → From URL → paste your NotesHQ URL. Updates every few hours.</p>
+      </div>
+
+      <!-- Apple Calendar -->
+      <div class="cal-app">
+        <div class="cal-app-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="48" height="48">
+            <rect x="4" y="8" width="56" height="52" rx="11" fill="white" stroke="#e5e5e5" stroke-width="1"/>
+            <rect x="4" y="8" width="56" height="14" rx="11" fill="#ff453a"/>
+            <text x="32" y="19" text-anchor="middle" font-family="'Geist',sans-serif" font-weight="600" font-size="8" fill="white" letter-spacing="0.5">SUNDAY</text>
+            <text x="32" y="48" text-anchor="middle" font-family="'Instrument Serif',serif" font-weight="400" font-size="26" fill="#1d1d1f">17</text>
+          </svg>
+        </div>
+        <h3>Apple Calendar</h3>
+        <p>Tap "Open in calendar" from NotesHQ — iOS and macOS handle the rest. Works on iPad too.</p>
+      </div>
+
+      <!-- Microsoft Outlook -->
+      <div class="cal-app">
+        <div class="cal-app-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="48" height="48">
+            <rect x="6" y="14" width="44" height="40" rx="3" fill="#0078d4"/>
+            <rect x="10" y="22" width="36" height="28" rx="1" fill="white"/>
+            <line x1="10" y1="30" x2="46" y2="30" stroke="#0078d4" stroke-width="1.5"/>
+            <line x1="18" y1="22" x2="18" y2="50" stroke="#cce4f7" stroke-width="0.5"/>
+            <line x1="28" y1="22" x2="28" y2="50" stroke="#cce4f7" stroke-width="0.5"/>
+            <line x1="38" y1="22" x2="38" y2="50" stroke="#cce4f7" stroke-width="0.5"/>
+            <line x1="10" y1="38" x2="46" y2="38" stroke="#cce4f7" stroke-width="0.5"/>
+            <line x1="10" y1="44" x2="46" y2="44" stroke="#cce4f7" stroke-width="0.5"/>
+            <text x="50" y="42" text-anchor="middle" font-family="'Geist',sans-serif" font-weight="700" font-size="20" fill="#0078d4">O</text>
+          </svg>
+        </div>
+        <h3>Outlook</h3>
+        <p>Calendar → Add calendar → Subscribe from web → paste the URL. Works in Outlook 365, desktop, and on the web.</p>
+      </div>
+
+      <!-- Thunderbird -->
+      <div class="cal-app">
+        <div class="cal-app-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="48" height="48">
+            <circle cx="32" cy="32" r="26" fill="#0a84ff"/>
+            <path d="M14 36 Q24 18 36 24 Q48 30 50 36 Q44 50 30 50 Q18 50 14 36 Z" fill="#ff9f0a"/>
+            <path d="M28 30 Q34 26 42 28 L48 32 Q42 34 36 34 Q30 34 28 30 Z" fill="white"/>
+            <circle cx="39" cy="29" r="1.6" fill="#1d1d1f"/>
+          </svg>
+        </div>
+        <h3>Thunderbird</h3>
+        <p>File → New → Calendar → On the Network → iCalendar (ICS). Free, open source, runs on Linux too.</p>
+      </div>
+    </div>
+
+    <!-- Universal-compatibility callout -->
+    <p class="integrations-universal">
+      Anything else that speaks <strong>iCalendar (RFC 5545)</strong> works too — Fastmail, ProtonMail, Nextcloud, Linux clients, calendar widgets on smartwatches. One URL, every device.
+    </p>
+
+    <!-- Email integration aside -->
+    <div class="integrations-aside">
+      <div class="integrations-aside-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="5" width="20" height="14" rx="2"/>
+          <path d="m2 7 10 7 10-7"/>
+        </svg>
+      </div>
+      <div>
+        <h4>And the daily review lands in every inbox</h4>
+        <p>Opt in to a short morning email — today's reminders, anything overdue, and your writing streak — delivered at the hour you pick, in your local timezone. Same trusted pipeline as account emails: sent from <code>zshift.io</code>, SPF + DKIM signed, clean delivery to Gmail, Outlook, ProtonMail, iCloud, Yahoo, Fastmail, and any other RFC-compliant inbox.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── Pebble (device) ── -->
 <section id="pebble" class="pebble">
   <div class="section-inner">
@@ -2509,9 +2719,9 @@
         </div>
 
         <div class="pebble-cta">
-          <a class="btn white big" href="pebble.html">Reserve Pebble</a>
+          <a class="btn white big" href="#contact" data-topic="Pebble — pre-order &amp; hardware">Reserve Pebble</a>
           <a class="btn outline-light big" href="pebble.html">Learn more →</a>
-          <span class="priceline"><b>£129</b> · ships May 2026 · free shipping</span>
+          <span class="priceline"><b>£129</b> · ships August 2026 · free shipping · <strong>6 months unlimited transcription &amp; translation included</strong></span>
         </div>
       </div>
     </div>
@@ -2606,7 +2816,9 @@
         <ul class="price-perks">
           <li>Up to <strong>50 notes</strong> (20 text · 10 canvas)</li>
           <li><strong>5 notebooks</strong> · <strong>1 smart folder</strong></li>
-          <li>Voice memos — <strong>1 min</strong> per recording</li>
+          <li>Voice memos — <strong>1 min</strong> per recording, 30 min/mo transcribed</li>
+          <li><strong>5 saved</strong> un-transcribed audios (retry later)</li>
+          <li>Note translation — <strong>first 1,000 words</strong> (24 languages)</li>
           <li>Canvas with shapes &amp; math equations</li>
           <li>Outline panel &amp; find / replace in the editor</li>
           <li>Vault, trash &amp; 30-day recovery</li>
@@ -2635,7 +2847,7 @@
           <li>Focus timer &amp; recurring reminders</li>
           <li><strong>NoteChat</strong> — ask your notes anything</li>
           <li><strong>NoteQ</strong> — auto-generated quizzes</li>
-          <li>AI summaries, rewrites, tag suggestions &amp; translation</li>
+          <li>AI summaries, rewrites &amp; smart tag suggestions</li>
           <li>Phone &amp; email priority support</li>
         </ul>
         <a class="price-cta light" href="https://app.noteshq.ai/signup?plan=premium" target="_blank" rel="noopener">Go Premium</a>
@@ -2670,128 +2882,189 @@
               <th scope="col">Feature</th>
               <th scope="col">Basic</th>
               <th scope="col" class="cmp-featured">Premium</th>
-              <th scope="col" class="cmp-ai">Brain</th>
             </tr>
           </thead>
           <tbody>
             <!-- Capture & note kinds ── -->
-            <tr class="cmp-group"><td colspan="4">Capture &amp; note kinds</td></tr>
-            <tr><th scope="row">Notes total</th><td>50</td><td>Unlimited</td><td>Unlimited</td></tr>
-            <tr><th scope="row">Text notes</th><td>20</td><td>Unlimited</td><td>Unlimited</td></tr>
-            <tr><th scope="row">Canvas notes</th><td>10</td><td>Unlimited</td><td>Unlimited</td></tr>
-            <tr><th scope="row">Checklists &amp; daily notes</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Voice memo — recording length</th><td>1 min</td><td>10 min</td><td>20 min</td></tr>
-            <tr><th scope="row">Voice transcription quota</th><td>30 min/mo</td><td>5 hrs/mo</td><td>Unlimited</td></tr>
-            <tr><th scope="row">Templates</th><td>Use only</td><td>Create &amp; manage</td><td>Create &amp; manage</td></tr>
+            <tr class="cmp-group"><td colspan="3">Capture &amp; note kinds</td></tr>
+            <tr><th scope="row">Notes total</th><td>50</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Text notes</th><td>20</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Canvas notes</th><td>10</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Checklists &amp; daily notes</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Voice memo — recording length</th><td>1 min</td><td>20 min</td></tr>
+            <tr><th scope="row">Voice transcription quota</th><td>30 min/mo</td><td>Unlimited</td></tr>
+            <tr>
+              <th scope="row">Transcription languages
+                <span style="color:var(--ink-3);font-size:11px;font-weight:400;">
+                  (auto-detect + 25: Arabic, Belarusian, Bengali, Bulgarian, Catalan,
+                  Chinese, Czech, Danish, Dutch, English, French, German, Greek, Italian,
+                  Japanese, Polish, Portuguese, Russian, Slovak, Slovene, Spanish,
+                  Swedish, Turkmen, Turkish, Welsh)
+                </span>
+              </th>
+              <td>All 25</td>
+              <td>All 25</td>
+            </tr>
+            <tr>
+              <th scope="row">Save voice memos un-transcribed
+                <span style="color:var(--ink-3);font-size:11px;font-weight:400;">(retry when you have quota)</span>
+              </th>
+              <td>5 saved</td>
+              <td>Unlimited</td>
+            </tr>
+            <tr><th scope="row">Templates</th><td>Use only</td><td>Create &amp; manage</td></tr>
 
             <!-- Organization ── -->
-            <tr class="cmp-group"><td colspan="4">Organization</td></tr>
-            <tr><th scope="row">Notebooks</th><td>5</td><td>Unlimited</td><td>Unlimited</td></tr>
-            <tr><th scope="row">Sub-notebooks (nested)</th><td>—</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Notebook archive</th><td>—</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Tags &amp; color labels</th><td>Unlimited</td><td>Unlimited</td><td>Unlimited</td></tr>
-            <tr><th scope="row">Tag rename / merge</th><td>—</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Smart folders</th><td>1</td><td>Unlimited</td><td>Unlimited</td></tr>
-            <tr><th scope="row">Pin to top &amp; drag-to-reorder</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Vault (biometric / PIN)</th><td>5 notes</td><td>Unlimited</td><td>Unlimited</td></tr>
-            <tr><th scope="row">Trash &amp; 30-day recovery</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Note merge</th><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr class="cmp-group"><td colspan="3">Organization</td></tr>
+            <tr><th scope="row">Notebooks</th><td>5</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Sub-notebooks (nested)</th><td>—</td><td>✓</td></tr>
+            <tr><th scope="row">Notebook archive</th><td>—</td><td>✓</td></tr>
+            <tr><th scope="row">Tags &amp; color labels</th><td>Unlimited</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Tag rename / merge</th><td>—</td><td>✓</td></tr>
+            <tr><th scope="row">Smart folders</th><td>1</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Pin to top &amp; drag-to-reorder</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Vault (biometric / PIN)</th><td>5 notes</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Trash &amp; 30-day recovery</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Note merge</th><td>—</td><td>✓</td></tr>
 
             <!-- Editor ── -->
-            <tr class="cmp-group"><td colspan="4">Editor</td></tr>
-            <tr><th scope="row">Rich text + slash commands</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Inline images storage</th><td>50 MB</td><td>10 GB</td><td>10 GB</td></tr>
-            <tr><th scope="row">Resizable images &amp; alignment</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Math / LaTeX equations</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Outline panel</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Find &amp; replace</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Tables</th><td>—</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Linked notes <span style="color:var(--ink-3);font-size:11px;font-weight:400;">(one note references another)</span></th><td>—</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Linked-notes hover preview</th><td>—</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Reading mode</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Focus / pomodoro timer</th><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr class="cmp-group"><td colspan="3">Editor</td></tr>
+            <tr><th scope="row">Rich text + slash commands</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Inline images storage</th><td>50 MB</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Resizable images &amp; alignment</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Math / LaTeX equations</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Outline panel</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Find &amp; replace</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Tables</th><td>—</td><td>✓</td></tr>
+            <tr><th scope="row">Linked notes <span style="color:var(--ink-3);font-size:11px;font-weight:400;">(one note references another)</span></th><td>—</td><td>✓</td></tr>
+            <tr><th scope="row">Linked-notes hover preview</th><td>—</td><td>✓</td></tr>
+            <tr><th scope="row">Reading mode</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Focus / pomodoro timer</th><td>—</td><td>✓</td></tr>
 
             <!-- Canvas ── -->
-            <tr class="cmp-group"><td colspan="4">Canvas</td></tr>
-            <tr><th scope="row">Pen, eraser &amp; pan</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Shape tools (rect / ellipse / line / arrow)</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Move / drag shapes</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Sticky notes on canvas</th><td>—</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Inline images on canvas</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr class="cmp-group"><td colspan="3">Canvas</td></tr>
+            <tr><th scope="row">Pen, eraser &amp; pan</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Shape tools (rect / ellipse / line / arrow)</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Move / drag shapes</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Inline images on canvas</th><td>✓</td><td>✓</td></tr>
 
             <!-- Reminders ── -->
-            <tr class="cmp-group"><td colspan="4">Reminders &amp; calendar</td></tr>
-            <tr><th scope="row">Per-note reminders</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Recurring reminders</th><td>—</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Browser push notifications</th><td>—</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Mobile local notifications</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Calendar view</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr class="cmp-group"><td colspan="3">Reminders &amp; calendar</td></tr>
+            <tr><th scope="row">Per-note reminders</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Recurring reminders</th><td>—</td><td>✓</td></tr>
+            <tr><th scope="row">Browser push notifications</th><td>—</td><td>✓</td></tr>
+            <tr><th scope="row">Mobile local notifications</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Calendar view</th><td>✓</td><td>✓</td></tr>
+            <tr>
+              <th scope="row">Calendar subscription (webcal / ICS)
+                <span style="color:var(--ink-3);font-size:11px;font-weight:400;">(Google, Apple, Outlook, Thunderbird — any iCalendar client)</span>
+              </th>
+              <td>✓</td>
+              <td>✓</td>
+            </tr>
+            <tr>
+              <th scope="row">Daily review email
+                <span style="color:var(--ink-3);font-size:11px;font-weight:400;">(morning summary of today's reminders + overdue items, at the hour you pick)</span>
+              </th>
+              <td>✓</td>
+              <td>✓</td>
+            </tr>
 
             <!-- Sharing ── -->
-            <tr class="cmp-group"><td colspan="4">Sharing</td></tr>
-            <tr><th scope="row">Public share links</th><td>3 active</td><td>Unlimited</td><td>Unlimited</td></tr>
-            <tr><th scope="row">Password gate</th><td>—</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Expiration dates</th><td>—</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Rotate / revoke token</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Mobile system share</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Translate in share view</th><td>—</td><td>—</td><td>✓</td></tr>
+            <tr class="cmp-group"><td colspan="3">Sharing</td></tr>
+            <tr><th scope="row">Public share links</th><td>3 active</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Password gate</th><td>—</td><td>✓</td></tr>
+            <tr><th scope="row">Expiration dates</th><td>—</td><td>✓</td></tr>
+            <tr><th scope="row">Rotate / revoke token</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Mobile system share</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Translate in share view</th><td>✓</td><td>✓</td></tr>
 
             <!-- Search & discovery ── -->
-            <tr class="cmp-group"><td colspan="4">Search &amp; discovery</td></tr>
-            <tr><th scope="row">Quick switcher (⌘K)</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Universal search</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Related-notes panel</th><td>Top 3</td><td>Top 5</td><td>Top 5, AI-tuned</td></tr>
-            <tr><th scope="row">Image gallery</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr class="cmp-group"><td colspan="3">Search &amp; discovery</td></tr>
+            <tr>
+              <th scope="row">Quick switcher (⌘K)
+                <span style="color:var(--ink-3);font-size:11px;font-weight:400;">(jump to any note / notebook / setting by typing)</span>
+              </th>
+              <td>✓</td>
+              <td>✓</td>
+            </tr>
+            <tr><th scope="row">Search (title + body)</th><td>✓</td><td>✓</td></tr>
+            <tr>
+              <th scope="row">Search filters
+                <span style="color:var(--ink-3);font-size:11px;font-weight:400;">(notebook, tag, kind, vault, attachments)</span>
+              </th>
+              <td>—</td>
+              <td>✓</td>
+            </tr>
+            <tr><th scope="row">Related-notes panel</th><td>Top 3</td><td>Top 5, AI-tuned</td></tr>
+            <tr><th scope="row">Image gallery</th><td>✓</td><td>✓</td></tr>
 
             <!-- Version history ── -->
-            <tr class="cmp-group"><td colspan="4">Version history</td></tr>
-            <tr><th scope="row">Snapshots per note</th><td>5</td><td>30</td><td>30</td></tr>
-            <tr><th scope="row">Restore any snapshot</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Word-level diff</th><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr class="cmp-group"><td colspan="3">Version history</td></tr>
+            <tr><th scope="row">Snapshots per note</th><td>5</td><td>30</td></tr>
+            <tr><th scope="row">Restore any snapshot</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Word-level diff</th><td>—</td><td>✓</td></tr>
 
             <!-- AI ── -->
-            <tr class="cmp-group"><td colspan="4">AI</td></tr>
-            <tr><th scope="row">NoteChat</th><td>—</td><td>—</td><td>500 msgs/mo</td></tr>
-            <tr><th scope="row">NoteQ quizzes</th><td>—</td><td>—</td><td>100/mo</td></tr>
-            <tr><th scope="row">AI summarize note</th><td>—</td><td>—</td><td>✓</td></tr>
-            <tr><th scope="row">AI rewrite selection</th><td>—</td><td>—</td><td>✓</td></tr>
-            <tr><th scope="row">Smart tag suggestions (AI)</th><td>—</td><td>—</td><td>✓</td></tr>
-            <tr><th scope="row">Auto-tag suggestions (frequency-based)</th><td>—</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Note translation (8 languages)</th><td>—</td><td>3 / mo</td><td>Unlimited</td></tr>
+            <tr class="cmp-group"><td colspan="3">AI</td></tr>
+            <tr><th scope="row">NoteChat</th><td>—</td><td>500 msgs/mo</td></tr>
+            <tr><th scope="row">NoteQ quizzes</th><td>—</td><td>100/mo</td></tr>
+            <tr><th scope="row">AI summarize note</th><td>—</td><td>✓</td></tr>
+            <tr><th scope="row">AI rewrite selection</th><td>—</td><td>✓</td></tr>
+            <tr><th scope="row">Smart tag suggestions (AI)</th><td>—</td><td>✓</td></tr>
+            <tr><th scope="row">Auto-tag suggestions (frequency-based)</th><td>—</td><td>✓</td></tr>
+            <tr>
+              <th scope="row">Note translation
+                <span style="color:var(--ink-3);font-size:11px;font-weight:400;">
+                  (24 targets: Arabic, Bengali, Bulgarian, Catalan, Chinese,
+                  Czech, Danish, Dutch, English, French, German, Greek, Hindi,
+                  Italian, Japanese, Korean, Polish, Portuguese, Russian, Slovak,
+                  Slovene, Spanish, Swedish, Turkish)
+                </span>
+              </th>
+              <td>First 1,000 words</td>
+              <td>Unlimited</td>
+            </tr>
 
             <!-- Writing tracking ── -->
-            <tr class="cmp-group"><td colspan="4">Writing tracking</td></tr>
-            <tr><th scope="row">Daily word-goal chip</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Server-side streak tracking</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Writing-activity heatmap</th><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr class="cmp-group"><td colspan="3">Writing tracking</td></tr>
+            <tr><th scope="row">Daily word-goal chip</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Server-side streak tracking</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Writing-activity heatmap</th><td>—</td><td>✓</td></tr>
 
             <!-- Import / export ── -->
-            <tr class="cmp-group"><td colspan="4">Import / export</td></tr>
-            <tr><th scope="row">Markdown export (per note)</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Markdown export — entire library</th><td>—</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Markdown import</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">PDF export</th><td>—</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Print</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr class="cmp-group"><td colspan="3">Import / export</td></tr>
+            <tr><th scope="row">Markdown export (per note)</th><td>✓</td><td>✓</td></tr>
+            <tr>
+              <th scope="row">Markdown export — entire library
+                <span style="color:var(--ink-3);font-size:11px;font-weight:400;">(zip of every note, organised by notebook, with attachments)</span>
+              </th>
+              <td>✓</td>
+              <td>✓</td>
+            </tr>
+            <tr><th scope="row">Markdown import</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">PDF export</th><td>—</td><td>✓</td></tr>
+            <tr><th scope="row">Print</th><td>✓</td><td>✓</td></tr>
 
             <!-- Sync & devices ── -->
-            <tr class="cmp-group"><td colspan="4">Sync &amp; devices</td></tr>
-            <tr><th scope="row">Web + iOS + Android</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Multi-device sync</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Offline editing (mobile)</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Tablet split-view</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr class="cmp-group"><td colspan="3">Sync &amp; devices</td></tr>
+            <tr><th scope="row">Web + iOS + Android</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Multi-device sync</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Offline editing (mobile)</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Tablet split-view</th><td>✓</td><td>✓</td></tr>
 
             <!-- Customization ── -->
-            <tr class="cmp-group"><td colspan="4">Customization &amp; UI</td></tr>
-            <tr><th scope="row">Dark mode + theme palettes</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">8 UI languages</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Right-click / long-press context</th><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr class="cmp-group"><td colspan="3">Customization &amp; UI</td></tr>
+            <tr><th scope="row">Dark mode + theme palettes</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">8 UI languages</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Right-click / long-press context</th><td>✓</td><td>✓</td></tr>
 
             <!-- Account & security ── -->
-            <tr class="cmp-group"><td colspan="4">Account &amp; security</td></tr>
-            <tr><th scope="row">Email + Google + Apple sign-in</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Biometric / PIN vault</th><td>✓</td><td>✓</td><td>✓</td></tr>
-            <tr><th scope="row">Priority support</th><td>—</td><td>Email + phone</td><td>Email + phone (fastest)</td></tr>
-            <tr><th scope="row">Auto-archive</th><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr class="cmp-group"><td colspan="3">Account &amp; security</td></tr>
+            <tr><th scope="row">Email + Google + Apple sign-in</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Biometric / PIN vault</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Priority support</th><td>—</td><td>Email + phone</td></tr>
+            <tr><th scope="row">Auto-archive</th><td>—</td><td>✓</td></tr>
           </tbody>
         </table>
       </div>
@@ -2809,11 +3082,11 @@
     <div class="faq-list">
       <div class="faq">
         <h4>Is the free version really free? <span class="plus">+</span></h4>
-        <p>Yes — £0, no credit card, no time limit, no feature throttling. The free plan covers unlimited notes, sketches, voice memos, notebooks, vault, and sync forever. Only the AI features (NoteChat &amp; NoteQ) require Premium.</p>
+        <p>Yes — £0, no credit card, no time limit. Basic gives you 50 notes (20 text + 10 canvas), 5 notebooks, 1-minute voice memos with 30 minutes of free monthly transcription, voice transcription in 25 languages with auto-detect, note translation across 24 languages (first 1,000 words per note), plus sync, vault, and the full canvas. Upgrade to Premium when you outgrow the caps or want the AI features.</p>
       </div>
       <div class="faq">
         <h4>What does Premium add? <span class="plus">+</span></h4>
-        <p>Unlimited NoteChat (chat with your notes) and NoteQ (AI-generated quizzes from your notes and uploaded documents), plus priority sync, faster transcription, AI-powered summaries, and priority support.</p>
+        <p>Unlimited notes &amp; notebooks, longer voice memos with unlimited transcription, NoteChat (ask your notes anything), NoteQ (auto-generated quizzes), AI summaries, smart tag suggestions, tables, linked notes, the focus timer, recurring reminders, version-history diff, and phone &amp; email priority support.</p>
       </div>
       <div class="faq">
         <h4>Is my data private? <span class="plus">+</span></h4>
@@ -2899,6 +3172,43 @@
 
       <script>
         (function () {
+          // Pre-select the contact-form topic dropdown when the URL
+          // arrives with `?topic=…` (typically from a Reserve Pebble
+          // button on pebble.html → index.html?topic=pebble#contact).
+          // We do a loose label match so "topic=pebble" picks the
+          // "Pebble — pre-order & hardware" option without callers
+          // needing to escape the dash/ampersand.
+          // Loose label match — "pebble" picks "Pebble — pre-order & hardware".
+          function preselectTopic(label) {
+            var sel = document.getElementById('contact-topic');
+            if (!sel || !label) return;
+            var needle = label.toLowerCase();
+            for (var i = 0; i < sel.options.length; i++) {
+              if (sel.options[i].text.toLowerCase().indexOf(needle) !== -1) {
+                sel.selectedIndex = i;
+                return;
+              }
+            }
+          }
+
+          // 1) Cross-page entry: `index.html?topic=pebble#contact` arrives
+          //    with the query, we read it once on load.
+          try {
+            var params = new URLSearchParams(window.location.search);
+            var topic  = params.get('topic');
+            if (topic) preselectTopic(topic);
+          } catch (_) { /* IE-safe no-op */ }
+
+          // 2) In-page entry: any anchor with `data-topic` pre-fills the
+          //    dropdown when the user taps it (the URL stays clean — no
+          //    full reload, scroll position is preserved by the #contact
+          //    fragment).
+          document.querySelectorAll('a[data-topic]').forEach(function (a) {
+            a.addEventListener('click', function () {
+              preselectTopic(a.getAttribute('data-topic'));
+            });
+          });
+
           // Contact form → POST to api.noteshq.ai/api/contact. Same shape as
           // every other api.noteshq.ai endpoint: JSON in, JSON out. Honeypot
           // field is rejected server-side; we still send it so the server can
