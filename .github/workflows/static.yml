@@ -36,3 +36,5 @@ jobs:
       run:  cp -r /home/noteshq-website/_work/noteshq-website/noteshq-website/open/*.* /home/noteshq/open/
     - name: Copy assets
       run: cp -r /home/noteshq-website/_work/noteshq-website/noteshq-website/assets/*.png /home/noteshq/assets/
+    - name: Copy wellknown
+      run: cp -r /home/noteshq-website/_work/noteshq-website/noteshq-website/.well-known/*.json /home/noteshq/.well-known/
