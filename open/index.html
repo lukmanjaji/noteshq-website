@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <!-- Don't index this page — it's a transient redirect, not content. -->
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Opening NotesHQ…</title>
+  <link rel="icon" href="/assets/favicon.svg" />
+  <style>
+    /* Minimal "we're opening the app" splash. Same brand palette as the
+       marketing site so users see a consistent feel during the handoff.
+       Layout is bullet-proof for email-launched contexts where any other
+       page chrome would be noise — just centre, fade, done. */
+    :root {
+      --purple: #6B3FD4;
+      --purple-deep: #5230AB;
+      --ink: #1B1426;
+      --ink-3: #897A9E;
+      --bg: #FBF9FF;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --ink: #FBF9FF;
+        --ink-3: #C5B7DC;
+        --bg: #14101F;
+      }
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; height: 100%; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Geist, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+    .logo {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      background: var(--purple);
+      color: white;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: 30px;
+      margin-bottom: 18px;
+    }
+    h1 {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-weight: normal;
+      font-size: 24px;
+      margin: 0 0 8px;
+    }
+    p {
+      color: var(--ink-3);
+      font-size: 15px;
+      line-height: 1.5;
+      max-width: 360px;
+      margin: 0 0 20px;
+    }
+    .btn {
+      display: inline-block;
+      background: var(--purple);
+      color: white;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .btn:hover { background: var(--purple-deep); }
+    .spinner {
+      width: 24px; height: 24px;
+      border: 2px solid rgba(107, 63, 212, 0.2);
+      border-top-color: var(--purple);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 20px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .fallback { margin-top: 28px; font-size: 13px; }
+    .fallback a { color: var(--purple); }
+  </style>
+</head>
+<body>
+  <div class="logo" aria-hidden="true">N</div>
+  <h1>Opening NotesHQ…</h1>
+  <div class="spinner" aria-hidden="true"></div>
+  <p id="status">If the app doesn't open in a moment, tap the button below to continue in your browser.</p>
+  <a class="btn" id="webBtn" href="https://app.noteshq.ai">Continue in browser</a>
+
+  <p class="fallback">
+    Don't have the app yet?
+    <a href="https://play.google.com/store/apps/details?id=com.zshift.noteshq" target="_blank" rel="noopener">Get it on Google Play</a>
+  </p>
+
+  <script>
+    /**
+     * Smart deep-link handoff. The email's "Open NotesHQ" button lands
+     * here; we then try to route the user into the native app and fall
+     * back to the web app if that fails.
+     *
+     * Three runtimes to handle:
+     *
+     *  Android — use the standard intent:// URL pattern. Chrome,
+     *  Samsung Browser, Firefox, and Gmail's WebView all honour the
+     *  S.browser_fallback_url parameter: if the app's not installed, the
+     *  browser silently navigates to the fallback URL instead of
+     *  showing the "no app to handle this" error. The package name
+     *  pin (com.zshift.noteshq) means it ONLY tries our app — not any
+     *  random app that registered the noteshq:// scheme.
+     *
+     *  iOS — no intent:// equivalent. Standard pattern: set
+     *  location.href to the custom scheme; if the app opens, this
+     *  page is backgrounded and the timeout never fires. If the app
+     *  doesn't open (not installed), the timeout falls through to
+     *  the web URL. We use 1500ms — long enough for the OS handoff,
+     *  short enough that uninstalled users don't sit on a blank page.
+     *
+     *  Desktop / unknown — just hop straight to the web app. There's
+     *  no native app to land in, and the redirect should be instant.
+     */
+    (function () {
+      var WEB_URL = 'https://app.noteshq.ai';
+      var APP_SCHEME = 'noteshq://';
+      var ANDROID_PACKAGE = 'com.zshift.noteshq';
+
+      // Allow the email to override the post-launch destination via a
+      // ?to=… query param. Whitelisted to same-origin or app.noteshq.ai
+      // so we can't be used as an open-redirect for phishing.
+      var params = new URLSearchParams(window.location.search);
+      var toParam = params.get('to') || '';
+      var safeTo = WEB_URL;
+      try {
+        if (toParam) {
+          var u = new URL(toParam, WEB_URL);
+          if (u.origin === WEB_URL || u.origin === window.location.origin) {
+            safeTo = u.toString();
+          }
+        }
+      } catch (_) { /* ignore malformed param */ }
+
+      // Update the visible fallback button so a hand-pressed link
+      // matches the auto-redirect destination.
+      try { document.getElementById('webBtn').href = safeTo; } catch (_) {}
+
+      var ua = navigator.userAgent || '';
+      var isAndroid = /Android/i.test(ua);
+      var isIOS = /iPhone|iPad|iPod/i.test(ua);
+
+      if (isAndroid) {
+        // Encode the fallback so the intent: URL parses correctly.
+        var fallback = encodeURIComponent(safeTo);
+        // intent:// MUST have a host segment (we use "open"); the path
+        // after #Intent;…;end is what Android parses to launch the app.
+        var intentUrl = 'intent://open#Intent;' +
+          'scheme=noteshq;' +
+          'package=' + ANDROID_PACKAGE + ';' +
+          'S.browser_fallback_url=' + fallback + ';' +
+          'end';
+        // Replace, not assign, so the browser back-button doesn't loop
+        // the user back into the redirect.
+        window.location.replace(intentUrl);
+      } else if (isIOS) {
+        // Two-stage: try the scheme, fall back on timeout. The
+        // visibility check stops the fallback if the app DID open
+        // and the page is now in the background.
+        var didHide = false;
+        document.addEventListener('visibilitychange', function () {
+          if (document.hidden) didHide = true;
+        });
+        window.location.href = APP_SCHEME;
+        setTimeout(function () {
+          if (!didHide) window.location.replace(safeTo);
+        }, 1500);
+      } else {
+        // Desktop or unrecognised mobile — just go to the web app.
+        window.location.replace(safeTo);
+      }
+    })();
+  </script>
+</body>
+</html>
