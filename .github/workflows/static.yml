@@ -32,6 +32,7 @@ jobs:
 
     - name: Copy site files
       run: cp -r /home/noteshq-website/_work/noteshq-website/noteshq-website/*.* /home/noteshq/
-
+    - name: Copy open intent
+      run:  cp -r /home/noteshq-website/_work/noteshq-website/noteshq-website/open/*.* /home/noteshq/open/
     - name: Copy assets
       run: cp -r /home/noteshq-website/_work/noteshq-website/noteshq-website/assets/*.png /home/noteshq/assets/
