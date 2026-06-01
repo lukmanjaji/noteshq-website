@@ -1,0 +1,15 @@
+# Netlify / Cloudflare Pages redirect rules.
+#
+# Both platforms auto-serve /404.html on a missing route without
+# any config, but this file is the explicit declaration: anything
+# unmatched falls through to /404.html and the HTTP response is
+# returned with a real 404 status (not 200).  The trailing "404"
+# is what flips the status code; without it, the platform serves
+# the page content but with HTTP 200, which trips up SEO crawlers
+# and breaks `curl -fsSL` scripts that rely on the status to
+# detect broken links.
+#
+# Order matters — keep this rule LAST in the file so any
+# legitimate /path rewrites above it match first.
+
+/*    /404.html   404

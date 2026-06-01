@@ -1,0 +1,13 @@
+# Apache config — drop into the site root if the marketing site
+# is served by Apache (cPanel hosts, classic LAMP stacks). Modern
+# hosts (Netlify, Cloudflare Pages, Vercel, S3+CloudFront) ignore
+# this file; they use _redirects or their dashboard's redirect UI.
+
+ErrorDocument 404 /404.html
+
+# Belt-and-braces: also send the right Content-Type so the
+# response is parsed as HTML even when the request URL had a
+# weird extension (e.g. /foo.json that doesn't exist).
+<Files "404.html">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+</Files>
