@@ -2820,11 +2820,11 @@
 </section>
 
 <!-- ── Browser clipper ──────────────────────────────────────────
-     One-click save from any browser tab. Two store buttons — Chrome
-     Web Store (covers Chrome / Brave / Vivaldi / Opera / Edge with
-     the Chrome store enabled) and Edge Add-ons (Microsoft's own
-     listing for default Edge installs). Firefox + Safari aren't
-     shipped yet — the section copy stays honest about that. -->
+     One-click save from any browser tab. Three store buttons —
+     Chrome Web Store (covers Chrome / Brave / Vivaldi / Opera / Edge
+     with the Chrome store enabled), Edge Add-ons (Microsoft's own
+     listing for default Edge installs), and AMO (Firefox). Safari
+     isn't shipped yet — the section copy stays honest about that. -->
 <section id="clipper" class="clipper-section">
   <div class="section-inner">
     <div class="section-head">
@@ -2867,10 +2867,40 @@
           <strong>Microsoft Edge Add-ons</strong>
         </span>
       </a>
+      <!-- Firefox via AMO. URL is locale-less so addons.mozilla.org
+           302-redirects each visitor to their browser's locale —
+           a German visitor lands on /de/, an English visitor on
+           /en-US/, etc. The simplified Firefox flame mark uses the
+           orange-to-red gradient that's been Firefox's brand since
+           the 2019 logo refresh; rendered inline as SVG so the
+           landing page stays single-file with no extra asset
+           requests. -->
+      <a
+        class="clipper-store-btn"
+        href="https://addons.mozilla.org/firefox/addon/noteshq-clipper/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg viewBox="0 0 48 48" width="28" height="28" aria-hidden="true">
+          <defs>
+            <radialGradient id="ff-flame" cx="50%" cy="55%" r="65%">
+              <stop offset="0%"  stop-color="#FFEA00"/>
+              <stop offset="40%" stop-color="#FF8A00"/>
+              <stop offset="100%" stop-color="#E53935"/>
+            </radialGradient>
+          </defs>
+          <circle cx="24" cy="24" r="20" fill="url(#ff-flame)"/>
+          <path d="M24 8c4 4 4 9 1 13 3-1 6 1 7 4-1 9-8 15-16 14-7-1-12-7-12-14 0-5 3-9 7-11-2 4-1 8 3 9-1-5 3-10 8-12 2 4 1 7-1 9 4-2 7-6 6-10-1-3-2-4-3-2z" fill="#1B1426" opacity="0.85"/>
+        </svg>
+        <span>
+          <span class="clipper-store-label">Get it on</span>
+          <strong>Firefox Add-ons</strong>
+        </span>
+      </a>
     </div>
 
     <p class="clipper-foot">
-      Works on every Chromium browser — Chrome, Edge, Brave, Vivaldi, Opera, Arc. Firefox &amp; Safari builds are on the way.
+      Works on every Chromium browser — Chrome, Edge, Brave, Vivaldi, Opera, Arc — and on Firefox. Safari build is on the way.
     </p>
   </div>
 </section>
@@ -3320,7 +3350,7 @@
       </div>
       <div class="faq">
         <h4>What platforms are supported? <span class="plus">+</span></h4>
-        <p>The web app (works in any modern browser) and Android — <a href="https://play.google.com/store/apps/details?id=com.zshift.noteshq" target="_blank" rel="noopener noreferrer">get it on Google Play</a>. iOS / iPadOS is on the way; the codebase ships across all three so they share the same data, vault, and notebooks the moment iOS lands. There's also a browser clipper for Chrome / Edge / Brave / Vivaldi / Opera (see <a href="#clipper">Clipper</a> above).</p>
+        <p>The web app (works in any modern browser) and Android — <a href="https://play.google.com/store/apps/details?id=com.zshift.noteshq" target="_blank" rel="noopener noreferrer">get it on Google Play</a>. iOS / iPadOS is on the way; the codebase ships across all three so they share the same data, vault, and notebooks the moment iOS lands. There's also a browser clipper for Chrome / Edge / Firefox / Brave / Vivaldi / Opera (see <a href="#clipper">Clipper</a> above).</p>
       </div>
       <div class="faq">
         <h4>Can I cancel anytime? <span class="plus">+</span></h4>
