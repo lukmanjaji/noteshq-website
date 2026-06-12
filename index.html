@@ -143,9 +143,7 @@
   /* ── App-store badges (hero) ──────────────────────────────────
      Compact pills below the primary CTAs. Match the clipper-section
      "Get it on" style so the same visual language reads as "this is
-     a downloadable thing". The .is-soon modifier dims the iOS pill
-     while still surfacing the brand — sets expectations without
-     hiding the roadmap. */
+     a downloadable thing". */
   .hero-stores {
     display: flex;
     flex-wrap: wrap;
@@ -184,15 +182,6 @@
     font-size: 14px;
     font-weight: 600;
   }
-  .hero-store-btn.is-soon {
-    opacity: 0.55;
-    cursor: default;
-  }
-  .hero-store-btn.is-soon:hover {
-    transform: none;
-    background: var(--ink);
-  }
-
   .trust {
     display: inline-flex; align-items: center; gap: 14px;
     font-size: 13px; color: var(--ink-3);
@@ -2108,12 +2097,8 @@
       </div>
 
       <!-- ── App-store badges ─────────────────────────────────────
-           Two compact pills below the primary CTAs. Google Play is
-           live; the iOS pill is intentionally marked "Coming soon"
-           rather than hidden, so the eyebrow above ("Web · iOS ·
-           Android — all in sync") doesn't read as a lie. Swap the
-           iOS href + drop the "is-soon" modifier once we ship to
-           TestFlight / App Store. -->
+           Two compact pills below the primary CTAs. Both stores are
+           live (iOS approved June 2026). -->
       <div class="hero-stores">
         <a
           class="hero-store-btn"
@@ -2140,15 +2125,21 @@
             <strong>Google Play</strong>
           </span>
         </a>
-        <span class="hero-store-btn is-soon" aria-disabled="true">
+        <a
+          class="hero-store-btn"
+          href="https://apps.apple.com/us/app/noteshq/id6777536742"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Download NotesHQ on the App Store"
+        >
           <svg viewBox="0 0 22 22" width="20" height="20" aria-hidden="true" fill="currentColor">
             <path d="M16.5 11.6c0-2 1.6-2.9 1.7-3-1-1.3-2.4-1.5-2.9-1.5-1.2-.1-2.4.7-3 .7-.6 0-1.6-.7-2.6-.7-1.3 0-2.6.8-3.3 2-1.4 2.4-.4 6 1 8 .7 1 1.5 2 2.5 2 1 0 1.4-.6 2.6-.6s1.5.6 2.6.6c1.1 0 1.8-1 2.4-2 .8-1.1 1.1-2.2 1.1-2.3 0-.1-2-.8-2-3.2zM14.6 5.7c.5-.6.9-1.5.7-2.4-.8 0-1.7.5-2.2 1.1-.5.5-.9 1.4-.8 2.3 1 0 1.8-.4 2.3-1z"/>
           </svg>
           <span>
-            <span class="hero-store-label">Coming soon</span>
+            <span class="hero-store-label">Download on the</span>
             <strong>App Store</strong>
           </span>
-        </span>
+        </a>
       </div>
 
       <div class="trust">
@@ -3350,7 +3341,7 @@
       </div>
       <div class="faq">
         <h4>What platforms are supported? <span class="plus">+</span></h4>
-        <p>The web app (works in any modern browser) and Android — <a href="https://play.google.com/store/apps/details?id=com.zshift.noteshq" target="_blank" rel="noopener noreferrer">get it on Google Play</a>. iOS / iPadOS is on the way; the codebase ships across all three so they share the same data, vault, and notebooks the moment iOS lands. There's also a browser clipper for Chrome / Edge / Firefox / Brave / Vivaldi / Opera (see <a href="#clipper">Clipper</a> above).</p>
+        <p>The web app (works in any modern browser), Android — <a href="https://play.google.com/store/apps/details?id=com.zshift.noteshq" target="_blank" rel="noopener noreferrer">get it on Google Play</a> — and iOS / iPadOS — <a href="https://apps.apple.com/us/app/noteshq/id6777536742" target="_blank" rel="noopener noreferrer">download on the App Store</a>. All three share the same data, vault, and notebooks. There's also a browser clipper for Chrome / Edge / Firefox / Brave / Vivaldi / Opera (see <a href="#clipper">Clipper</a> above).</p>
       </div>
       <div class="faq">
         <h4>Can I cancel anytime? <span class="plus">+</span></h4>
